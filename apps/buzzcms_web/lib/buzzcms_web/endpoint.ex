@@ -40,5 +40,6 @@ defmodule BuzzcmsWeb.Endpoint do
     key: "_buzzcms_web_key",
     signing_salt: "TQ2/G4mU"
 
+  plug CORSPlug
   plug BuzzcmsWeb.Router
 end
