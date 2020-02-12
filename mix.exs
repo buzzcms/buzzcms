@@ -5,7 +5,13 @@ defmodule Buzzcms.Umbrella.MixProject do
     [
       apps_path: "apps",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      releases: [
+        web: [
+          version: "0.0.1",
+          applications: [buzzcms_web: :permanent]
+        ]
+      ]
     ]
   end
 
