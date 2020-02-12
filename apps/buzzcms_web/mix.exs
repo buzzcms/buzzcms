@@ -43,7 +43,12 @@ defmodule BuzzcmsWeb.MixProject do
       {:gettext, "~> 0.11"},
       {:buzzcms, in_umbrella: true},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:absinthe, "~> 1.5.0-rc.2"},
+      {:absinthe_plug, "~> 1.5.0-rc.1"},
+      {:absinthe_relay, "~> 1.5.0-rc.0"},
+      {:dataloader, "~> 1.0"},
+      {:proper_case, "~> 1.3"}
     ]
   end
 
