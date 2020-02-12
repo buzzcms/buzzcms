@@ -13,6 +13,8 @@ use Mix.Config
 config :buzzcms,
   ecto_repos: [Buzzcms.Repo]
 
+config :buzzcms, Buzzcms.Repo, migration_primary_key: [type: :uuid]
+
 config :buzzcms_web,
   ecto_repos: [Buzzcms.Repo],
   generators: [context_app: :buzzcms]
