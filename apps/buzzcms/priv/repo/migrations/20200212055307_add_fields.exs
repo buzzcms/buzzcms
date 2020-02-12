@@ -17,13 +17,14 @@ defmodule Buzzcms.Repo.Migrations.AddFields do
     create constraint(:field, :field_type, check: "type IN (#{Enum.join(@field_types, ", ")})")
 
     create table(:field_value) do
+      add :code, :string, null: false
+      add :display_name, :string, null: false
       add :field_id, references(:field), null: false
       add :position, :integer, default: 0, null: false
-      add :value, :string, null: false
       add :description, :string, null: false
     end
 
-    create_unique_contraint(:field_value, [:field_id, :value])
+    create_unique_contraint(:field_value, [:field_id, :code])
     create index(:field_value, [:field_id])
 
     create table(:entry_type_field, primary_key: false) do

@@ -37,8 +37,12 @@ defmodule Buzzcms.MixProject do
   defp deps do
     [
       {:ecto_sql, "~> 3.1"},
+      {:ecto_enum, "~> 1.4"},
+      {:ecto_ltree, "~> 0.2.0"},
       {:postgrex, ">= 0.0.0"},
-      {:jason, "~> 1.0"}
+      {:bcrypt_elixir, "~> 2.1"},
+      {:jason, "~> 1.0"},
+      {:ex_machina, "~> 2.3", only: :test}
     ]
   end
 

@@ -13,7 +13,7 @@ use Mix.Config
 config :buzzcms,
   ecto_repos: [Buzzcms.Repo]
 
-config :buzzcms, Buzzcms.Repo, migration_primary_key: [type: :uuid]
+config :buzzcms, Buzzcms.Repo, types: Buzzcms.PostgresTypes
 
 config :buzzcms_web,
   ecto_repos: [Buzzcms.Repo],

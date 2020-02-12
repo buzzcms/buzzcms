@@ -20,7 +20,8 @@ defmodule Buzzcms.Repo.Migrations.Initialize do
     end
 
     # User
-    create table(:user) do
+    create table(:user, primary_key: false) do
+      add :id, :uuid, default: fragment("uuid_generate_v4()"), primary_key: true, null: false
       add :email, :text, null: false
       add :display_name, :text, null: false
       add :nickname, :text

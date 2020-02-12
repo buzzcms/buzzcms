@@ -92,6 +92,7 @@ defmodule Buzzcms.Repo.Migrations.AddBasicModels do
     create constraint(:taxon, :taxon_state, check: "state in (#{Enum.join(@states, ",")})")
     create_update_modified_at_trigger(:taxon)
     create_function__update_taxon_hierarchy()
+
     create_function__update_taxon_descendants()
 
     create_trigger(
@@ -149,7 +150,7 @@ defmodule Buzzcms.Repo.Migrations.AddBasicModels do
   end
 
   defp create_entry_fields do
-    add :nanoid, :string, null: false
+    add :nanoid, :string
     add :slug, :string, null: false
     add :title, :string, null: false
     add :subtitle, :string
@@ -166,8 +167,8 @@ defmodule Buzzcms.Repo.Migrations.AddBasicModels do
     add :state, :string, default: "draft", null: false
     add :created_at, :utc_datetime, null: false, default: fragment("now()")
     add :modified_at, :utc_datetime, null: false, default: fragment("now()")
-    add :created_by_id, references(:user)
-    add :modified_by_id, references(:user)
+    add :created_by_id, references(:user, type: :uuid)
+    add :modified_by_id, references(:user, type: :uuid)
   end
 
   defp create_function__update_taxon_hierarchy() do
