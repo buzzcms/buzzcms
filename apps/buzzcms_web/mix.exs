@@ -49,7 +49,10 @@ defmodule BuzzcmsWeb.MixProject do
       {:absinthe_plug, "~> 1.5.0-rc.1"},
       {:absinthe_relay, "~> 1.5.0-rc.0"},
       {:dataloader, "~> 1.0"},
-      {:proper_case, "~> 1.3"}
+      {:proper_case, "~> 1.3"},
+      {:ex_image_info, "~> 0.2.4"},
+      {:nanoid, "~> 2.0"},
+      {:httpoison, "~> 1.6"}
     ]
   end
 
