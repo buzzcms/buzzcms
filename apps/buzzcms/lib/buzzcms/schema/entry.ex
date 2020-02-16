@@ -6,7 +6,7 @@ defmodule Buzzcms.Schema.Entry do
   @optional_fields [:description, :body, :rich_text]
 
   schema "entry" do
-    field :nanoid, :string
+    # field :nanoid, :string
     field :slug, :string
     field :title, :string
     field :description, :string
