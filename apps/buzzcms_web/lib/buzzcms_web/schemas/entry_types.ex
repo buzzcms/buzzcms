@@ -10,30 +10,31 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
   @input_ids []
 
   node object(:entry_type) do
-    field :code, non_null(:string)
-    field :display_name, non_null(:string)
+    field(:code, non_null(:string))
+    field(:display_name, non_null(:string))
 
-    field :taxonomies, non_null(list_of(non_null(:taxonomy))),
+    field(:taxonomies, non_null(list_of(non_null(:taxonomy))),
       resolve: dataloader(Data, :taxonomies)
+    )
   end
 
   connection(node_type: :entry_type) do
     edge do
-      field :node, non_null(:entry_type)
+      field(:node, non_null(:entry_type))
     end
   end
 
   input_object :entry_type_input do
-    field :code, :string
-    field :display_name, :string
+    field(:code, :string)
+    field(:display_name, :string)
   end
 
   input_object :entry_type_filter_input do
-    field :code, :string_filter_input
+    field(:code, :string_filter_input)
   end
 
   object :entry_type_queries do
-    connection field :entry_types, node_type: :entry_type do
+    connection field(:entry_types, node_type: :entry_type) do
       arg(:filter, :entry_filter_input)
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&EntryTypeResolver.list/2)
@@ -41,40 +42,40 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
   end
 
   object :entry_type_mutations do
-    payload field :create_entry_type do
+    payload field(:create_entry_type) do
       input do
-        field :data, :entry_type_input
+        field(:data, :entry_type_input)
       end
 
       output do
-        field :result, :entry_type_edge
+        field(:result, :entry_type_edge)
       end
 
       middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&EntryTypeResolver.create/2)
     end
 
-    payload field :edit_entry_type do
+    payload field(:edit_entry_type) do
       input do
-        field :id, :id
-        field :data, :entry_type_input
+        field(:id, :id)
+        field(:data, :entry_type_input)
       end
 
       output do
-        field :result, :entry_type_edge
+        field(:result, :entry_type_edge)
       end
 
       middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&EntryTypeResolver.edit/2)
     end
 
-    payload field :delete_entry_type do
+    payload field(:delete_entry_type) do
       input do
-        field :id, :id
+        field(:id, :id)
       end
 
       output do
-        field :result, :entry_type_edge
+        field(:result, :entry_type_edge)
       end
 
       middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)

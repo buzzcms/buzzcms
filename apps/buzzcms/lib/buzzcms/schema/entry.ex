@@ -3,7 +3,7 @@ defmodule Buzzcms.Schema.Entry do
   import Ecto.Changeset
 
   @required_fields [:slug, :title, :entry_type_id]
-  @optional_fields [:description, :body, :rich_text]
+  @optional_fields [:description, :body, :rich_text, :image, :images]
 
   schema "entry" do
     # field :nanoid, :string
@@ -11,6 +11,8 @@ defmodule Buzzcms.Schema.Entry do
     field :title, :string
     field :description, :string
     field :body, :string
+    field :image, :string
+    field :images, {:array, :string}
     field :rich_text, {:array, :map}
     belongs_to :entry_type, Buzzcms.Schema.EntryType
     belongs_to :taxon, Buzzcms.Schema.Taxon

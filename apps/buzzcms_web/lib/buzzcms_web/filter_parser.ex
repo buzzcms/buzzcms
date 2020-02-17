@@ -11,6 +11,9 @@ defmodule Buzzcms.FilterParser do
           :id ->
             dynamic([p], ^acc and field(p, ^field_name) == ^field_value)
 
+          :boolean ->
+            dynamic([p], ^acc and field(p, ^field_name) == ^field_value)
+
           :id_filter_input ->
             dynamic([p], ^acc and ^parse_id(field_name, field_value))
 

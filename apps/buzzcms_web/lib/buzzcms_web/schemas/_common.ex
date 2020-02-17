@@ -45,43 +45,43 @@ defmodule BuzzcmsWeb.Schema.Common do
   end
 
   input_object :id_filter_input do
-    field :eq, :id
-    field :neq, :id
-    field :in, list_of(non_null(:id))
+    field(:eq, :id)
+    field(:neq, :id)
+    field(:in, list_of(non_null(:id)))
   end
 
   input_object :string_filter_input do
-    field :eq, :string
-    field :neq, :string
-    field :in, :string
-    field :like, :string
-    field :ilike, :string
+    field(:eq, :string)
+    field(:neq, :string)
+    field(:in, :string)
+    field(:like, :string)
+    field(:ilike, :string)
   end
 
   input_object :int_filter_input do
-    field :eq, :integer
-    field :lt, :integer
-    field :gt, :integer
-    field :lte, :integer
-    field :gte, :integer
-    field :in, list_of(non_null(:integer))
+    field(:eq, :integer)
+    field(:lt, :integer)
+    field(:gt, :integer)
+    field(:lte, :integer)
+    field(:gte, :integer)
+    field(:in, list_of(non_null(:integer)))
   end
 
   input_object :float_filter_input do
-    field :eq, :float
-    field :lt, :float
-    field :gt, :float
-    field :lte, :float
-    field :gte, :float
-    field :in, list_of(non_null(:float))
+    field(:eq, :float)
+    field(:lt, :float)
+    field(:gt, :float)
+    field(:lte, :float)
+    field(:gte, :float)
+    field(:in, list_of(non_null(:float)))
   end
 
   input_object :date_filter_input do
-    field :eq, :date
-    field :lt, :date
-    field :gt, :date
-    field :lte, :date
-    field :gte, :date
+    field(:eq, :date)
+    field(:lt, :date)
+    field(:gt, :date)
+    field(:lte, :date)
+    field(:gte, :date)
   end
 
   node interface do

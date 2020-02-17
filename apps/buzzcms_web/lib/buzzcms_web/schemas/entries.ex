@@ -6,7 +6,12 @@ defmodule BuzzcmsWeb.Schema.Entries do
   alias BuzzcmsWeb.Data
   alias BuzzcmsWeb.EntryResolver
 
-  @filter_ids [filter: [entry_type_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:entry_type)]]
+  @filter_ids [
+    filter: [
+      entry_type_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:entry_type),
+      taxon_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:taxon)
+    ]
+  ]
   @input_ids [id: :entry, data: [entry_type_id: :entry_type, taxon_id: :taxon]]
 
   enum :entry_order_field do

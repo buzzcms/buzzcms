@@ -8,7 +8,7 @@ defmodule BuzzcmsWeb.Schema.Images do
   @input_ids []
 
   node object(:image) do
-    field :name, non_null(:string)
+    field(:name, non_null(:string))
 
     field :uid, non_null(:id) do
       resolve(fn _, %{source: source} ->
@@ -17,13 +17,13 @@ defmodule BuzzcmsWeb.Schema.Images do
       end)
     end
 
-    field :remote_url, :string
-    field :ext, non_null(:string)
-    field :mime, non_null(:string)
-    field :width, non_null(:decimal)
-    field :height, non_null(:decimal)
-    field :size, non_null(:decimal)
-    field :code, non_null(:string)
+    field(:remote_url, :string)
+    field(:ext, non_null(:string))
+    field(:mime, non_null(:string))
+    field(:width, non_null(:decimal))
+    field(:height, non_null(:decimal))
+    field(:size, non_null(:decimal))
+    field(:code, non_null(:string))
   end
 
   enum :image_order_field do
@@ -35,29 +35,29 @@ defmodule BuzzcmsWeb.Schema.Images do
   end
 
   input_object :image_order_by_input do
-    field :field, non_null(:image_order_field)
-    field :direction, non_null(:order_direction)
+    field(:field, non_null(:image_order_field))
+    field(:direction, non_null(:order_direction))
   end
 
   input_object :image_filter_input do
-    field :name, :string_filter_input
-    field :remote_url, :string_filter_input
+    field(:name, :string_filter_input)
+    field(:remote_url, :string_filter_input)
   end
 
   connection(node_type: :image) do
-    field :count, non_null(:integer)
+    field(:count, non_null(:integer))
 
     edge do
-      field :node, non_null(:image)
+      field(:node, non_null(:image))
     end
   end
 
   input_object :image_input do
-    field :name, :string
+    field(:name, :string)
   end
 
   object :image_queries do
-    connection field :images, node_type: :image do
+    connection field(:images, node_type: :image) do
       arg(:filter, :image_filter_input)
       arg(:order_by, list_of(non_null(:image_order_by_input)))
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
@@ -66,27 +66,27 @@ defmodule BuzzcmsWeb.Schema.Images do
   end
 
   object :image_mutations do
-    payload field :edit_image do
+    payload field(:edit_image) do
       input do
-        field :id, :id
-        field :data, :image_input
+        field(:id, :id)
+        field(:data, :image_input)
       end
 
       output do
-        field :result, :image_edge
+        field(:result, :image_edge)
       end
 
       middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&ImageResolver.edit/2)
     end
 
-    payload field :delete_image do
+    payload field(:delete_image) do
       input do
-        field :id, :id
+        field(:id, :id)
       end
 
       output do
-        field :result, :image_edge
+        field(:result, :image_edge)
       end
 
       middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)

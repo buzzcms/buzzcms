@@ -3,6 +3,7 @@ defmodule BuzzcmsWeb.TaxonResolver do
   @filter_definition [
     {:slug, :string_filter_input},
     {:title, :string_filter_input},
+    {:is_root, :boolean},
     {:taxonomy_id, :id_filter_input}
   ]
 

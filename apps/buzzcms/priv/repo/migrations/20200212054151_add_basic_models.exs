@@ -29,6 +29,8 @@ defmodule Buzzcms.Repo.Migrations.AddBasicModels do
       add :modified_at, :utc_datetime, null: false, default: fragment("now()")
     end
 
+    create_unique_contraint(:image, [:remote_url])
+
     # Redirect
     create table(:redirect) do
       add :from, :string, null: false
@@ -83,6 +85,7 @@ defmodule Buzzcms.Repo.Migrations.AddBasicModels do
     end
 
     create_unique_contraint(:taxon, [:nanoid])
+    create_unique_contraint(:taxon, [:key])
     create index(:taxon, [:taxonomy_id])
     create index(:taxon, [:parent_id])
     create index(:taxon, ["created_at DESC"])
@@ -118,6 +121,7 @@ defmodule Buzzcms.Repo.Migrations.AddBasicModels do
     end
 
     create_unique_contraint(:entry, [:nanoid])
+    create_unique_contraint(:entry, [:key])
     create index(:entry, [:entry_type_id])
     create index(:entry, [:taxon_id])
     create index(:entry, ["created_at DESC"])
@@ -151,6 +155,7 @@ defmodule Buzzcms.Repo.Migrations.AddBasicModels do
 
   defp create_entry_fields do
     add :nanoid, :string
+    add :key, :string
     add :slug, :string, null: false
     add :title, :string, null: false
     add :subtitle, :string

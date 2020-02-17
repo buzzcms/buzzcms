@@ -30,6 +30,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field(:images, :json)
     field(:taxonomy_id, non_null(:id))
     field(:taxonomy, non_null(:taxonomy), resolve: dataloader(Data, :taxonomy))
+    field(:taxons, non_null(list_of(non_null(:taxon))), resolve: dataloader(Data, :taxons))
   end
 
   connection(node_type: :taxon) do
@@ -49,6 +50,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
   input_object :taxon_filter_input do
     field(:slug, :string_filter_input)
     field(:title, :string_filter_input)
+    field(:is_root, :boolean)
     field(:state, :string_filter_input)
     field(:taxonomy_id, :id_filter_input)
   end

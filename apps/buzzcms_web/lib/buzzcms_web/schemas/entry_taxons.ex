@@ -7,19 +7,19 @@ defmodule BuzzcmsWeb.Schema.EntryTaxons do
   alias Buzzcms.Schema.{Entry, EntryTaxon}
 
   input_object :entry_taxon_input do
-    field :entry_id, :string
-    field :taxon_id, :string
+    field(:entry_id, :string)
+    field(:taxon_id, :string)
   end
 
   object :entry_taxon_mutations do
-    payload field :create_entry_taxon do
+    payload field(:create_entry_taxon) do
       input do
-        field :data, :entry_taxon_input
+        field(:data, :entry_taxon_input)
       end
 
       output do
-        field :entry, :entry
-        field :taxon, :taxon
+        field(:entry, :entry)
+        field(:taxon, :taxon)
       end
 
       middleware(Absinthe.Relay.Node.ParseIDs, data: [entry_id: :entry, taxon_id: :taxon])
@@ -34,22 +34,23 @@ defmodule BuzzcmsWeb.Schema.EntryTaxons do
       end)
     end
 
-    payload field :delete_entry_taxon do
+    payload field(:delete_entry_taxon) do
       input do
-        field :data, :entry_taxon_input
+        field(:data, :entry_taxon_input)
       end
 
       output do
-        field :entry, :entry
-        field :taxon, :taxon
+        field(:entry, :entry)
+        field(:taxon, :taxon)
       end
 
       middleware(Absinthe.Relay.Node.ParseIDs, data: [entry_id: :entry, taxon_id: :taxon])
 
       resolve(fn %{data: data}, %{context: _} ->
         query =
-          from et in EntryTaxon,
+          from(et in EntryTaxon,
             where: et.entry_id == ^data.entry_id and et.taxon_id == ^data.taxon_id
+          )
 
         case Repo.delete_all(query) do
           {1, _} -> {:ok, %{entry: Repo.get(Entry, data.entry_id)}}
