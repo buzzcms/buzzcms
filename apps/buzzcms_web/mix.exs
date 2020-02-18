@@ -14,7 +14,14 @@ defmodule BuzzcmsWeb.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -51,8 +58,11 @@ defmodule BuzzcmsWeb.MixProject do
       {:dataloader, "~> 1.0"},
       {:proper_case, "~> 1.3"},
       {:ex_image_info, "~> 0.2.4"},
+      {:exconstructor, "~> 1.1"},
       {:nanoid, "~> 2.0"},
-      {:httpoison, "~> 1.6"}
+      {:httpoison, "~> 1.6"},
+      {:excoveralls, "~> 0.10", only: :test},
+      {:ex_machina, "~> 2.3", only: :test}
     ]
   end
 

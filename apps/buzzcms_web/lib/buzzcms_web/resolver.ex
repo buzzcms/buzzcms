@@ -8,9 +8,15 @@ defmodule BuzzcmsWeb.Resolver do
         where = get_filter(params)
         order_by = get_order_by(params)
 
-        query = from(@schema, where: ^where, order_by: ^order_by)
+        query =
+          @schema
+          |> join(:inner, [e], et in Buzzcms.Schema.EntryTaxon, on: e.id == et.entry_id)
+          |> where([e, et], et.taxon_id == 70)
+          |> where(^where)
+          |> order_by(^order_by)
+
         {:ok, result} = Absinthe.Relay.Connection.from_query(query, &Repo.all/1, params)
-        count = Repo.aggregate(from(@schema, where: ^where), :count)
+        count = Repo.aggregate(query, :count)
         {:ok, result |> Map.put(:count, count)}
       end
 
@@ -87,7 +93,7 @@ defmodule BuzzcmsWeb.Resolver do
             |> Keyword.new()
 
           _ ->
-            dynamic([p], p)
+            []
         end
       end
     end

@@ -11,6 +11,13 @@ defmodule Buzzcms.Umbrella.MixProject do
           version: "0.0.1",
           applications: [buzzcms_web: :permanent]
         ]
+      ],
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
       ]
     ]
   end
