@@ -4,6 +4,8 @@ defmodule FilterParser.ForeignFilterInput do
   import Ecto.Query
   import FilterParser.Helper
 
+  def parse(schema, nil, _fields), do: schema
+
   def parse(schema, filter, fields) do
     fields
     |> Enum.reduce(schema, fn {field_name,

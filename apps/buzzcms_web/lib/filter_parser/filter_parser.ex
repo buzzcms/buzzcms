@@ -19,6 +19,8 @@ defmodule FilterParser.FilterParser do
     end
   end
 
+  defp parse_fields(nil, _fields), do: nil
+
   defp parse_fields(filter, fields) do
     fields
     |> Enum.reduce(nil, fn {field_name, struct}, acc ->

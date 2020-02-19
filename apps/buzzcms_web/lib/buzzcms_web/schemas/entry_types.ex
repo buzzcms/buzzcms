@@ -19,6 +19,8 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
   end
 
   connection(node_type: :entry_type) do
+    field(:count, non_null(:integer))
+
     edge do
       field(:node, non_null(:entry_type))
     end

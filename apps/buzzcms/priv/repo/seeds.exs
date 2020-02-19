@@ -9,3 +9,4 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+Buzzcms.Repo.insert!(%Buzzcms.Schema.EntryType{code: "post", display_name: "Post"})
