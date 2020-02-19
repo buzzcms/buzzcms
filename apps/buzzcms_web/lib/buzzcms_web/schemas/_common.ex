@@ -48,6 +48,14 @@ defmodule BuzzcmsWeb.Schema.Common do
     field(:eq, :id)
     field(:neq, :id)
     field(:in, list_of(non_null(:id)))
+    field(:nin, list_of(non_null(:id)))
+  end
+
+  input_object :foreign_filter_input do
+    field(:eq, :id)
+    field(:neq, :id)
+    field(:in, list_of(non_null(:id)))
+    field(:nin, list_of(non_null(:id)))
   end
 
   input_object :string_filter_input do
@@ -60,6 +68,7 @@ defmodule BuzzcmsWeb.Schema.Common do
 
   input_object :int_filter_input do
     field(:eq, :integer)
+    field(:neq, :integer)
     field(:lt, :integer)
     field(:gt, :integer)
     field(:lte, :integer)
@@ -69,6 +78,7 @@ defmodule BuzzcmsWeb.Schema.Common do
 
   input_object :float_filter_input do
     field(:eq, :float)
+    field(:neq, :float)
     field(:lt, :float)
     field(:gt, :float)
     field(:lte, :float)
@@ -78,10 +88,12 @@ defmodule BuzzcmsWeb.Schema.Common do
 
   input_object :date_filter_input do
     field(:eq, :date)
+    field(:neq, :date)
     field(:lt, :date)
     field(:gt, :date)
     field(:lte, :date)
     field(:gte, :date)
+    field(:in, list_of(non_null(:date)))
   end
 
   node interface do

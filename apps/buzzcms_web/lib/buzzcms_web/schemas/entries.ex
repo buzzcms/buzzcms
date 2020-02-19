@@ -9,7 +9,8 @@ defmodule BuzzcmsWeb.Schema.Entries do
   @filter_ids [
     filter: [
       entry_type_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:entry_type),
-      taxon_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:taxon)
+      taxon_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:taxon),
+      taxons_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:taxon)
     ]
   ]
   @input_ids [id: :entry, data: [entry_type_id: :entry_type, taxon_id: :taxon]]
@@ -66,27 +67,11 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field(:title, :string_filter_input)
     field(:state, :string_filter_input)
     field(:taxon_id, :id_filter_input)
+    field(:taxons_id, :foreign_filter_input)
     field(:entry_type_id, :id_filter_input)
   end
 
-  object :entries_aggregate do
-    field :count, :integer do
-      arg(:filter, :entry_filter_input)
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
-
-      resolve(fn params, info ->
-        {:ok, EntryResolver.count(params, info)}
-      end)
-    end
-  end
-
   object :entry_queries do
-    field :entries_aggregate, :entries_aggregate do
-      resolve(fn _params, _ ->
-        {:ok, %{}}
-      end)
-    end
-
     connection field(:entries, node_type: :entry) do
       arg(:filter, :entry_filter_input)
       arg(:order_by, list_of(non_null(:entry_order_by_input)))

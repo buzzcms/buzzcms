@@ -55,24 +55,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field(:taxonomy_id, :id_filter_input)
   end
 
-  object :taxons_aggregate do
-    field :count, :integer do
-      arg(:filter, :taxon_filter_input)
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
-
-      resolve(fn params, info ->
-        {:ok, TaxonResolver.count(params, info)}
-      end)
-    end
-  end
-
   object :taxon_queries do
-    field :taxons_aggregate, :taxons_aggregate do
-      resolve(fn _params, _ ->
-        {:ok, %{}}
-      end)
-    end
-
     connection field(:taxons, node_type: :taxon) do
       arg(:filter, :taxon_filter_input)
       arg(:order_by, list_of(non_null(:taxon_order_by_input)))

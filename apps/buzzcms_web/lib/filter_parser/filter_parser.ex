@@ -4,12 +4,12 @@ defmodule FilterParser.FilterParser do
 
   alias FilterParser.ItemParser
 
-  def parse(filter, schema: schema, fields: fields, foreign_fields: foreign_fields) do
-    parse(filter, schema: schema, fields: fields)
+  def parse(schema, filter, fields: fields, foreign_fields: foreign_fields) do
+    parse(schema, filter, fields: fields)
     |> FilterParser.ForeignFilterInput.parse(filter, foreign_fields)
   end
 
-  def parse(filter, schema: schema, fields: fields) do
+  def parse(schema, filter, fields: fields) do
     where = parse_fields(filter, fields)
 
     if where do
@@ -19,7 +19,7 @@ defmodule FilterParser.FilterParser do
     end
   end
 
-  def parse_fields(filter, fields) do
+  defp parse_fields(filter, fields) do
     fields
     |> Enum.reduce(nil, fn {field_name, struct}, acc ->
       case Map.get(filter, field_name) do

@@ -1,8 +1,9 @@
 defmodule BuzzcmsWeb.TaxonomyResolver do
   @schema Buzzcms.Schema.Taxonomy
   @filter_definition [
-    {:code, :string_filter_input}
+    fields: [
+      code: FilterParser.StringFilterInput
+    ]
   ]
-
   use BuzzcmsWeb.Resolver
 end

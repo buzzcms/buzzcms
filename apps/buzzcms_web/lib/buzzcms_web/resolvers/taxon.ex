@@ -1,10 +1,16 @@
 defmodule BuzzcmsWeb.TaxonResolver do
+  alias FilterParser.{IdFilterInput, StringFilterInput}
+
   @schema Buzzcms.Schema.Taxon
+
   @filter_definition [
-    {:slug, :string_filter_input},
-    {:title, :string_filter_input},
-    {:is_root, :boolean},
-    {:taxonomy_id, :id_filter_input}
+    fields: [
+      {:slug, StringFilterInput},
+      {:title, StringFilterInput},
+      # {:is_root, IdFilterInput},
+      {:parent_id, IdFilterInput},
+      {:state, StringFilterInput}
+    ]
   ]
 
   use BuzzcmsWeb.Resolver

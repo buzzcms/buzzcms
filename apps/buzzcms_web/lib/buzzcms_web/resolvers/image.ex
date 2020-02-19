@@ -1,8 +1,11 @@
 defmodule BuzzcmsWeb.ImageResolver do
   @schema Buzzcms.Schema.Image
+
   @filter_definition [
-    {:name, :string_filter_input},
-    {:remote_url, :string_filter_input}
+    fields: [
+      name: FilterParser.StringFilterInput,
+      remote_url: FilterParser.StringFilterInput
+    ]
   ]
 
   use BuzzcmsWeb.Resolver

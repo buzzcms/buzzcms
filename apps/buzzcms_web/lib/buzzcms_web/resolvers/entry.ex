@@ -1,17 +1,20 @@
 defmodule BuzzcmsWeb.EntryResolver do
-  import Ecto.Query
+  alias FilterParser.{IdFilterInput, StringFilterInput}
 
   @schema Buzzcms.Schema.Entry
+
   @filter_definition [
-    {:slug, :string_filter_input},
-    {:title, :string_filter_input},
-    {:entry_type_id, :id_filter_input},
-    {:state, :string_filter_input},
-    {:taxon_id,
-     {:ref_id_filter_input,
-      Buzzcms.Schema.Entry
-      |> join(:inner, [e], et in Buzzcms.Schema.EntryTaxon, on: e.id == et.entry_id)}}
-    # {:x, }
+    fields: [
+      {:slug, StringFilterInput},
+      {:title, StringFilterInput},
+      {:entry_type_id, IdFilterInput},
+      {:taxon_id, IdFilterInput},
+      {:state, StringFilterInput}
+    ],
+    foreign_fields: [
+      taxons_id:
+        {Buzzcms.Schema.EntryTaxon, [foreign_key: :entry_id, foreign_filter_field: :taxon_id]}
+    ]
   ]
 
   use BuzzcmsWeb.Resolver

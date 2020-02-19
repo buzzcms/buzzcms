@@ -1,7 +1,9 @@
 defmodule BuzzcmsWeb.EntryTypeResolver do
   @schema Buzzcms.Schema.EntryType
   @filter_definition [
-    {:code, :string_filter_input}
+    fields: [
+      code: FilterParser.StringFilterInput
+    ]
   ]
 
   use BuzzcmsWeb.Resolver
