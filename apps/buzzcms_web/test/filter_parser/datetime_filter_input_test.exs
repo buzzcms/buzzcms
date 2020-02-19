@@ -5,6 +5,11 @@ defmodule FilterParser.DateTimeInputFilterTest do
   alias FilterParser.DateTimeFilterInput
 
   describe "DateTime Filter" do
+    test "empty" do
+      exp = ItemParser.parse(%DateTimeFilterInput{}, :published_at, [])
+      assert exp == nil
+    end
+
     test "eq" do
       exp = ItemParser.parse(%DateTimeFilterInput{eq: ~D[2018-08-20]}, :published_at, [])
 
@@ -24,13 +29,13 @@ defmodule FilterParser.DateTimeInputFilterTest do
     test "multiple condition" do
       exp =
         ItemParser.parse(
-          %DateTimeFilterInput{gt: ~D[2018-08-20], lte: ~D[2020-08-20]},
+          %DateTimeFilterInput{gte: ~D[2018-08-20], lte: ~D[2020-08-20]},
           :published_at,
           []
         )
 
       assert inspect(exp) ==
-               ~s/dynamic([p], p.published_at > ^~D[2018-08-20] and p.published_at <= ^~D[2020-08-20])/
+               ~s/dynamic([p], p.published_at >= ^~D[2018-08-20] and p.published_at <= ^~D[2020-08-20])/
     end
   end
 end

@@ -15,6 +15,11 @@ defmodule FilterParser.FilterParserTest do
       ]
     ]
 
+    test "empty" do
+      exp = FilterParser.FilterParser.parse(%{}, @filter_definition)
+      assert exp == Entry
+    end
+
     test "1 filter item" do
       exp = FilterParser.FilterParser.parse(%{avg_rating: %{gt: 3}}, @filter_definition)
 

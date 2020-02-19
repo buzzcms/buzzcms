@@ -5,6 +5,11 @@ defmodule FilterParser.StringInputFilterTest do
   alias FilterParser.StringFilterInput
 
   describe "String Filter" do
+    test "empty" do
+      exp = ItemParser.parse(%StringFilterInput{}, :name, [])
+      assert exp == nil
+    end
+
     test "eq" do
       exp = ItemParser.parse(%StringFilterInput{eq: "lorem"}, :name, [])
       assert inspect(exp) == ~s/dynamic([p], p.name == ^"lorem")/

@@ -34,10 +34,9 @@ defmodule FilterParser.ForeignFilterInput do
   defp parse_item({compare_type, value}, acc, foreign_filter_field) do
     case compare_type do
       :eq -> join_exp(acc, dynamic([p], field(p, ^foreign_filter_field) == ^value))
-      :ne -> join_exp(acc, dynamic([p], field(p, ^foreign_filter_field) != ^value))
+      :neq -> join_exp(acc, dynamic([p], field(p, ^foreign_filter_field) != ^value))
       :in -> join_exp(acc, dynamic([p], field(p, ^foreign_filter_field) in ^value))
       :nin -> join_exp(acc, dynamic([p], field(p, ^foreign_filter_field) not in ^value))
-      _ -> acc
     end
   end
 end

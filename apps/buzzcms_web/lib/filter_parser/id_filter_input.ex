@@ -23,7 +23,6 @@ defimpl FilterParser.ItemParser, for: FilterParser.IdFilterInput do
       :neq -> join_exp(acc, dynamic([p], field(p, ^field_name) != ^value))
       :in -> join_exp(acc, dynamic([p], field(p, ^field_name) in ^value))
       :nin -> join_exp(acc, dynamic([p], field(p, ^field_name) not in ^value))
-      _ -> acc
     end
   end
 end

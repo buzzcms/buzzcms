@@ -24,7 +24,6 @@ defimpl FilterParser.ItemParser, for: FilterParser.NumberFilterInput do
       :lt -> join_exp(acc, dynamic([p], field(p, ^field_name) < ^value))
       :gte -> join_exp(acc, dynamic([p], field(p, ^field_name) >= ^value))
       :lte -> join_exp(acc, dynamic([p], field(p, ^field_name) <= ^value))
-      _ -> acc
     end
   end
 end

@@ -24,7 +24,6 @@ defimpl FilterParser.ItemParser, for: FilterParser.StringFilterInput do
       :ilike -> join_exp(acc, dynamic([p], ilike(field(p, ^field_name), ^value)))
       :like -> join_exp(acc, dynamic([p], like(field(p, ^field_name), ^value)))
       :in -> join_exp(acc, dynamic([p], field(p, ^field_name) in ^value))
-      _ -> acc
     end
   end
 end
