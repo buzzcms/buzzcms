@@ -11,7 +11,20 @@ defmodule BuzzcmsWeb.Schema.Products do
   node object(:product) do
     field :available_at, :datetime
     field :discontinue_at, :datetime
-    field :variants, non_null(list_of(non_null(:variant))), resolve: dataloader(Data, :variants)
+
+    field :variants, non_null(list_of(non_null(:variant))),
+      resolve:
+        dataloader(
+          Data,
+          fn _parent, args, _info -> {:variants, args} end,
+          args: %{
+            fields: [
+              is_master: FilterParser.BooleanFilterInput
+            ]
+          }
+        ) do
+      arg(:filter, :variant_filter_input)
+    end
 
     field :option_types, non_null(list_of(non_null(:option_type))),
       resolve: dataloader(Data, :option_types)
@@ -36,7 +49,7 @@ defmodule BuzzcmsWeb.Schema.Products do
     connection field(:products, node_type: :product) do
       arg(:filter, :product_filter_input)
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
-      resolve(&ProductResolver.list/2)
+      resolve(&BuzzcmsWeb.ProductResolver.list/2)
     end
   end
 
@@ -51,7 +64,7 @@ defmodule BuzzcmsWeb.Schema.Products do
       end
 
       middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
-      resolve(&ProductResolver.create/2)
+      resolve(&BuzzcmsWeb.ProductResolver.create/2)
     end
 
     payload field(:edit_product) do
@@ -65,7 +78,7 @@ defmodule BuzzcmsWeb.Schema.Products do
       end
 
       middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
-      resolve(&ProductResolver.edit/2)
+      resolve(&BuzzcmsWeb.ProductResolver.edit/2)
     end
 
     payload field(:delete_product) do
@@ -78,7 +91,7 @@ defmodule BuzzcmsWeb.Schema.Products do
       end
 
       middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
-      resolve(&ProductResolver.delete/2)
+      resolve(&BuzzcmsWeb.ProductResolver.delete/2)
     end
   end
 end

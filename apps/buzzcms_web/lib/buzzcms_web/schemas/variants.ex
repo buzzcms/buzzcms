@@ -46,7 +46,7 @@ defmodule BuzzcmsWeb.Schema.Variants do
   end
 
   input_object :variant_filter_input do
-    field(:code, :string_filter_input)
+    field(:is_master, :boolean_filter_input)
   end
 
   object :variant_queries do

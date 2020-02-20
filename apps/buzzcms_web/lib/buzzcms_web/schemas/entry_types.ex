@@ -34,11 +34,13 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
 
   input_object :entry_type_filter_input do
     field(:code, :string_filter_input)
+    field(:is_product, :boolean_filter_input)
   end
 
   object :entry_type_queries do
     connection field(:entry_types, node_type: :entry_type) do
       arg(:filter, :entry_type_filter_input)
+      arg(:limit, :integer)
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&EntryTypeResolver.list/2)
     end

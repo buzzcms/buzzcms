@@ -16,11 +16,9 @@ defmodule BuzzcmsWeb.Resolver do
       end
 
       def create(%{data: data}, %{context: _} = _info) do
-        input = data
-
         result =
           %@schema{}
-          |> @schema.changeset(input)
+          |> @schema.changeset(data)
           |> Repo.insert()
 
         case result do

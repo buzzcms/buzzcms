@@ -5,7 +5,7 @@ defmodule FilterParser.FilterParser do
   alias FilterParser.ItemParser
 
   def parse(schema, filter, fields: fields, foreign_fields: foreign_fields) do
-    parse(schema, filter, fields: fields)
+    parse(schema, filter, fields: fields || [])
     |> FilterParser.ForeignFilterInput.parse(filter, foreign_fields)
   end
 

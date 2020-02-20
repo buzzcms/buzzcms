@@ -44,6 +44,11 @@ defmodule BuzzcmsWeb.Schema.Common do
     value(:desc_nulls_first)
   end
 
+  input_object :boolean_filter_input do
+    field(:eq, :boolean)
+    field(:neq, :boolean)
+  end
+
   input_object :id_filter_input do
     field(:eq, :id)
     field(:neq, :id)

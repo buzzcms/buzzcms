@@ -40,7 +40,7 @@ defmodule FilterParser.FilterParserTest do
       exp = FilterParser.FilterParser.parse(@schema, filter, @filter_definition)
 
       assert inspect(exp) ==
-               ~s/#Ecto.Query<from e0 in Buzzcms.Schema.Entry, join: e1 in Buzzcms.Schema.EntryTaxon, on: e0.id == e1.entry_id, where: e0.avg_rating > ^3, where: e0.taxon_id in ^[1, 2]>/
+               ~s/#Ecto.Query<from e0 in Buzzcms.Schema.Entry, join: e1 in Buzzcms.Schema.EntryTaxon, on: e0.id == e1.entry_id, where: e0.avg_rating > ^3, where: e1.taxon_id in ^[1, 2]>/
     end
   end
 end
