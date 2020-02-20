@@ -16,6 +16,7 @@ defmodule Buzzcms.Schema.Entry do
     field :rich_text, {:array, :map}
     belongs_to :entry_type, Buzzcms.Schema.EntryType
     belongs_to :taxon, Buzzcms.Schema.Taxon
+    has_one :product, Buzzcms.Schema.Product
     many_to_many :taxons, Buzzcms.Schema.Taxon, join_through: "entry_taxon"
     field :state, :string
     field :published_at, :utc_datetime

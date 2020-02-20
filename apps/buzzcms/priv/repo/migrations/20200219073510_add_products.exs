@@ -52,6 +52,7 @@ defmodule Buzzcms.Repo.Migrations.AddProducts do
     create table(:option_value) do
       add :option_type_id, references(:option_type), null: false
       add :value, :string, null: false
+      add :image, :string
       add :position, :integer, default: 0
       add :created_at, :utc_datetime, null: false, default: fragment("now()")
     end

@@ -12,6 +12,7 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
   node object(:entry_type) do
     field(:code, non_null(:string))
     field(:display_name, non_null(:string))
+    field(:is_product, non_null(:boolean))
 
     field(:taxonomies, non_null(list_of(non_null(:taxonomy))),
       resolve: dataloader(Data, :taxonomies)
@@ -37,7 +38,7 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
 
   object :entry_type_queries do
     connection field(:entry_types, node_type: :entry_type) do
-      arg(:filter, :entry_filter_input)
+      arg(:filter, :entry_type_filter_input)
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&EntryTypeResolver.list/2)
     end

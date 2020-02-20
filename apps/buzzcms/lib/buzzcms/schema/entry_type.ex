@@ -8,7 +8,7 @@ defmodule Buzzcms.Schema.EntryType do
   schema "entry_type" do
     field :code, :string
     field :display_name, :string
-    # field :is_product, :boolean
+    field :is_product, :boolean
     many_to_many :taxonomies, Buzzcms.Schema.Taxonomy, join_through: "entry_type_taxonomy"
   end
 

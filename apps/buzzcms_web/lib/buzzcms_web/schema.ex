@@ -14,6 +14,10 @@ defmodule BuzzcmsWeb.Schema do
   import_types(BuzzcmsWeb.Schema.EntryTypeTaxonomies)
   import_types(BuzzcmsWeb.Schema.Fields)
   import_types(BuzzcmsWeb.Schema.Images)
+  import_types(BuzzcmsWeb.Schema.Products)
+  import_types(BuzzcmsWeb.Schema.Variants)
+  import_types(BuzzcmsWeb.Schema.OptionTypes)
+  import_types(BuzzcmsWeb.Schema.OptionValues)
 
   query do
     import_fields(:node_field)
@@ -21,6 +25,10 @@ defmodule BuzzcmsWeb.Schema do
     import_fields(:taxonomy_queries)
     import_fields(:taxon_queries)
     import_fields(:entry_queries)
+    import_fields(:product_queries)
+    import_fields(:variant_queries)
+    import_fields(:option_type_queries)
+    import_fields(:option_value_queries)
     import_fields(:field_queries)
     import_fields(:image_queries)
   end
@@ -30,6 +38,10 @@ defmodule BuzzcmsWeb.Schema do
     import_fields(:taxonomy_mutations)
     import_fields(:taxon_mutations)
     import_fields(:entry_mutations)
+    import_fields(:product_mutations)
+    import_fields(:variant_mutations)
+    import_fields(:option_type_mutations)
+    import_fields(:option_value_mutations)
     import_fields(:field_mutations)
     import_fields(:entry_taxon_mutations)
     import_fields(:entry_type_taxonomy_mutations)
