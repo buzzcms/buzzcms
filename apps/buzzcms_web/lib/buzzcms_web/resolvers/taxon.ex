@@ -5,6 +5,7 @@ defmodule BuzzcmsWeb.TaxonResolver do
 
   @filter_definition [
     fields: [
+      {:id, IdFilterInput},
       {:slug, StringFilterInput},
       {:title, StringFilterInput},
       # {:is_root, IdFilterInput},

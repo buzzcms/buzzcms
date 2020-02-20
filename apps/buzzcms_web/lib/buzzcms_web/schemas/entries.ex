@@ -8,6 +8,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
 
   @filter_ids [
     filter: [
+      id: BuzzcmsWeb.ParseIDsHelper.get_ids(:entry),
       entry_type_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:entry_type),
       taxon_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:taxon),
       taxons_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:taxon)
@@ -63,6 +64,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
   end
 
   input_object :entry_filter_input do
+    field(:id, :id_filter_input)
     field(:slug, :string_filter_input)
     field(:title, :string_filter_input)
     field(:state, :string_filter_input)

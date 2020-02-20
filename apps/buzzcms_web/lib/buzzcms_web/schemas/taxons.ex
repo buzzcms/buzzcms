@@ -6,7 +6,12 @@ defmodule BuzzcmsWeb.Schema.Taxons do
   alias BuzzcmsWeb.Data
   alias BuzzcmsWeb.TaxonResolver
 
-  @filter_ids [filter: [taxonomy_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:taxonomy)]]
+  @filter_ids [
+    filter: [
+      id: BuzzcmsWeb.ParseIDsHelper.get_ids(:taxon),
+      taxonomy_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:taxonomy)
+    ]
+  ]
   @input_ids [id: :taxon, data: [taxonomy_id: :taxonomy]]
 
   enum :taxon_order_field do
@@ -26,6 +31,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field(:description, :string)
     field(:body, :string)
     field(:rich_text, :json)
+    field(:is_root, :boolean)
     field(:image, :string)
     field(:images, :json)
     field(:taxonomy_id, non_null(:id))
@@ -48,6 +54,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
   end
 
   input_object :taxon_filter_input do
+    field(:id, :id_filter_input)
     field(:slug, :string_filter_input)
     field(:title, :string_filter_input)
     field(:is_root, :boolean)

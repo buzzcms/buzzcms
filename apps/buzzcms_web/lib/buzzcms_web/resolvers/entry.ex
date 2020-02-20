@@ -5,6 +5,7 @@ defmodule BuzzcmsWeb.EntryResolver do
 
   @filter_definition [
     fields: [
+      {:id, IdFilterInput},
       {:slug, StringFilterInput},
       {:title, StringFilterInput},
       {:entry_type_id, IdFilterInput},
