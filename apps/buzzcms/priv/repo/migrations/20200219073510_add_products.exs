@@ -64,7 +64,7 @@ defmodule Buzzcms.Repo.Migrations.AddProducts do
       add :sku, :string
       add :product_id, references(:product), null: false
       add :key, :string
-      add :is_master, :boolean
+      add :is_master, :boolean, default: false
       add :image, :string
       add :position, :integer, default: 0
       add :list_price, :decimal, precision: 14, scale: 2

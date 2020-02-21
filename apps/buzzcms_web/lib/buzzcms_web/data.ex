@@ -5,6 +5,9 @@ defmodule BuzzcmsWeb.Data do
 
   def query(queryable, params) do
     case params do
+      %{where: fun} ->
+        queryable |> fun.()
+
       %{fields: fields, filter: filter} ->
         queryable |> FilterParser.FilterParser.parse(filter, fields: fields)
 

@@ -7,6 +7,7 @@ defmodule Buzzcms.Schema.Product do
 
   schema "product" do
     belongs_to :entry, Buzzcms.Schema.Entry
+    has_one :master_variant, Buzzcms.Schema.Variant
     has_many :variants, Buzzcms.Schema.Variant
     has_many :option_types, Buzzcms.Schema.OptionType
     field :available_at, :utc_datetime

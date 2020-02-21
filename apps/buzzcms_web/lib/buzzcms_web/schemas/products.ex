@@ -2,6 +2,7 @@ defmodule BuzzcmsWeb.Schema.Products do
   use Absinthe.Schema.Notation
   use Absinthe.Relay.Schema.Notation, :modern
   import Absinthe.Resolution.Helpers
+  import Ecto.Query
 
   alias BuzzcmsWeb.Data
 
@@ -9,25 +10,33 @@ defmodule BuzzcmsWeb.Schema.Products do
   @input_ids []
 
   node object(:product) do
-    field :available_at, :datetime
-    field :discontinue_at, :datetime
+    field(:available_at, :datetime)
+    field(:discontinue_at, :datetime)
 
-    field :variants, non_null(list_of(non_null(:variant))),
+    field :master_variant, :variant,
       resolve:
         dataloader(
           Data,
-          fn _parent, args, _info -> {:variants, args} end,
+          :master_variant,
           args: %{
-            fields: [
-              is_master: FilterParser.BooleanFilterInput
-            ]
+            where: fn schema -> schema |> where([p], p.is_master == true) end
           }
-        ) do
-      arg(:filter, :variant_filter_input)
-    end
+        )
 
-    field :option_types, non_null(list_of(non_null(:option_type))),
+    field(:variants, non_null(list_of(non_null(:variant))),
+      resolve:
+        dataloader(
+          Data,
+          :variants,
+          args: %{
+            where: fn schema -> schema |> where([p], p.is_master != true) end
+          }
+        )
+    )
+
+    field(:option_types, non_null(list_of(non_null(:option_type))),
       resolve: dataloader(Data, :option_types)
+    )
   end
 
   connection(node_type: :product) do
@@ -37,8 +46,8 @@ defmodule BuzzcmsWeb.Schema.Products do
   end
 
   input_object :product_input do
-    field :available_at, :datetime
-    field :discontinue_at, :datetime
+    field(:available_at, :datetime)
+    field(:discontinue_at, :datetime)
   end
 
   input_object :product_filter_input do
