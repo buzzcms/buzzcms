@@ -20,6 +20,14 @@ defmodule FilterParser.FilterParserTest do
       assert exp == Entry
     end
 
+    test "filter item is empty" do
+      filter = %{avg_rating: %{}, taxon_id: %{in: [1, 2]}}
+      exp = FilterParser.FilterParser.parse(@schema, filter, @filter_definition)
+
+      assert inspect(exp) ==
+               ~s/#Ecto.Query<from e0 in Buzzcms.Schema.Entry, where: e0.taxon_id in ^[1, 2]>/
+    end
+
     test "1 filter item" do
       exp = FilterParser.FilterParser.parse(@schema, %{avg_rating: %{gt: 3}}, @filter_definition)
 

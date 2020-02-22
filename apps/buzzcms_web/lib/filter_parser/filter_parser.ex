@@ -30,8 +30,11 @@ defmodule FilterParser.FilterParser do
 
         filter_item ->
           filter_input = struct.new(filter_item)
-          filter = ItemParser.parse(filter_input, field_name)
-          join_exp(acc, dynamic([p], ^filter))
+
+          case ItemParser.parse(filter_input, field_name) do
+            nil -> acc
+            result -> join_exp(acc, dynamic([p], ^result))
+          end
       end
     end)
   end

@@ -3,8 +3,8 @@ defmodule BuzzcmsWeb.ImageResolver do
 
   @filter_definition [
     fields: [
-      name: FilterParser.StringFilterInput,
-      remote_url: FilterParser.StringFilterInput
+      {:name, FilterParser.StringFilterInput},
+      {:remote_url, FilterParser.StringFilterInput}
     ]
   ]
 

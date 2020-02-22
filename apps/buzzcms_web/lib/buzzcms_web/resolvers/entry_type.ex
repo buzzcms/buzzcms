@@ -2,8 +2,8 @@ defmodule BuzzcmsWeb.EntryTypeResolver do
   @schema Buzzcms.Schema.EntryType
   @filter_definition [
     fields: [
-      code: FilterParser.StringFilterInput,
-      is_product: FilterParser.BooleanFilterInput
+      {:code, FilterParser.StringFilterInput},
+      {:is_product, FilterParser.BooleanFilterInput}
     ]
   ]
 

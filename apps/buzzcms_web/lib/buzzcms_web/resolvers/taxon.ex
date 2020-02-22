@@ -1,8 +1,6 @@
 defmodule BuzzcmsWeb.TaxonResolver do
   alias FilterParser.{IdFilterInput, StringFilterInput, BooleanFilterInput}
-
   @schema Buzzcms.Schema.Taxon
-
   @filter_definition [
     fields: [
       {:id, IdFilterInput},

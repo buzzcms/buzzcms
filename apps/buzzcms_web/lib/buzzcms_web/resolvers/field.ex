@@ -3,7 +3,7 @@ defmodule BuzzcmsWeb.FieldResolver do
 
   @filter_definition [
     fields: [
-      code: FilterParser.StringFilterInput
+      {:code, FilterParser.StringFilterInput}
     ]
   ]
 
