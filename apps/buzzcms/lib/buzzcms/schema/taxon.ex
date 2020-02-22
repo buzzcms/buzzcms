@@ -12,10 +12,13 @@ defmodule Buzzcms.Schema.Taxon do
     field :description, :string
     field :body, :string
     field :rich_text, {:array, :map}
+    field :image, :string
+    field :images, {:array, :map}
     has_many :taxons, Buzzcms.Schema.Taxon, foreign_key: :parent_id
     belongs_to :taxonomy, Buzzcms.Schema.Taxonomy
     belongs_to :parent, Buzzcms.Schema.Taxon
     field :is_root, :boolean
+    field :entries_count, :integer
     field :path, Ltree
     field :level, :integer
     field :state, :string

@@ -77,6 +77,7 @@ defmodule Buzzcms.Repo.Migrations.AddBasicModels do
     # Taxon
     create table(:taxon) do
       create_entry_fields()
+      add :entries_count, :integer
       add :parent_id, references(:taxon)
       add :is_root, :boolean
       add :path, :ltree

@@ -26,20 +26,23 @@ defmodule BuzzcmsWeb.Schema.Taxons do
   end
 
   node object(:taxon) do
-    field(:slug, non_null(:string))
-    field(:title, non_null(:string))
-    field(:description, :string)
-    field(:body, :string)
-    field(:rich_text, :json)
-    field(:is_root, :boolean)
-    field(:path, :string)
-    field(:image, :string)
-    field(:images, :json)
-    field(:taxonomy_id, non_null(:id))
-    field(:parent, non_null(:taxon), resolve: dataloader(Data, :parent))
-    field(:taxonomy, non_null(:taxonomy), resolve: dataloader(Data, :taxonomy))
-    field(:taxons, non_null(list_of(non_null(:taxon))), resolve: dataloader(Data, :taxons))
-    field(:state, non_null(:string))
+    field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
+    field :slug, non_null(:string)
+    field :title, non_null(:string)
+    field :description, :string
+    field :body, :string
+    field :rich_text, :json
+    field :is_root, :boolean
+    field :path, :string
+    field :image, :string
+    field :images, :json
+    field :entries_count, :integer
+    field :taxonomy_id, non_null(:id)
+    field :parent, :taxon, resolve: dataloader(Data, :parent)
+    field :parent_id, :id
+    field :taxonomy, non_null(:taxonomy), resolve: dataloader(Data, :taxonomy)
+    field :taxons, non_null(list_of(non_null(:taxon))), resolve: dataloader(Data, :taxons)
+    field :state, non_null(:string)
   end
 
   connection(node_type: :taxon) do
