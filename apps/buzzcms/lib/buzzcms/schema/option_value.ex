@@ -6,8 +6,9 @@ defmodule Buzzcms.Schema.OptionValue do
   @optional_fields [:value, :position]
 
   schema "option_value" do
+    field :code, :string
+    field :display_name, :string
     belongs_to :option_type, Buzzcms.Schema.OptionType
-    field :value, :string
     field :position, :integer
   end
 
@@ -15,5 +16,6 @@ defmodule Buzzcms.Schema.OptionValue do
     entity
     |> cast(params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+    |> unique_constraint(:code, name: :option_value_option_type_id_code)
   end
 end

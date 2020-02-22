@@ -57,7 +57,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field(:id, :id_filter_input)
     field(:slug, :string_filter_input)
     field(:title, :string_filter_input)
-    field(:is_root, :boolean)
+    field(:is_root, :boolean_filter_input)
     field(:state, :string_filter_input)
     field(:taxonomy_id, :id_filter_input)
   end

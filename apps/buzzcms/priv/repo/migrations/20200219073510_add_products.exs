@@ -40,24 +40,26 @@ defmodule Buzzcms.Repo.Migrations.AddProducts do
     )
 
     create table(:option_type) do
-      add :name, :string, null: false
+      add :code, :string, null: false
+      add :display_name, :string, null: false
       add :product_id, references(:product), null: false
       add :position, :integer, default: 0
       add :created_at, :utc_datetime, null: false, default: fragment("now()")
     end
 
-    create_unique_contraint(:option_type, [:product_id, :name])
+    create_unique_contraint(:option_type, [:product_id, :code])
     create index(:option_type, [:product_id])
 
     create table(:option_value) do
+      add :code, :string, null: false
+      add :display_name, :string, null: false
       add :option_type_id, references(:option_type), null: false
-      add :value, :string, null: false
       add :image, :string
       add :position, :integer, default: 0
       add :created_at, :utc_datetime, null: false, default: fragment("now()")
     end
 
-    create_unique_contraint(:option_value, [:option_type_id, :value])
+    create_unique_contraint(:option_value, [:option_type_id, :code])
     create index(:option_value, [:option_type_id])
 
     create table(:variant) do
