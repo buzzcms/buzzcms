@@ -40,6 +40,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :taxonomy_id, non_null(:id)
     field :parent, :taxon, resolve: dataloader(Data, :parent)
     field :parent_id, :id
+    field :position, :integer
     field :taxonomy, non_null(:taxonomy), resolve: dataloader(Data, :taxonomy)
     field :taxons, non_null(list_of(non_null(:taxon))), resolve: dataloader(Data, :taxons)
     field :state, non_null(:string)
@@ -57,6 +58,8 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field(:slug, :string)
     field(:title, :string)
     field(:taxonomy_id, :string)
+    field(:parent_id, :string)
+    field(:position, :integer)
   end
 
   input_object :taxon_filter_input do
@@ -66,6 +69,12 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field(:is_root, :boolean_filter_input)
     field(:state, :string_filter_input)
     field(:taxonomy_id, :id_filter_input)
+  end
+
+  input_object :edit_taxon_tree_item_input do
+    field :_id, :id
+    field :parent_id, :id
+    field :position, :integer
   end
 
   object :taxon_queries do
@@ -116,6 +125,58 @@ defmodule BuzzcmsWeb.Schema.Taxons do
 
       middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&TaxonResolver.delete/2)
+    end
+
+    payload field(:edit_taxon_tree) do
+      input do
+        field(:data, non_null(list_of(non_null(:edit_taxon_tree_item_input))))
+      end
+
+      output do
+        field(:result, list_of(:taxon_edge))
+      end
+
+      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
+
+      resolve(fn %{data: data}, _info ->
+        taxons =
+          data
+          |> Enum.map(fn %{_id: id, parent_id: parent_id, position: position} ->
+            %{
+              id: String.to_integer(id),
+              parent_id:
+                case parent_id do
+                  nil -> nil
+                  parent_id -> String.to_integer(parent_id)
+                end,
+              position: position
+            }
+          end)
+
+        Ecto.Multi.new()
+        |> Ecto.Multi.run(:create_tmp_table, fn repo, _ ->
+          repo.query("""
+          CREATE TEMP TABLE tmp_taxon AS
+          SELECT id, parent_id, position FROM taxon LIMIT 0;
+          """)
+        end)
+        |> Ecto.Multi.insert_all(:insert_tmp_taxons, "tmp_taxon", taxons)
+        |> Ecto.Multi.run(:update_taxons, fn repo, _ ->
+          repo.query("""
+          UPDATE taxon
+          SET parent_id = tmp_taxon.parent_id, position = tmp_taxon.position
+          FROM tmp_taxon
+          WHERE tmp_taxon.id = taxon.id;
+          """)
+        end)
+        |> Ecto.Multi.run(:drop_tmp_table, fn repo, _ ->
+          repo.query("DROP TABLE tmp_taxon")
+        end)
+        |> Buzzcms.Repo.transaction()
+        |> IO.inspect()
+
+        {:ok, %{result: []}}
+      end)
     end
   end
 end
