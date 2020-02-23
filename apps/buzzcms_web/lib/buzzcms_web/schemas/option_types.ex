@@ -10,7 +10,8 @@ defmodule BuzzcmsWeb.Schema.OptionTypes do
   @input_ids []
 
   node object(:option_type) do
-    field(:name, non_null(:string))
+    field(:code, non_null(:string))
+    field(:display_name, non_null(:string))
 
     field :option_values, non_null(list_of(non_null(:option_value))),
       resolve: dataloader(Data, :option_values)

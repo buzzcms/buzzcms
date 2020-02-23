@@ -114,8 +114,8 @@ defmodule Buzzcms.Repo.Migrations.AddFields do
     # Entry select value
     create table(:entry_select_value, primary_key: false) do
       add :entry_id, references(:entry), primary_key: true, null: false
-      add :field_id, references(:field), primary_key: true, null: false
-      add :field_value_id, references(:field_value), null: false
+      add :field_value_id, references(:field_value), primary_key: true, null: false
+      add :field_id, references(:field), null: false
     end
 
     create index(:entry_select_value, [:entry_id])
