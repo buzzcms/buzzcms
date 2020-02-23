@@ -18,6 +18,7 @@ defmodule Buzzcms.Schema.Entry do
     belongs_to :taxon, Buzzcms.Schema.Taxon
     has_one :product, Buzzcms.Schema.Product
     many_to_many :taxons, Buzzcms.Schema.Taxon, join_through: "entry_taxon"
+    many_to_many :select_values, Buzzcms.Schema.FieldValue, join_through: "entry_select_value"
     field :state, :string
     field :published_at, :utc_datetime
     field :created_at, :utc_datetime
