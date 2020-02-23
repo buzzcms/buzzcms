@@ -13,6 +13,7 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
     field(:code, non_null(:string))
     field(:display_name, non_null(:string))
     field(:is_product, non_null(:boolean))
+    field(:fields, non_null(list_of(non_null(:field))), resolve: dataloader(Data, :fields))
 
     field(:taxonomies, non_null(list_of(non_null(:taxonomy))),
       resolve: dataloader(Data, :taxonomies)
