@@ -10,6 +10,7 @@ defmodule BuzzcmsWeb.Schema.Products do
   @input_ids []
 
   node object(:product) do
+    field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field(:available_at, :datetime)
     field(:discontinue_at, :datetime)
 

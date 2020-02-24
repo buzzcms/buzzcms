@@ -34,6 +34,7 @@ defmodule Buzzcms.Schema.Variant do
     field :depth, :decimal
     field :track_inventory, :boolean
     field :is_valid, :boolean
+    many_to_many :option_values, Buzzcms.Schema.OptionValue, join_through: "variant_option_value"
   end
 
   def changeset(entity, params \\ %{}) do

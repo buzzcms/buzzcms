@@ -30,6 +30,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
   end
 
   node object(:entry) do
+    field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field(:slug, non_null(:string))
     field(:title, non_null(:string))
     field(:description, :string)

@@ -9,6 +9,7 @@ defmodule BuzzcmsWeb.Schema.Taxonomies do
   @input_ids []
 
   node object(:taxonomy) do
+    field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field(:code, non_null(:string))
     field(:display_name, non_null(:string))
 

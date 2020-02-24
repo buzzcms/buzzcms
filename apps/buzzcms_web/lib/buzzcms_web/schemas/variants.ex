@@ -3,11 +3,14 @@ defmodule BuzzcmsWeb.Schema.Variants do
   use Absinthe.Relay.Schema.Notation, :modern
 
   alias BuzzcmsWeb.VariantResolver
+  import Absinthe.Resolution.Helpers
+  alias BuzzcmsWeb.Data
 
   @filter_ids []
   @input_ids []
 
   node object(:variant) do
+    field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field :sku, :string
     field :key, :string
     field :is_master, :boolean
@@ -19,8 +22,12 @@ defmodule BuzzcmsWeb.Schema.Variants do
     field :height, :decimal
     field :width, :decimal
     field :depth, :decimal
+    field :stock, :integer
     field :track_inventory, :boolean
     field :is_valid, :boolean
+
+    field :option_values, non_null(list_of(non_null(:option_value))),
+      resolve: dataloader(Data, :option_values)
   end
 
   connection(node_type: :variant) do
