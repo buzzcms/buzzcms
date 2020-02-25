@@ -61,6 +61,8 @@ defmodule BuzzcmsWeb.Resolver do
             []
         end
       end
+
+      defoverridable list: 2
     end
   end
 end
