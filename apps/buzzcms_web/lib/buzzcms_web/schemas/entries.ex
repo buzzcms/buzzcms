@@ -126,7 +126,27 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :field, :entry_field_filter_input
   end
 
+  object :select_filter_result do
+    field :field_code, non_null(:string)
+    field :field_value_code, non_null(:string)
+    field :field_name, non_null(:string)
+    field :field_value_name, non_null(:string)
+    field :count, non_null(:integer)
+  end
+
+  object :filter_result do
+    field :select, non_null(list_of(non_null(:select_filter_result))) do
+      # resolve(&EntryResolver.get_filter/2)
+    end
+  end
+
   object :entry_queries do
+    field :entry_filter, :filter_result do
+      arg(:filter, :entry_filter_input)
+      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
+      resolve(&EntryResolver.get_filter/2)
+    end
+
     connection field(:entries, node_type: :entry) do
       arg(:filter, :entry_filter_input)
       arg(:order_by, list_of(non_null(:entry_order_by_input)))
