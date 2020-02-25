@@ -41,6 +41,10 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field(:entry_type, non_null(:entry_type), resolve: dataloader(Data, :entry_type))
     field(:taxon, non_null(:taxon), resolve: dataloader(Data, :taxon))
     field(:product, :product, resolve: dataloader(Data, :product))
+    field(:state, non_null(:string))
+    field(:published_at, non_null(:datetime))
+    field(:created_at, non_null(:datetime))
+    field(:updated_at, non_null(:datetime))
 
     field(
       :taxons,
@@ -53,11 +57,6 @@ defmodule BuzzcmsWeb.Schema.Entries do
       non_null(list_of(non_null(:field_value))),
       resolve: dataloader(Data, :select_values)
     )
-
-    field(:state, non_null(:string))
-    field(:published_at, non_null(:datetime))
-    field(:created_at, non_null(:datetime))
-    field(:updated_at, non_null(:datetime))
   end
 
   connection(node_type: :entry) do
@@ -78,14 +77,53 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field(:entry_type_id, :string)
   end
 
+  input_object :entry_boolean_field_filter_input do
+    field :field, non_null(:string)
+    field :eq, :boolean
+  end
+
+  input_object :entry_integer_field_filter_input do
+    field :field, non_null(:string)
+    field :eq, :integer
+    field :neq, :integer
+    field :gt, :integer
+    field :le, :integer
+    field :gte, :integer
+    field :lte, :integer
+  end
+
+  input_object :entry_decimal_field_filter_input do
+    field :field, non_null(:string)
+    field :eq, :decimal
+    field :neq, :decimal
+    field :gt, :decimal
+    field :le, :decimal
+    field :gte, :decimal
+    field :lte, :decimal
+  end
+
+  input_object :entry_select_field_filter_input do
+    field :field, non_null(:string)
+    field :eq, :string
+    field :in, list_of(non_null(:string))
+  end
+
+  input_object :entry_field_filter_input do
+    field :boolean, list_of(non_null(:entry_boolean_field_filter_input))
+    field :integer, list_of(non_null(:entry_integer_field_filter_input))
+    field :decimal, list_of(non_null(:entry_decimal_field_filter_input))
+    field :select, list_of(non_null(:entry_select_field_filter_input))
+  end
+
   input_object :entry_filter_input do
-    field(:id, :id_filter_input)
-    field(:slug, :string_filter_input)
-    field(:title, :string_filter_input)
-    field(:state, :string_filter_input)
-    field(:taxon_id, :id_filter_input)
-    field(:taxons_id, :foreign_filter_input)
-    field(:entry_type_id, :id_filter_input)
+    field :id, :id_filter_input
+    field :slug, :string_filter_input
+    field :title, :string_filter_input
+    field :state, :string_filter_input
+    field :taxon_id, :id_filter_input
+    field :taxons_id, :foreign_filter_input
+    field :entry_type_id, :id_filter_input
+    field :field, :entry_field_filter_input
   end
 
   object :entry_queries do

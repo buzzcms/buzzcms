@@ -7,6 +7,7 @@ defmodule Buzzcms.Repo.Migrations.AddFields do
     create table(:field) do
       add :code, :string, null: false
       add :display_name, :string, null: false
+      add :position, :integer, default: 0, null: false
       add :note, :string
       add :type, :string, null: false, default: "select"
       add :created_at, :utc_datetime, null: false, default: fragment("now()")

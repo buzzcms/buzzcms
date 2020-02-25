@@ -6,7 +6,7 @@ defmodule Buzzcms.Schema.EntrySelectValue do
 
   schema "entry_select_value" do
     belongs_to :entry, Buzzcms.Schema.Entry
-    belongs_to :field_value, Buzzcms.Schema.Field
+    belongs_to :field_value, Buzzcms.Schema.FieldValue
   end
 
   def changeset(entity, params \\ %{}) do

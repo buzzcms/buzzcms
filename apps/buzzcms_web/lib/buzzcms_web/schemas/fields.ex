@@ -2,7 +2,9 @@ defmodule BuzzcmsWeb.Schema.Fields do
   use Absinthe.Schema.Notation
   use Absinthe.Relay.Schema.Notation, :modern
 
+  alias BuzzcmsWeb.Data
   alias BuzzcmsWeb.FieldResolver
+  import Absinthe.Resolution.Helpers
 
   @filter_ids []
   @input_ids []
@@ -18,10 +20,12 @@ defmodule BuzzcmsWeb.Schema.Fields do
   end
 
   node object(:field) do
-    field(:code, non_null(:string))
-    field(:display_name, non_null(:string))
-    field(:note, :string)
-    field(:type, :field_type)
+    field :code, non_null(:string)
+    field :display_name, non_null(:string)
+    field :position, :integer
+    field :note, :string
+    field :type, :field_type
+    field(:values, non_null(list_of(non_null(:field_value))), resolve: dataloader(Data, :values))
   end
 
   connection(node_type: :field) do
@@ -31,14 +35,14 @@ defmodule BuzzcmsWeb.Schema.Fields do
   end
 
   input_object :field_input do
-    field(:code, :string)
-    field(:display_name, :string)
-    field(:note, :string)
-    field(:type, :field_type)
+    field :code, :string
+    field :display_name, :string
+    field :note, :string
+    field :type, :field_type
   end
 
   input_object :field_filter_input do
-    field(:code, :string_filter_input)
+    field :code, :string_filter_input
   end
 
   object :field_queries do
