@@ -2,13 +2,22 @@ defmodule BuzzcmsWeb.Schema.EntryTaxons do
   use Absinthe.Schema.Notation
   use Absinthe.Relay.Schema.Notation, :modern
   import Ecto.Query
+  import Absinthe.Resolution.Helpers
 
   alias Buzzcms.Repo
   alias Buzzcms.Schema.{Entry, EntryTaxon}
+  alias BuzzcmsWeb.Data
 
   input_object :entry_taxon_input do
-    field(:entry_id, :string)
-    field(:taxon_id, :string)
+    field :entry_id, non_null(:string)
+    field :taxon_id, non_null(:string)
+    field :group, :string
+  end
+
+  node object(:entry_taxon) do
+    field :entry, non_null(:entry), resolve: dataloader(Data, :entry)
+    field :taxon, non_null(:taxon), resolve: dataloader(Data, :taxon)
+    field :group, :string
   end
 
   object :entry_taxon_mutations do

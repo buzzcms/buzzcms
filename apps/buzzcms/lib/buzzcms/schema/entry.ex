@@ -17,6 +17,7 @@ defmodule Buzzcms.Schema.Entry do
     belongs_to :entry_type, Buzzcms.Schema.EntryType
     belongs_to :taxon, Buzzcms.Schema.Taxon
     has_one :product, Buzzcms.Schema.Product
+    has_many :entry_taxons, Buzzcms.Schema.EntryTaxon
     many_to_many :taxons, Buzzcms.Schema.Taxon, join_through: "entry_taxon"
     many_to_many :select_values, Buzzcms.Schema.FieldValue, join_through: "entry_select_value"
     field :state, :string

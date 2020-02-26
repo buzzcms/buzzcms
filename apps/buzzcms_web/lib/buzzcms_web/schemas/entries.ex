@@ -2,7 +2,6 @@ defmodule BuzzcmsWeb.Schema.Entries do
   use Absinthe.Schema.Notation
   use Absinthe.Relay.Schema.Notation, :modern
   import Absinthe.Resolution.Helpers
-
   alias BuzzcmsWeb.Data
   alias BuzzcmsWeb.EntryResolver
 
@@ -39,12 +38,18 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field(:image, :string)
     field(:images, :json)
     field(:entry_type, non_null(:entry_type), resolve: dataloader(Data, :entry_type))
-    field(:taxon, non_null(:taxon), resolve: dataloader(Data, :taxon))
+    field(:taxon, :taxon, resolve: dataloader(Data, :taxon))
     field(:product, :product, resolve: dataloader(Data, :product))
     field(:state, non_null(:string))
     field(:published_at, non_null(:datetime))
     field(:created_at, non_null(:datetime))
     field(:updated_at, non_null(:datetime))
+
+    field(
+      :entry_taxons,
+      non_null(list_of(non_null(:entry_taxon))),
+      resolve: dataloader(Data, :entry_taxons)
+    )
 
     field(
       :taxons,

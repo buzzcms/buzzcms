@@ -82,6 +82,7 @@ defmodule Buzzcms.Repo.Migrations.AddBasicModels do
       add :is_root, :boolean
       add :path, :ltree
       add :level, :integer
+      add :group, :string
       add :taxonomy_id, references(:taxonomy), null: false
     end
 
@@ -89,6 +90,7 @@ defmodule Buzzcms.Repo.Migrations.AddBasicModels do
     create_unique_contraint(:taxon, [:key])
     create index(:taxon, [:taxonomy_id])
     create index(:taxon, [:parent_id])
+    create index(:taxon, [:group])
     create index(:taxon, ["created_at DESC"])
     create index(:taxon, ["modified_at DESC"])
     create index(:taxon, [:created_by_id])
