@@ -41,7 +41,11 @@ defmodule BuzzcmsWeb.EntryResolver do
       |> parse_entry_field_filter(params)
       |> IO.inspect(label: "Filter query")
 
-    {:ok, %{select: get_select_field_stats(entry_filter_query)}}
+    {:ok,
+     %{
+       count: Repo.aggregate(entry_filter_query, :count),
+       select: get_select_field_stats(entry_filter_query)
+     }}
   end
 
   defp get_select_field_stats(filter_query) do
@@ -53,8 +57,8 @@ defmodule BuzzcmsWeb.EntryResolver do
         on: esv.field_value_id == fv.id,
         join: f in Buzzcms.Schema.Field,
         on: fv.field_id == f.id,
-        group_by: [f.code, f.display_name, fv.code, fv.display_name],
-        order_by: [desc: count()],
+        group_by: [f.code, f.display_name, fv.code, fv.display_name, f.position, fv.position],
+        order_by: [f.position, fv.position],
         select: %{
           field_code: f.code,
           field_name: f.display_name,
@@ -76,6 +80,7 @@ defmodule BuzzcmsWeb.EntryResolver do
         :decimal -> parse_entry_number_field_filters(schema_acc, payload)
       end
     end)
+    |> IO.inspect(label: "Select Query")
   end
 
   defp parse_entry_field_filter(schema, %{}), do: schema
@@ -98,23 +103,28 @@ defmodule BuzzcmsWeb.EntryResolver do
   end
 
   defp parse_entry_select_field_filter(schema, %{field: field_name} = filter) do
-    joined_schema =
-      schema
-      |> join(:inner, [p], esf in EntrySelectValue, as: :esf, on: esf.entry_id == p.id)
-      |> join(:inner, [p, esf: esf], fv in FieldValue, as: :fv, on: esf.field_value_id == fv.id)
-      |> join(:inner, [p, esf: esf, fv: fv], f in Field, as: :f, on: fv.field_id == f.id)
-      |> where([f: f], f.code == ^field_name)
-
-    filter
-    |> Enum.reduce(
-      joined_schema,
-      fn {compare_type, value}, schema_acc ->
-        case compare_type do
-          :eq -> schema_acc |> where([fv: fv], fv.code == ^value)
-          :in -> schema_acc |> where([fv: fv], fv.code in ^value)
-          _ -> schema_acc
+    sub_schema =
+      filter
+      |> Enum.reduce(
+        from(esf in EntrySelectValue,
+          join: fv in FieldValue,
+          on: esf.field_value_id == fv.id,
+          as: :fv,
+          join: f in Field,
+          on: fv.field_id == f.id,
+          distinct: esf.entry_id,
+          where: f.code == ^field_name
+        ),
+        fn {compare_type, value}, schema_acc ->
+          case compare_type do
+            :eq -> schema_acc |> where([fv: fv], fv.code == ^value)
+            :in -> schema_acc |> where([fv: fv], fv.code in ^value)
+            _ -> schema_acc
+          end
         end
-      end
-    )
+      )
+      |> IO.inspect(label: "Subquery")
+
+    schema |> join(:inner, [p], sub in subquery(sub_schema), on: p.id == sub.entry_id)
   end
 end

@@ -140,9 +140,8 @@ defmodule BuzzcmsWeb.Schema.Entries do
   end
 
   object :filter_result do
-    field :select, non_null(list_of(non_null(:select_filter_result))) do
-      # resolve(&EntryResolver.get_filter/2)
-    end
+    field :count, non_null(:integer)
+    field :select, non_null(list_of(non_null(:select_filter_result)))
   end
 
   object :entry_queries do
