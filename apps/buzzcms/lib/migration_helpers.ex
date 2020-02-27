@@ -49,13 +49,13 @@ defmodule Buzzcms.Migration do
   def create_function__get_default_enum() do
     execute(
       """
-      CREATE FUNCTION get_default_enum(tbl TEXT)
+      CREATE OR REPLACE FUNCTION get_default_enum(tbl TEXT)
       RETURNS TEXT
       AS $$
       DECLARE
       _value TEXT;
       BEGIN
-      SELECT value INTO _value FROM "enum_default_value" WHERE enum = tbl;
+      EXECUTE format('SELECT value FROM "%s" WHERE is_default = true;', tbl) INTO _value;
       RETURN _value;
       END $$ LANGUAGE plpgsql;
       """,

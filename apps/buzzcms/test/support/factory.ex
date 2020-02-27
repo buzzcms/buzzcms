@@ -1,5 +1,6 @@
 defmodule Buzzcms.Factory do
   use ExMachina.Ecto, repo: Buzzcms.Repo
+  use Buzzcms.UserFactory
 
   alias Buzzcms.Schema.{
     Entry,
@@ -33,6 +34,13 @@ defmodule Buzzcms.Factory do
     %Taxon{
       title: title,
       slug: slug
+    }
+  end
+
+  def email_sender_factory do
+    %Buzzcms.Schema.EmailSender{
+      name: "Sender",
+      email: "hi@buzzcms.co"
     }
   end
 end

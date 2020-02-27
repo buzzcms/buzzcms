@@ -1,4 +1,4 @@
-defmodule Buzzcms.Auth.Pipeline do
+defmodule BuzzcmsWeb.Auth.Pipeline do
   use Guardian.Plug.Pipeline,
     otp_app: :buzzcms,
     error_handler: Buzzcms.Auth.ErrorHandler,

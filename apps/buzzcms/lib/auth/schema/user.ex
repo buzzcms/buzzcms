@@ -30,10 +30,11 @@ defmodule Buzzcms.Schema.User do
       :display_name,
       :nickname,
       :password,
+      :auth_provider,
       :role,
       :is_verified
     ])
-    |> validate_required([:email, :display_name, :password])
+    |> validate_required([:email, :display_name, :password, :auth_provider])
     |> validate_format(:email, ~r/^\S+@\S+\.\S+$/)
     |> validate_format(:password, ~r/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/)
     |> unique_constraint(:email, name: :user_email_auth_provider_unique)

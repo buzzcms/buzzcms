@@ -9,8 +9,12 @@ defmodule BuzzcmsWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug BuzzcmsWeb.Auth.Pipeline
+  end
+
   # pipeline :auth do
-  #   plug Buzzcms.Auth.Pipeline
+  #   plug BuzzcmsWeb.Auth.Pipeline
   # end
 
   pipeline :graphql do
@@ -26,5 +30,20 @@ defmodule BuzzcmsWeb.Router do
   scope "/", BuzzcmsWeb do
     get("/images/:transform/:id", ImageController, :transform)
     get("/images/:id", ImageController, :view)
+  end
+
+  scope "/auth", BuzzcmsWeb do
+    pipe_through [:api, :auth]
+
+    get("/me", AuthController, :me)
+
+    get("/:provider", AuthController, :request)
+    get("/:provider/callback", AuthController, :callback)
+    post("/:provider/callback", AuthController, :callback)
+
+    post("/register", AuthController, :sign_up_with_email)
+    post("/logout", AuthController, :delete)
+
+    post("/verify", AuthController, :verify_token)
   end
 end

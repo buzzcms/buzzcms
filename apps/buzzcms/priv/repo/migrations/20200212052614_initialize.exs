@@ -4,6 +4,7 @@ defmodule Buzzcms.Repo.Migrations.Initialize do
   def change do
     create_extension([:ltree, :"uuid-ossp"])
     create_function__update_modified_at()
+    create_function__get_default_enum()
 
     # Auth Provider
     create table(:auth_provider, primary_key: false) do
@@ -28,7 +29,11 @@ defmodule Buzzcms.Repo.Migrations.Initialize do
       add :password_hash, :text
       add :is_verified, :boolean, null: false, default: false
       add :auth_provider, references(:auth_provider, column: :value, type: :text), null: false
-      add :role, references(:role, column: :value, type: :text), null: false
+
+      add :role, references(:role, column: :value, type: :text),
+        null: false,
+        default: fragment("get_default_enum('role')")
+
       add :created_at, :utc_datetime, null: false, default: fragment("now()")
       add :modified_at, :utc_datetime, null: false, default: fragment("now()")
     end
