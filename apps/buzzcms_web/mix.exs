@@ -61,6 +61,11 @@ defmodule BuzzcmsWeb.MixProject do
       {:exconstructor, "~> 1.1"},
       {:nanoid, "~> 2.0"},
       {:httpoison, "~> 1.6"},
+      {:ueberauth, "~> 0.6"},
+      {:ueberauth_identity, "~> 0.2"},
+      {:ueberauth_facebook, "~> 0.8"},
+      {:guardian, "~> 2.0"},
+      {:bamboo, "~> 1.4"},
       {:excoveralls, "~> 0.10", only: :test},
       {:ex_machina, "~> 2.3", only: :test}
     ]

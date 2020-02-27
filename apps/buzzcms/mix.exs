@@ -42,6 +42,7 @@ defmodule Buzzcms.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:bcrypt_elixir, "~> 2.1"},
       {:jason, "~> 1.0"},
+      {:exconstructor, "~> 1.1"},
       {:ex_machina, "~> 2.3", only: :test}
     ]
   end
