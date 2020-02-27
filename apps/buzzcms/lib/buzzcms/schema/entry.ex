@@ -3,14 +3,23 @@ defmodule Buzzcms.Schema.Entry do
   import Ecto.Changeset
 
   @required_fields [:slug, :title, :entry_type_id]
-  @optional_fields [:description, :body, :rich_text, :image, :images]
+  @optional_fields [
+    :subtitle,
+    :description,
+    :body,
+    :rich_text,
+    :image,
+    :images,
+    :state,
+    :published_at
+  ]
 
   schema "entry" do
     # field :nanoid, :string
     field :slug, :string
     field :title, :string
     field :subtitle, :string
-    field :description, :string
+    field :description, :string, default: ""
     field :body, :string
     field :image, :string
     field :images, {:array, :string}

@@ -4,13 +4,22 @@ defmodule Buzzcms.Schema.Taxon do
   alias EctoLtree.LabelTree, as: Ltree
 
   @required_fields [:slug, :title, :taxonomy_id]
-  @optional_fields [:description, :body, :rich_text, :parent_id]
+  @optional_fields [
+    :subtitle,
+    :description,
+    :body,
+    :rich_text,
+    :image,
+    :images,
+    :parent_id,
+    :state
+  ]
 
   schema "taxon" do
     field :slug, :string
     field :title, :string
     field :subtitle, :string
-    field :description, :string
+    field :description, :string, default: ""
     field :body, :string
     field :rich_text, {:array, :map}
     field :image, :string

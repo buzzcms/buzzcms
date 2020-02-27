@@ -15,6 +15,12 @@ defmodule BuzzcmsWeb.Schema.Entries do
   ]
   @input_ids [id: :entry, data: [entry_type_id: :entry_type, taxon_id: :taxon]]
 
+  enum :entry_state do
+    value(:draft, as: "draft")
+    value(:published, as: "published")
+    value(:archive, as: "archive")
+  end
+
   enum :entry_order_field do
     value(:title)
     value(:created_at)
@@ -41,7 +47,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :entry_type, non_null(:entry_type), resolve: dataloader(Data, :entry_type)
     field :taxon, :taxon, resolve: dataloader(Data, :taxon)
     field :product, :product, resolve: dataloader(Data, :product)
-    field :state, non_null(:string)
+    field :state, non_null(:entry_state)
     field :published_at, non_null(:datetime)
     field :created_at, non_null(:datetime)
     field :updated_at, non_null(:datetime)
@@ -78,6 +84,8 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :images, :json
     field :taxon_id, :string
     field :entry_type_id, :string
+    field :state, :entry_state
+    field :published_at, :datetime
   end
 
   input_object :entry_boolean_field_filter_input do
