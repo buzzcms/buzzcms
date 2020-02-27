@@ -27,9 +27,13 @@ defmodule BuzzcmsWeb.Router do
     forward "/graphiql", Absinthe.Plug.GraphiQL, schema: BuzzcmsWeb.Schema
   end
 
-  scope "/", BuzzcmsWeb do
-    get("/images/:transform/:id", ImageController, :transform)
-    get("/images/:id", ImageController, :view)
+  scope "/images", BuzzcmsWeb do
+    get("/:transform/:id", ImageController, :transform)
+    get("/:id", ImageController, :view)
+  end
+
+  scope "/images", BuzzcmsWeb do
+    post("/upload", ImageController, :upload)
   end
 
   scope "/auth", BuzzcmsWeb do
