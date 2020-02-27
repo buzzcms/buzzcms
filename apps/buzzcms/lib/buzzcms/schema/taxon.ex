@@ -9,6 +9,7 @@ defmodule Buzzcms.Schema.Taxon do
   schema "taxon" do
     field :slug, :string
     field :title, :string
+    field :subtitle, :string
     field :description, :string
     field :body, :string
     field :rich_text, {:array, :map}

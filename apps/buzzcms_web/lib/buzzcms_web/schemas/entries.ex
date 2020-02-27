@@ -24,44 +24,39 @@ defmodule BuzzcmsWeb.Schema.Entries do
   end
 
   input_object :entry_order_by_input do
-    field(:field, non_null(:entry_order_field))
-    field(:direction, non_null(:order_direction))
+    field :field, non_null(:entry_order_field)
+    field :direction, non_null(:order_direction)
   end
 
   node object(:entry) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
-    field(:slug, non_null(:string))
-    field(:title, non_null(:string))
-    field(:description, :string)
-    field(:body, :string)
-    field(:rich_text, :json)
-    field(:image, :string)
-    field(:images, :json)
-    field(:entry_type, non_null(:entry_type), resolve: dataloader(Data, :entry_type))
-    field(:taxon, :taxon, resolve: dataloader(Data, :taxon))
-    field(:product, :product, resolve: dataloader(Data, :product))
-    field(:state, non_null(:string))
-    field(:published_at, non_null(:datetime))
-    field(:created_at, non_null(:datetime))
-    field(:updated_at, non_null(:datetime))
+    field :slug, non_null(:string)
+    field :title, non_null(:string)
+    field :subtitle, :string
+    field :description, :string
+    field :body, :string
+    field :rich_text, :json
+    field :image, :string
+    field :images, :json
+    field :entry_type, non_null(:entry_type), resolve: dataloader(Data, :entry_type)
+    field :taxon, :taxon, resolve: dataloader(Data, :taxon)
+    field :product, :product, resolve: dataloader(Data, :product)
+    field :state, non_null(:string)
+    field :published_at, non_null(:datetime)
+    field :created_at, non_null(:datetime)
+    field :updated_at, non_null(:datetime)
 
-    field(
-      :entry_taxons,
-      non_null(list_of(non_null(:entry_taxon))),
-      resolve: dataloader(Data, :entry_taxons)
-    )
+    field :entry_taxons,
+          non_null(list_of(non_null(:entry_taxon))),
+          resolve: dataloader(Data, :entry_taxons)
 
-    field(
-      :taxons,
-      non_null(list_of(non_null(:taxon))),
-      resolve: dataloader(Data, :taxons)
-    )
+    field :taxons,
+          non_null(list_of(non_null(:taxon))),
+          resolve: dataloader(Data, :taxons)
 
-    field(
-      :select_values,
-      non_null(list_of(non_null(:field_value))),
-      resolve: dataloader(Data, :select_values)
-    )
+    field :select_values,
+          non_null(list_of(non_null(:field_value))),
+          resolve: dataloader(Data, :select_values)
   end
 
   connection(node_type: :entry) do
@@ -73,13 +68,16 @@ defmodule BuzzcmsWeb.Schema.Entries do
   end
 
   input_object :entry_input do
-    field(:slug, :string)
-    field(:title, :string)
-    field(:description, :string)
-    field(:body, :string)
-    field(:rich_text, :json)
-    field(:taxon_id, :string)
-    field(:entry_type_id, :string)
+    field :slug, :string
+    field :title, :string
+    field :subtitle, :string
+    field :description, :string
+    field :body, :string
+    field :rich_text, :json
+    field :image, :string
+    field :images, :json
+    field :taxon_id, :string
+    field :entry_type_id, :string
   end
 
   input_object :entry_boolean_field_filter_input do

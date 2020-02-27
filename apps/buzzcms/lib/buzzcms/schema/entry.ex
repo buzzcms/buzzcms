@@ -9,6 +9,7 @@ defmodule Buzzcms.Schema.Entry do
     # field :nanoid, :string
     field :slug, :string
     field :title, :string
+    field :subtitle, :string
     field :description, :string
     field :body, :string
     field :image, :string

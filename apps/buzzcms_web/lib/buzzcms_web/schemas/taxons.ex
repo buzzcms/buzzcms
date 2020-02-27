@@ -29,6 +29,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field :slug, non_null(:string)
     field :title, non_null(:string)
+    field :subtitle, :string
     field :description, :string
     field :body, :string
     field :rich_text, :json
@@ -47,28 +48,34 @@ defmodule BuzzcmsWeb.Schema.Taxons do
   end
 
   connection(node_type: :taxon) do
-    field(:count, non_null(:integer))
+    field :count, non_null(:integer)
 
     edge do
-      field(:node, non_null(:taxon))
+      field :node, non_null(:taxon)
     end
   end
 
   input_object :taxon_input do
-    field(:slug, :string)
-    field(:title, :string)
-    field(:taxonomy_id, :string)
-    field(:parent_id, :string)
-    field(:position, :integer)
+    field :slug, :string
+    field :title, :string
+    field :subtitle, :string
+    field :description, :string
+    field :body, :string
+    field :rich_text, :json
+    field :image, :string
+    field :images, :json
+    field :taxonomy_id, :string
+    field :parent_id, :string
+    field :position, :integer
   end
 
   input_object :taxon_filter_input do
-    field(:id, :id_filter_input)
-    field(:slug, :string_filter_input)
-    field(:title, :string_filter_input)
-    field(:is_root, :boolean_filter_input)
-    field(:state, :string_filter_input)
-    field(:taxonomy_id, :id_filter_input)
+    field :id, :id_filter_input
+    field :slug, :string_filter_input
+    field :title, :string_filter_input
+    field :is_root, :boolean_filter_input
+    field :state, :string_filter_input
+    field :taxonomy_id, :id_filter_input
   end
 
   input_object :edit_taxon_tree_item_input do
