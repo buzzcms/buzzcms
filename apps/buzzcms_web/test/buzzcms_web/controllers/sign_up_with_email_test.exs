@@ -6,7 +6,7 @@ defmodule BuzzcmsWeb.SignUpToSystemProjectTest do
   alias Buzzcms.Repo
   alias Buzzcms.Schema.{User, Token}
 
-  describe "Sign up to system project using email" do
+  describe "Sign up with email" do
     test "valid payload", %{conn: conn} do
       user_payload = build(:email_signup_payload)
       %{user_id: user_id} = sign_up_with_email(conn, user_payload) |> decode_token()
