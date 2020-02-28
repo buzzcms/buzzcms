@@ -24,7 +24,7 @@ defmodule BuzzcmsWeb.SignUpToSystemProjectTest do
                token: token
              } = Repo.one(Token, where: [type: "verify_email", user_id: user_id])
 
-      email = Buzzcms.Mailer.send_mail_by_token(token)
+      email = BuzzcmsWeb.Mailer.send_mail_by_token(token)
 
       assert %Bamboo.Email{
                from: {"Sender", "hi@buzzcms.co"},

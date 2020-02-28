@@ -1,5 +1,5 @@
-defmodule Buzzcms.Mailer do
-  use Bamboo.Mailer, otp_app: :buzzcms
+defmodule BuzzcmsWeb.Mailer do
+  use Bamboo.Mailer, otp_app: :buzzcms_app
   import Ecto.Query, only: [from: 2]
   alias Buzzcms.Repo
   alias Buzzcms.Schema.{EmailTemplate, EmailSender, Token, User}
