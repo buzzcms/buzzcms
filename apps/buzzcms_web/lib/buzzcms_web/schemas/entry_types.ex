@@ -7,35 +7,35 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
   alias BuzzcmsWeb.EntryTypeResolver
 
   @filter_ids []
-  @input_ids []
+  @input_ids [id: :entry_type]
 
   node object(:entry_type) do
-    field(:code, non_null(:string))
-    field(:display_name, non_null(:string))
-    field(:is_product, non_null(:boolean))
-    field(:fields, non_null(list_of(non_null(:field))), resolve: dataloader(Data, :fields))
+    field :code, non_null(:string)
+    field :display_name, non_null(:string)
+    field :is_product, non_null(:boolean)
+    field :fields, non_null(list_of(non_null(:field))), resolve: dataloader(Data, :fields)
 
-    field(:taxonomies, non_null(list_of(non_null(:taxonomy))),
+    field :taxonomies, non_null(list_of(non_null(:taxonomy))),
       resolve: dataloader(Data, :taxonomies)
-    )
   end
 
   connection(node_type: :entry_type) do
-    field(:count, non_null(:integer))
+    field :count, non_null(:integer)
 
     edge do
-      field(:node, non_null(:entry_type))
+      field :node, non_null(:entry_type)
     end
   end
 
   input_object :entry_type_input do
-    field(:code, :string)
-    field(:display_name, :string)
+    field :code, :string
+    field :display_name, :string
+    field :is_product, :boolean
   end
 
   input_object :entry_type_filter_input do
-    field(:code, :string_filter_input)
-    field(:is_product, :boolean_filter_input)
+    field :code, :string_filter_input
+    field :is_product, :boolean_filter_input
   end
 
   object :entry_type_queries do

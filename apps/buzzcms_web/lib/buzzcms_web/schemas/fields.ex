@@ -7,7 +7,7 @@ defmodule BuzzcmsWeb.Schema.Fields do
   import Absinthe.Resolution.Helpers
 
   @filter_ids []
-  @input_ids []
+  @input_ids [id: :field]
 
   enum :field_type do
     value(:decimal)

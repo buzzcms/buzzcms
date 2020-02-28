@@ -6,7 +6,7 @@ defmodule BuzzcmsWeb.Schema.Taxonomies do
   alias BuzzcmsWeb.TaxonomyResolver
 
   @filter_ids []
-  @input_ids []
+  @input_ids [id: :taxonomy]
 
   node object(:taxonomy) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
