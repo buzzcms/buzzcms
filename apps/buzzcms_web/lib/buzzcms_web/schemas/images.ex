@@ -5,7 +5,7 @@ defmodule BuzzcmsWeb.Schema.Images do
   alias BuzzcmsWeb.ImageResolver
 
   @filter_ids []
-  @input_ids []
+  @input_ids [id: :image]
 
   node object(:image) do
     field(:name, non_null(:string))

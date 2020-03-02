@@ -7,7 +7,7 @@ defmodule BuzzcmsWeb.Schema.Variants do
   alias BuzzcmsWeb.Data
 
   @filter_ids []
-  @input_ids []
+  @input_ids [id: :variant]
 
   node object(:variant) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end

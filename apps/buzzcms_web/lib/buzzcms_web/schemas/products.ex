@@ -7,7 +7,7 @@ defmodule BuzzcmsWeb.Schema.Products do
   alias BuzzcmsWeb.Data
 
   @filter_ids []
-  @input_ids []
+  @input_ids [id: :product]
 
   node object(:product) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end

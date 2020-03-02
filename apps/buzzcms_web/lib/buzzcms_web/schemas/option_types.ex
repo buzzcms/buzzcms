@@ -7,7 +7,7 @@ defmodule BuzzcmsWeb.Schema.OptionTypes do
   alias BuzzcmsWeb.OptionTypeResolver
 
   @filter_ids []
-  @input_ids []
+  @input_ids [id: :option_type]
 
   node object(:option_type) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end

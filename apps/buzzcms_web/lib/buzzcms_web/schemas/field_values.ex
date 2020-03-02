@@ -11,7 +11,7 @@ defmodule BuzzcmsWeb.Schema.FieldValues do
       field_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:field)
     ]
   ]
-  @input_ids []
+  @input_ids [id: :field_value]
 
   node object(:field_value) do
     field(:code, non_null(:string))
