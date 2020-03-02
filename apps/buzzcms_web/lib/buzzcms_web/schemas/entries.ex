@@ -19,6 +19,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
     value(:draft, as: "draft")
     value(:published, as: "published")
     value(:archive, as: "archive")
+    value(:trash, as: "trash")
   end
 
   enum :entry_order_field do
