@@ -22,7 +22,7 @@ defmodule Buzzcms.Schema.Entry do
     field :description, :string, default: ""
     field :body, :string
     field :image, :string
-    field :images, {:array, :string}
+    field :images, {:array, :map}
     field :rich_text, {:array, :map}
     belongs_to :entry_type, Buzzcms.Schema.EntryType
     belongs_to :taxon, Buzzcms.Schema.Taxon

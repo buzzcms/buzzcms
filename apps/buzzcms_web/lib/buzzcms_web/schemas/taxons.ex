@@ -36,7 +36,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :is_root, :boolean
     field :path, :string
     field :image, :string
-    field :images, non_null(list_of(non_null(:string)))
+    field :images, non_null(list_of(non_null(:image_item)))
     field :entries_count, :integer
     field :taxonomy_id, non_null(:id)
     field :parent, :taxon, resolve: dataloader(Data, :parent)
@@ -63,7 +63,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :body, :string
     field :rich_text, :json
     field :image, :string
-    field :images, list_of(non_null(:string))
+    field :images, list_of(non_null(:image_item_input))
     field :taxonomy_id, :string
     field :parent_id, :string
     field :position, :integer

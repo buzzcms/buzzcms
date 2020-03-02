@@ -44,6 +44,21 @@ defmodule BuzzcmsWeb.Schema.Common do
     value(:desc_nulls_first)
   end
 
+  object :image_item do
+    field(:id, non_null(:string)) do
+      resolve(fn _parent, %{source: source} -> {:ok, source["id"]} end)
+    end
+
+    field(:caption, :string) do
+      resolve(fn _parent, %{source: source} -> {:ok, source["caption"]} end)
+    end
+  end
+
+  input_object :image_item_input do
+    field(:id, :string)
+    field(:caption, :string)
+  end
+
   input_object :boolean_filter_input do
     field(:eq, :boolean)
     field(:neq, :boolean)

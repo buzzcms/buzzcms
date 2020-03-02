@@ -43,7 +43,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :body, :string
     field :rich_text, :json
     field :image, :string
-    field :images, non_null(list_of(non_null(:string)))
+    field :images, non_null(list_of(non_null(:image_item)))
     field :entry_type, non_null(:entry_type), resolve: dataloader(Data, :entry_type)
     field :taxon, :taxon, resolve: dataloader(Data, :taxon)
     field :product, :product, resolve: dataloader(Data, :product)
@@ -81,7 +81,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :body, :string
     field :rich_text, :json
     field :image, :string
-    field :images, list_of(non_null(:string))
+    field :images, list_of(non_null(:image_item_input))
     field :taxon_id, :string
     field :entry_type_id, :string
     field :state, :entry_state
