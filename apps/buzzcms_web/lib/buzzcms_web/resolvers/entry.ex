@@ -1,6 +1,6 @@
 defmodule BuzzcmsWeb.EntryResolver do
   import Ecto.Query
-  alias Buzzcms.Schema.{EntrySelectValue, Field, FieldValue}
+  alias Buzzcms.Schema.{EntrySelectValue, Field, FieldValue, Product, Variant}
   alias FilterParser.{IdFilterInput, StringFilterInput}
 
   @schema Buzzcms.Schema.Entry
@@ -27,6 +27,7 @@ defmodule BuzzcmsWeb.EntryResolver do
       @schema
       |> FilterParser.FilterParser.parse(params[:filter], @filter_definition)
       |> parse_entry_field_filter(params)
+      |> parse_product_filter(params)
       |> order_by(^get_order_by(params))
 
     {:ok, result} = Absinthe.Relay.Connection.from_query(query, &Repo.all/1, params)
@@ -39,7 +40,8 @@ defmodule BuzzcmsWeb.EntryResolver do
       @schema
       |> FilterParser.FilterParser.parse(params[:filter], @filter_definition)
       |> parse_entry_field_filter(params)
-      |> IO.inspect(label: "Filter query")
+
+    # |> IO.inspect(label: "Filter query")
 
     {:ok,
      %{
@@ -80,10 +82,46 @@ defmodule BuzzcmsWeb.EntryResolver do
         :decimal -> parse_entry_number_field_filters(schema_acc, payload)
       end
     end)
-    |> IO.inspect(label: "Select Query")
+
+    # |> IO.inspect(label: "Select Query")
   end
 
-  defp parse_entry_field_filter(schema, %{}), do: schema
+  defp parse_entry_field_filter(schema, _), do: schema
+
+  defp parse_product_filter(schema, %{filter: %{sale_price: _} = product_filter}) do
+    schema =
+      from e in schema,
+        join: p in Product,
+        on: p.entry_id == e.id,
+        as: :p,
+        join: v in Variant,
+        on: p.id == v.product_id and v.is_master == true,
+        as: :v
+
+    product_filter
+    |> Enum.reduce(schema, fn {field_name, filter_item}, acc_schema ->
+      case field_name do
+        :sale_price ->
+          filter_item
+          |> Enum.reduce(acc_schema, fn {compare_type, value}, next_acc_schema ->
+            case compare_type do
+              :eq -> where(next_acc_schema, [v: p], field(p, ^field_name) == ^value)
+              :gt -> where(next_acc_schema, [v: p], field(p, ^field_name) > ^value)
+              :lt -> where(next_acc_schema, [v: p], field(p, ^field_name) < ^value)
+              :gte -> where(next_acc_schema, [v: p], field(p, ^field_name) >= ^value)
+              :lte -> where(next_acc_schema, [v: p], field(p, ^field_name) <= ^value)
+            end
+          end)
+
+        _ ->
+          acc_schema
+      end
+
+      # |> IO.inspect(label: "Where")
+    end)
+  end
+
+  defp parse_product_filter(schema, _), do: schema
 
   defp parse_entry_boolean_field_filters(schema, _filters) do
     # IO.inspect(payload, label: "boolean")
@@ -123,7 +161,8 @@ defmodule BuzzcmsWeb.EntryResolver do
           end
         end
       )
-      |> IO.inspect(label: "Subquery")
+
+    # |> IO.inspect(label: "Subquery")
 
     schema |> join(:inner, [p], sub in subquery(sub_schema), on: p.id == sub.entry_id)
   end

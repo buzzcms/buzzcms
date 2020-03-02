@@ -24,7 +24,7 @@ defmodule BuzzcmsWeb.ImageController do
         conn |> send_file(200, cache_path)
 
       false ->
-        request_url = to_request_url(%{map: map, id: id, bucket: bucket()}) |> IO.inspect()
+        request_url = to_request_url(%{map: map, id: id, bucket: bucket()})
         %{body: body} = HTTPoison.get!(request_url)
         IO.inspect(request_url)
         File.mkdir_p!(Path.dirname(cache_path))
@@ -34,7 +34,7 @@ defmodule BuzzcmsWeb.ImageController do
   end
 
   def upload(conn, %{"files" => files}) do
-    save_images(files) |> IO.inspect()
+    save_images(files)
     conn |> json(%{ok: 1})
   end
 

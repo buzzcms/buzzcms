@@ -106,6 +106,16 @@ defmodule BuzzcmsWeb.Schema.Common do
     field(:in, list_of(non_null(:float)))
   end
 
+  input_object :decimal_filter_input do
+    field(:eq, :decimal)
+    field(:neq, :decimal)
+    field(:lt, :decimal)
+    field(:gt, :decimal)
+    field(:lte, :decimal)
+    field(:gte, :decimal)
+    field(:in, list_of(non_null(:decimal)))
+  end
+
   input_object :date_filter_input do
     field(:eq, :date)
     field(:neq, :date)

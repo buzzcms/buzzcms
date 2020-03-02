@@ -180,7 +180,6 @@ defmodule BuzzcmsWeb.Schema.Taxons do
           repo.query("DROP TABLE tmp_taxon")
         end)
         |> Buzzcms.Repo.transaction()
-        |> IO.inspect()
 
         {:ok, %{result: []}}
       end)

@@ -136,6 +136,8 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :taxons_id, :foreign_filter_input
     field :entry_type_id, :id_filter_input
     field :field, :entry_field_filter_input
+    field :sale_price, :decimal_filter_input
+    field :is_new_product, :boolean_filter_input
   end
 
   object :select_filter_result do
