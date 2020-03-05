@@ -3,7 +3,7 @@ defmodule BuzzcmsWeb.Schema.Common do
   use Absinthe.Relay.Schema.Notation, :modern
 
   alias Buzzcms.Repo
-  alias Buzzcms.Schema.{Entry, EntryType, Taxonomy, Taxon}
+  alias Buzzcms.Schema.{Entry, EntryType, Field, Taxonomy, Taxon}
 
   scalar :json, name: "Json" do
     description("""
@@ -132,6 +132,7 @@ defmodule BuzzcmsWeb.Schema.Common do
       %Taxonomy{}, _ -> :taxonomy
       %Taxon{}, _ -> :taxon
       %Entry{}, _ -> :entry
+      %Field{}, _ -> :field
       _, _ -> nil
     end)
   end
@@ -143,6 +144,7 @@ defmodule BuzzcmsWeb.Schema.Common do
         %{type: :entry, id: id}, _ -> {:ok, Repo.get(Entry, id)}
         %{type: :taxonomy, id: id}, _ -> {:ok, Repo.get(Taxonomy, id)}
         %{type: :taxon, id: id}, _ -> {:ok, Repo.get(Taxon, id)}
+        %{type: :field, id: id}, _ -> {:ok, Repo.get(Field, id)}
       end)
     end
   end

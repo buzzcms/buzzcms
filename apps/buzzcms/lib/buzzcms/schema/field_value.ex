@@ -2,12 +2,13 @@ defmodule Buzzcms.Schema.FieldValue do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @required_fields [:field_type_id]
-  @optional_fields [:value, :position]
+  @required_fields [:field_id, :code, :display_name]
+  @optional_fields [:position, :description]
 
   schema "field_value" do
     field :code, :string
     field :display_name, :string
+    field :description, :string, default: ""
     belongs_to :field, Buzzcms.Schema.Field
     field :position, :integer
   end
