@@ -76,6 +76,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :is_root, :boolean_filter_input
     field :state, :string_filter_input
     field :taxonomy_id, :id_filter_input
+    field :taxonomy_code, :string
   end
 
   input_object :edit_taxon_tree_item_input do
