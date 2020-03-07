@@ -28,6 +28,7 @@ defmodule BuzzcmsWeb.EntryResolver do
       |> FilterParser.FilterParser.parse(params[:filter], @filter_definition)
       |> parse_entry_field_filter(params)
       |> parse_product_filter(params)
+      |> parse_addition_filter(params)
       |> order_by(^get_order_by(params))
 
     {:ok, result} = Absinthe.Relay.Connection.from_query(query, &Repo.all/1, params)
@@ -71,6 +72,46 @@ defmodule BuzzcmsWeb.EntryResolver do
 
     Repo.all(query)
   end
+
+  defp parse_addition_filter(schema, %{filter: filter}) do
+    filter
+    |> Enum.reduce(schema, fn {key, value}, schema_acc ->
+      case key do
+        :entry_type_code ->
+          from e in schema_acc,
+            join: et in Buzzcms.Schema.EntryType,
+            on: e.entry_type_id == et.id,
+            where: et.code == ^value
+
+        :taxon_slug ->
+          %{taxonomy_code: taxonomy_code, slug: slug} = value
+
+          from e in schema_acc,
+            join: t in Buzzcms.Schema.Taxon,
+            on: e.taxon_id == t.id,
+            join: tx in Buzzcms.Schema.Taxonomy,
+            on: t.taxonomy_id == tx.id,
+            where: t.slug == ^slug and tx.code == ^taxonomy_code
+
+        :taxons_slug ->
+          %{taxonomy_code: taxonomy_code, slug: slug} = value
+
+          from e in schema_acc,
+            join: et in Buzzcms.Schema.EntryTaxon,
+            on: e.id == et.entry_id,
+            join: t in Buzzcms.Schema.Taxon,
+            on: t.id == et.taxon_id,
+            join: tx in Buzzcms.Schema.Taxonomy,
+            on: t.taxonomy_id == tx.id,
+            where: t.slug == ^slug and tx.code == ^taxonomy_code
+
+        _ ->
+          schema_acc
+      end
+    end)
+  end
+
+  defp parse_addition_filter(schema, _), do: schema
 
   defp parse_entry_field_filter(schema, %{filter: %{field: entry_field}}) do
     entry_field

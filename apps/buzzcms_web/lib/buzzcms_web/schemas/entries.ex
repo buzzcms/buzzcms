@@ -127,6 +127,12 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :select, list_of(non_null(:entry_select_field_filter_input))
   end
 
+  @desc "Filter by entry taxon/taxons slug; only use for the frontend"
+  input_object :taxon_slug_filter_input do
+    field :taxonomy_code, non_null(:string)
+    field :slug, non_null(:string)
+  end
+
   input_object :entry_filter_input do
     field :id, :id_filter_input
     field :slug, :string_filter_input
@@ -138,6 +144,10 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :field, :entry_field_filter_input
     field :sale_price, :decimal_filter_input
     field :is_new_product, :boolean_filter_input
+
+    field :entry_type_code, :string
+    field :taxon_slug, :taxon_slug_filter_input
+    field :taxons_slug, :taxon_slug_filter_input
   end
 
   object :select_filter_result do
