@@ -107,7 +107,7 @@ defmodule Buzzcms.Repo.Migrations.AddProducts do
       BEGIN
       INSERT INTO product(entry_id)
       SELECT id FROM entry
-      WHERE entry_type_id = NEW.id
+      WHERE entry_type_id = NEW.id AND NEW.is_product = true
       ON CONFLICT DO NOTHING;
       RETURN NEW;
       END;
