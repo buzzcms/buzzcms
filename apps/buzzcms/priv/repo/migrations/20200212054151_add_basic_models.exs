@@ -13,6 +13,8 @@ defmodule Buzzcms.Repo.Migrations.AddBasicModels do
       add :seo, :jsonb, default: "{}", null: false
     end
 
+    create_unique_contraint(:route, [:name])
+
     # Image
     create table(:image, primary_key: false) do
       add :id, :string, primary_key: true
