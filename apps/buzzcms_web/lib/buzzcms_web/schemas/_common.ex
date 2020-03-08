@@ -3,7 +3,7 @@ defmodule BuzzcmsWeb.Schema.Common do
   use Absinthe.Relay.Schema.Notation, :modern
 
   alias Buzzcms.Repo
-  alias Buzzcms.Schema.{Entry, EntryType, Field, Taxonomy, Taxon}
+  alias Buzzcms.Schema.{Entry, EntryType, Field, Taxonomy, Taxon, Route}
 
   scalar :json, name: "Json" do
     description("""
@@ -42,6 +42,43 @@ defmodule BuzzcmsWeb.Schema.Common do
     value(:desc)
     value(:desc_nulls_last)
     value(:desc_nulls_first)
+  end
+
+  object :heading do
+    field(:title, :string) do
+      resolve(fn _parent, %{source: source} -> {:ok, source["title"] || source[:title]} end)
+    end
+
+    field(:subtitle, :string) do
+      resolve(fn _parent, %{source: source} -> {:ok, source["subtitle"] || source[:subtitle]} end)
+    end
+  end
+
+  object :seo do
+    field(:title, :string) do
+      resolve(fn _parent, %{source: source} -> {:ok, source["title"] || source[:title]} end)
+    end
+
+    field(:description, :string) do
+      resolve(fn _parent, %{source: source} ->
+        {:ok, source["description"] || source[:description]}
+      end)
+    end
+
+    field(:keywords, list_of(non_null(:string))) do
+      resolve(fn _parent, %{source: source} -> {:ok, source["keywords"] || source[:keywords]} end)
+    end
+  end
+
+  input_object :heading_input do
+    field(:title, :string)
+    field(:subtitle, :string)
+  end
+
+  input_object :seo_input do
+    field(:title, :string)
+    field(:description, :string)
+    field(:keywords, list_of(non_null(:string)))
   end
 
   object :image_item do
@@ -133,6 +170,7 @@ defmodule BuzzcmsWeb.Schema.Common do
       %Taxon{}, _ -> :taxon
       %Entry{}, _ -> :entry
       %Field{}, _ -> :field
+      %Route{}, _ -> :route
       _, _ -> nil
     end)
   end
@@ -145,6 +183,7 @@ defmodule BuzzcmsWeb.Schema.Common do
         %{type: :taxonomy, id: id}, _ -> {:ok, Repo.get(Taxonomy, id)}
         %{type: :taxon, id: id}, _ -> {:ok, Repo.get(Taxon, id)}
         %{type: :field, id: id}, _ -> {:ok, Repo.get(Field, id)}
+        %{type: :route, id: id}, _ -> {:ok, Repo.get(Route, id)}
       end)
     end
   end

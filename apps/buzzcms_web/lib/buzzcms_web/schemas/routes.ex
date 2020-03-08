@@ -11,9 +11,9 @@ defmodule BuzzcmsWeb.Schema.Routes do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field(:name, non_null(:string))
     field(:pattern, non_null(:string))
-    field(:heading, non_null(:json))
-    field(:data, non_null(:json))
-    field(:seo, non_null(:json))
+    field(:heading, :heading)
+    field(:seo, :seo)
+    field(:data, :json)
   end
 
   enum :route_order_field do
@@ -40,9 +40,9 @@ defmodule BuzzcmsWeb.Schema.Routes do
   input_object :route_input do
     field(:name, :string)
     field(:pattern, :string)
-    field(:heading, :json)
+    field(:heading, :heading_input)
+    field(:seo, :seo_input)
     field(:data, :json)
-    field(:seo, :json)
   end
 
   object :route_queries do
