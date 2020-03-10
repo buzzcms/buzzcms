@@ -12,7 +12,6 @@ defmodule BuzzcmsWeb.Schema.Images do
 
     field :uid, non_null(:id) do
       resolve(fn _, %{source: source} ->
-        IO.inspect(source)
         {:ok, source.id}
       end)
     end

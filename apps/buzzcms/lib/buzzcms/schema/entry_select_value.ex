@@ -6,12 +6,13 @@ defmodule Buzzcms.Schema.EntrySelectValue do
 
   schema "entry_select_value" do
     belongs_to :entry, Buzzcms.Schema.Entry
+    belongs_to :field, Buzzcms.Schema.Field
     belongs_to :field_value, Buzzcms.Schema.FieldValue
   end
 
   def changeset(entity, params \\ %{}) do
     entity
-    |> cast(params, [:entry_id, :field_value_id])
+    |> cast(params, [:entry_id, :field_id, :field_value_id])
     |> unique_constraint(:field_value, name: :entry_field_value_pkey)
   end
 end

@@ -8,6 +8,7 @@ defmodule BuzzcmsWeb.Schema.EntrySelectValues do
 
   input_object :entry_select_value_input do
     field(:entry_id, :string)
+    field(:field_id, :string)
     field(:field_value_id, :string)
   end
 
@@ -23,7 +24,7 @@ defmodule BuzzcmsWeb.Schema.EntrySelectValues do
       end
 
       middleware(Absinthe.Relay.Node.ParseIDs,
-        data: [entry_id: :entry, field_value_id: :field_value]
+        data: [entry_id: :entry, field_id: :field, field_value_id: :field_value]
       )
 
       resolve(fn %{data: data}, %{context: _} ->
@@ -47,7 +48,7 @@ defmodule BuzzcmsWeb.Schema.EntrySelectValues do
       end
 
       middleware(Absinthe.Relay.Node.ParseIDs,
-        data: [entry_id: :entry, field_value_id: :field_value]
+        data: [entry_id: :entry, field_id: :field, field_value_id: :field_value]
       )
 
       resolve(fn %{data: data}, %{context: _} ->

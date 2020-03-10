@@ -26,7 +26,7 @@ defmodule BuzzcmsWeb.ImageController do
       false ->
         request_url = to_request_url(%{map: map, id: id, bucket: bucket()})
         %{body: body} = HTTPoison.get!(request_url)
-        IO.inspect(request_url)
+        # IO.inspect(request_url)
         File.mkdir_p!(Path.dirname(cache_path))
         File.write!(cache_path, body)
         conn |> put_resp_content_type("image/png") |> send_resp(200, body)
@@ -77,7 +77,7 @@ defmodule BuzzcmsWeb.ImageController do
       |> Repo.insert()
     else
       error ->
-        IO.inspect(error)
+        # IO.inspect(error)
         {:error, "Invalid image"}
     end
   end
