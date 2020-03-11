@@ -14,13 +14,14 @@ defmodule Buzzcms.Schema.Field do
     datetime: "datetime"
   )
 
-  @required_fields [:code, :display_name, :type]
+  @required_fields [:code, :display_name, :type, :position]
   @optional_fields [:note]
 
   schema "field" do
     field :code, :string
     field :display_name, :string
     field :note, :string
+    field :position, :integer
     has_many :values, Buzzcms.Schema.FieldValue
     field :type, FieldTypeEnum
     field :created_at, :utc_datetime

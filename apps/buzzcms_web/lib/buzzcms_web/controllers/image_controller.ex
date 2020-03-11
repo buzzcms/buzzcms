@@ -76,7 +76,7 @@ defmodule BuzzcmsWeb.ImageController do
       })
       |> Repo.insert()
     else
-      error ->
+      _error ->
         # IO.inspect(error)
         {:error, "Invalid image"}
     end
