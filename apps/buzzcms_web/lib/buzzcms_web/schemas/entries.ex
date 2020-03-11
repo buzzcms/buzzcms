@@ -64,6 +64,22 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :select_values,
           non_null(list_of(non_null(:field_value))),
           resolve: dataloader(Data, :select_values)
+
+    field :integer_values,
+          non_null(list_of(non_null(:integer_value))),
+          resolve: dataloader(Data, :integer_values)
+
+    field :decimal_values,
+          non_null(list_of(non_null(:decimal_value))),
+          resolve: dataloader(Data, :decimal_values)
+
+    field :boolean_values,
+          non_null(list_of(non_null(:boolean_value))),
+          resolve: dataloader(Data, :boolean_values)
+
+    field :json_values,
+          non_null(list_of(non_null(:json_value))),
+          resolve: dataloader(Data, :json_values)
   end
 
   connection(node_type: :entry) do

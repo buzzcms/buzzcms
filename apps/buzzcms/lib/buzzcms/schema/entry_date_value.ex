@@ -1,21 +1,20 @@
-defmodule Buzzcms.Schema.EntrySelectValue do
+defmodule Buzzcms.Schema.EntryDateValue do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key false
-  @required_fields [:entry_id, :field_id, :field_value_id]
+  @required_fields [:entry_id, :field_id, :value]
   @optional_fields []
+  @primary_key false
 
-  schema "entry_select_value" do
+  schema "entry_date_value" do
     belongs_to :entry, Buzzcms.Schema.Entry
     belongs_to :field, Buzzcms.Schema.Field
-    belongs_to :field_value, Buzzcms.Schema.FieldValue
+    field :value, :date
   end
 
   def changeset(entity, params \\ %{}) do
     entity
     |> cast(params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
-    |> unique_constraint(:field_value, name: :entry_field_value_pkey)
   end
 end

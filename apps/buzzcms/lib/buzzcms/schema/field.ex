@@ -11,7 +11,15 @@ defmodule Buzzcms.Schema.Field do
     multi_select: "multi_select",
     time: "time",
     date: "date",
-    datetime: "datetime"
+    datetime: "datetime",
+    color: "color",
+    checkbox_group: "checkbox_group",
+    radio_group: "radio_group",
+    rich_text: "rich_text",
+    image: "image",
+    gallery: "gallery",
+    google_map: "google_map",
+    json: "json"
   )
 
   @required_fields [:code, :display_name, :type, :position]

@@ -22,6 +22,7 @@ defmodule BuzzcmsWeb.Schema do
   import_types(BuzzcmsWeb.Schema.Variants)
   import_types(BuzzcmsWeb.Schema.OptionTypes)
   import_types(BuzzcmsWeb.Schema.OptionValues)
+  import_types(BuzzcmsWeb.Schema.EntryFields)
 
   query do
     import_fields(:node_field)
@@ -56,6 +57,7 @@ defmodule BuzzcmsWeb.Schema do
     import_fields(:entry_type_field_mutations)
     import_fields(:image_mutations)
     import_fields(:route_mutations)
+    import_fields(:entry_field_mutations)
   end
 
   def context(ctx) do

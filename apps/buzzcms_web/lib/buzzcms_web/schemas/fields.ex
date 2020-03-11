@@ -18,6 +18,14 @@ defmodule BuzzcmsWeb.Schema.Fields do
     value(:time)
     value(:date)
     value(:datetime)
+    value(:color)
+    value(:checkbox_group)
+    value(:radio_group)
+    value(:rich_text)
+    value(:image)
+    value(:gallery)
+    value(:google_map)
+    value(:json)
   end
 
   node object(:field) do

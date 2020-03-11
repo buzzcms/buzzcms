@@ -30,6 +30,13 @@ defmodule Buzzcms.Schema.Entry do
     has_many :entry_taxons, Buzzcms.Schema.EntryTaxon
     many_to_many :taxons, Buzzcms.Schema.Taxon, join_through: "entry_taxon"
     many_to_many :select_values, Buzzcms.Schema.FieldValue, join_through: "entry_select_value"
+    has_many :boolean_values, Buzzcms.Schema.EntryBooleanValue
+    has_many :integer_values, Buzzcms.Schema.EntryIntegerValue
+    has_many :decimal_values, Buzzcms.Schema.EntryDecimalValue
+    has_many :date_values, Buzzcms.Schema.EntryDateValue
+    has_many :time_values, Buzzcms.Schema.EntryTimeValue
+    has_many :datetime_values, Buzzcms.Schema.EntryDateTimeValue
+    has_many :json_values, Buzzcms.Schema.EntryJsonValue
     field :state, :string
     field :published_at, :utc_datetime
     field :created_at, :utc_datetime
