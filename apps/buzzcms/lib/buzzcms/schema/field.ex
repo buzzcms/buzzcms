@@ -29,7 +29,7 @@ defmodule Buzzcms.Schema.Field do
     field :code, :string
     field :display_name, :string
     field :note, :string
-    field :position, :integer
+    field :position, :integer, default: 0
     has_many :values, Buzzcms.Schema.FieldValue
     field :type, FieldTypeEnum
     field :created_at, :utc_datetime

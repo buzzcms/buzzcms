@@ -17,6 +17,7 @@ defmodule BuzzcmsWeb.Schema.FieldValues do
     field :code, non_null(:string)
     field :display_name, non_null(:string)
     field :position, :integer
+    field :field_id, non_null(:id)
     field :field, non_null(:field), resolve: dataloader(Data, :field)
   end
 

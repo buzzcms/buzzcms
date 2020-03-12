@@ -35,7 +35,7 @@ defmodule Buzzcms.Schema.Entry do
     has_many :decimal_values, Buzzcms.Schema.EntryDecimalValue
     has_many :date_values, Buzzcms.Schema.EntryDateValue
     has_many :time_values, Buzzcms.Schema.EntryTimeValue
-    has_many :datetime_values, Buzzcms.Schema.EntryDateTimeValue
+    has_many :datetime_values, Buzzcms.Schema.EntryDatetimeValue
     has_many :json_values, Buzzcms.Schema.EntryJsonValue
     field :state, :string
     field :published_at, :utc_datetime

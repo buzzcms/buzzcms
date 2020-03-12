@@ -29,21 +29,19 @@ defmodule Buzzcms.Repo.Migrations.RefineEntryFields do
       add(:value, :jsonb, null: false)
     end
 
-    create(index(:entry_json_value, [:entry_id]))
-    create(index(:entry_json_value, [:field_id]))
-    drop(constraint(:field, :field_type))
-    create(constraint(:field, :field_type, check: "type IN (#{Enum.join(@field_types, ", ")})"))
+    create index(:entry_json_value, [:entry_id])
+    create index(:entry_json_value, [:field_id])
+    drop constraint(:field, :field_type)
+    create constraint(:field, :field_type, check: "type IN (#{Enum.join(@field_types, ", ")})")
   end
 
   def down do
-    drop(constraint(:field, :field_type))
+    drop constraint(:field, :field_type)
 
-    create(
-      constraint(:field, :field_type, check: "type IN (#{Enum.join(@old_field_types, ", ")})")
-    )
+    create constraint(:field, :field_type, check: "type IN (#{Enum.join(@old_field_types, ", ")})")
 
-    drop(index(:entry_json_value, [:field_id]))
-    drop(index(:entry_json_value, [:entry_id]))
-    drop(table(:entry_json_value))
+    drop index(:entry_json_value, [:field_id])
+    drop index(:entry_json_value, [:entry_id])
+    drop table(:entry_json_value)
   end
 end
