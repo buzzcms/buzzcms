@@ -54,6 +54,7 @@ defmodule BuzzcmsWeb.Schema.Fields do
 
   input_object :field_filter_input do
     field :code, :string_filter_input
+    field :display_name, :string_filter_input
   end
 
   enum :field_order_field do

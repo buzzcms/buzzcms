@@ -23,6 +23,7 @@ defmodule BuzzcmsWeb.Schema.Images do
     field(:height, non_null(:decimal))
     field(:size, non_null(:decimal))
     field(:code, non_null(:string))
+    field :created_at, :datetime
   end
 
   enum :image_order_field do

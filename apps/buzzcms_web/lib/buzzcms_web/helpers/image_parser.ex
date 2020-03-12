@@ -1,7 +1,7 @@
 defmodule BuzzcmsWeb.ImageParser do
   @allow_actions ["scale", "fit"]
-  @allow_widths ["100", "200", "400", "600", "800", "1200"]
-  @allow_heights ["100", "200", "400", "600", "800", "1200"]
+  @allow_widths ["100", "200", "300", "400", "600", "800", "1200"]
+  @allow_heights ["100", "200", "300", "400", "600", "800", "1200"]
   @allow_qualities ["60", "80", "90", "100"]
   @allow_backgrounds ["black", "white"]
 
