@@ -166,7 +166,7 @@ defmodule BuzzcmsWeb.Schema.EntryFields do
         join: f in Field,
         on: sv.field_id == f.id,
         where:
-          f.type == "select" and sv.entry_id == ^entry_id and
+          f.type in ["select", "radio_group"] and sv.entry_id == ^entry_id and
             sv.field_value_id not in ^field_value_ids
     )
   end
@@ -196,7 +196,7 @@ defmodule BuzzcmsWeb.Schema.EntryFields do
         join: f in Field,
         on: sv.field_id == f.id,
         where:
-          f.type == "multi_select" and sv.entry_id == ^entry_id and
+          f.type in ["multi_select", "checkbox_group"] and sv.entry_id == ^entry_id and
             sv.field_value_id not in ^field_value_ids
     )
   end
