@@ -118,7 +118,7 @@ defmodule BuzzcmsWeb.Schema.Common do
   input_object :string_filter_input do
     field(:eq, :string)
     field(:neq, :string)
-    field(:in, :string)
+    field(:in, list_of(non_null(:string)))
     field(:like, :string)
     field(:ilike, :string)
   end
