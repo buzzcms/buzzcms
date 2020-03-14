@@ -13,7 +13,9 @@ use Mix.Config
 config :buzzcms,
   ecto_repos: [Buzzcms.Repo]
 
-config :buzzcms, Buzzcms.Repo, types: Buzzcms.PostgresTypes
+config :buzzcms, Buzzcms.Repo,
+  types: Buzzcms.PostgresTypes,
+  telemetry_prefix: [:buzzcms, :repo]
 
 config :buzzcms_web,
   ecto_repos: [Buzzcms.Repo],
