@@ -28,6 +28,7 @@ defmodule BuzzcmsWeb.Schema.ConfigItems do
   input_object :config_item_input do
     field :code, :string
     field :display_name, :string
+    field :type, :field_type
     field :data, :json
     field :note, :string
   end

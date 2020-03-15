@@ -3,7 +3,18 @@ defmodule BuzzcmsWeb.Schema.Common do
   use Absinthe.Relay.Schema.Notation, :modern
 
   alias Buzzcms.Repo
-  alias Buzzcms.Schema.{Entry, EntryType, Field, FieldValue, Taxonomy, Taxon, Route, Form}
+
+  alias Buzzcms.Schema.{
+    Entry,
+    EntryType,
+    Field,
+    FieldValue,
+    Taxonomy,
+    Taxon,
+    Route,
+    Form,
+    ConfigItem
+  }
 
   scalar :json, name: "Json" do
     description("""
@@ -173,6 +184,7 @@ defmodule BuzzcmsWeb.Schema.Common do
       %FieldValue{}, _ -> :field_value
       %Route{}, _ -> :route
       %Form{}, _ -> :form
+      %ConfigItem{}, _ -> :config_item
       _, _ -> nil
     end)
   end
@@ -188,6 +200,7 @@ defmodule BuzzcmsWeb.Schema.Common do
         %{type: :field_value, id: id}, _ -> {:ok, Repo.get(FieldValue, id)}
         %{type: :route, id: id}, _ -> {:ok, Repo.get(Route, id)}
         %{type: :form, id: id}, _ -> {:ok, Repo.get(Form, id)}
+        %{type: :config_item, id: id}, _ -> {:ok, Repo.get(ConfigItem, id)}
       end)
     end
   end
