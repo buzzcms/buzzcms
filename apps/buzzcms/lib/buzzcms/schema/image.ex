@@ -6,14 +6,17 @@ defmodule Buzzcms.Schema.Image do
     :id,
     :name,
     :ext,
-    :mime,
-    :width,
-    :height,
     :size,
     :status
   ]
 
-  @optional_fields [:remote_url, :caption]
+  @optional_fields [
+    :mime,
+    :width,
+    :height,
+    :remote_url,
+    :caption
+  ]
 
   @primary_key {:id, :string, []}
 

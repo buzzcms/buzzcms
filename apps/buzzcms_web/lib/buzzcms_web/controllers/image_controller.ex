@@ -1,4 +1,5 @@
 defmodule BuzzcmsWeb.ImageController do
+  require Logger
   use BuzzcmsWeb, :controller
 
   import BuzzcmsWeb.ImageParser
@@ -8,7 +9,10 @@ defmodule BuzzcmsWeb.ImageController do
   def view(conn, %{"id" => id}) do
     id = get_id(id)
     file_path = Path.join([dir(), "origin", id])
-    conn |> send_file(200, file_path)
+
+    conn
+    |> put_resp_content_type(MIME.from_path(file_path))
+    |> send_file(200, file_path)
   end
 
   def transform(conn, %{
@@ -16,25 +20,39 @@ defmodule BuzzcmsWeb.ImageController do
         "transform" => unordered_transform
       }) do
     id = get_id(id)
-    map = to_map(unordered_transform)
-    cache_path = Path.join([dir(), "transform", to_transform(map), id])
+    content_type = MIME.from_path(id)
 
-    case File.exists?(cache_path) do
-      true ->
-        conn |> send_file(200, cache_path)
+    case content_type do
+      "image/svg+xml" ->
+        file_path = Path.join([dir(), "origin", id])
 
-      false ->
-        request_url = to_request_url(%{map: map, id: id, bucket: bucket()})
-        %{body: body} = HTTPoison.get!(request_url)
-        # IO.inspect(request_url)
-        File.mkdir_p!(Path.dirname(cache_path))
-        File.write!(cache_path, body)
-        conn |> put_resp_content_type("image/png") |> send_resp(200, body)
+        conn
+        |> put_resp_content_type(MIME.from_path(file_path))
+        |> send_file(200, file_path)
+
+      _ ->
+        map = to_map(unordered_transform)
+        cache_path = Path.join([dir(), "transform", to_transform(map), id])
+
+        case File.exists?(cache_path) do
+          true ->
+            conn |> send_file(200, cache_path)
+
+          false ->
+            request_url = to_request_url(%{map: map, id: id, bucket: bucket()})
+            %{body: body} = HTTPoison.get!(request_url)
+            File.mkdir_p!(Path.dirname(cache_path))
+            File.write!(cache_path, body)
+
+            conn
+            |> put_resp_content_type(MIME.from_path(cache_path))
+            |> send_resp(200, body)
+        end
     end
   end
 
-  def upload(conn, %{"files" => files}) do
-    save_images(files)
+  def upload(conn, %{"files" => files} = args) do
+    save_images(files, Map.has_key?(args, "keepFilename"))
     conn |> json(%{ok: 1})
   end
 
@@ -45,39 +63,71 @@ defmodule BuzzcmsWeb.ImageController do
     end
   end
 
-  defp save_images(files) do
+  defp save_images(files, keep_name) do
     Path.join([dir(), "origin"]) |> File.mkdir_p!()
 
     files
     |> Enum.map(fn file ->
-      save_image(file)
+      save_image(file, keep_name)
     end)
   end
 
-  defp save_image(%{path: path, filename: filename}) do
+  defp save_image(
+         %{path: path, filename: filename, content_type: content_type},
+         keep_name
+       ) do
     with ext <- Path.extname(filename),
          name <- Path.basename(filename),
          {:ok, buffer} <- File.read(path),
          {:ok, %{size: size}} <- File.stat(path),
-         {mime, width, height, _} <- ExImageInfo.info(buffer),
-         id <- Nanoid.generate(12),
+         info <- ExImageInfo.info(buffer),
+         id <- if(keep_name, do: name, else: "#{Nanoid.generate(12)}#{ext}"),
          dest_file <- Path.join([dir(), "origin", id]),
          :ok <- File.cp(path, dest_file) do
-      %Image{}
-      |> Image.changeset(%{
+      base = %{
         id: id,
         name: name,
         ext: ext,
-        mime: mime,
-        width: width,
-        height: height,
         size: size,
         status: "uploaded"
-      })
+      }
+
+      IO.inspect(
+        case info do
+          {mime, width, height, _} ->
+            base
+            |> Map.merge(%{
+              mime: mime,
+              width: width,
+              height: height
+            })
+
+          nil ->
+            base |> Map.merge(%{mime: content_type})
+        end,
+        label: "Misc"
+      )
+
+      %Image{}
+      |> Image.changeset(
+        case info do
+          {mime, width, height, _} ->
+            base
+            |> Map.merge(%{
+              mime: mime,
+              width: width,
+              height: height
+            })
+
+          nil ->
+            base
+        end
+      )
       |> Repo.insert()
+      |> IO.inspect(label: "Insert result")
     else
-      _error ->
-        # IO.inspect(error)
+      error ->
+        inspect(error) |> Logger.debug()
         {:error, "Invalid image"}
     end
   end

@@ -18,9 +18,9 @@ defmodule BuzzcmsWeb.Schema.Images do
 
     field(:remote_url, :string)
     field(:ext, non_null(:string))
-    field(:mime, non_null(:string))
-    field(:width, non_null(:decimal))
-    field(:height, non_null(:decimal))
+    field(:mime, :string)
+    field(:width, :decimal)
+    field(:height, :decimal)
     field(:size, non_null(:decimal))
     field(:code, non_null(:string))
     field :created_at, :datetime
