@@ -4,7 +4,8 @@ defmodule BuzzcmsWeb.FieldResolver do
   @filter_definition [
     fields: [
       {:code, FilterParser.StringFilterInput},
-      {:display_name, FilterParser.StringFilterInput}
+      {:display_name, FilterParser.StringFilterInput},
+      {:type, FilterParser.StringFilterInput}
     ]
   ]
 

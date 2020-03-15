@@ -25,6 +25,7 @@ defmodule BuzzcmsWeb.Schema do
   import_types(BuzzcmsWeb.Schema.EntryFields)
   import_types(BuzzcmsWeb.Schema.Forms)
   import_types(BuzzcmsWeb.Schema.Subscribers)
+  import_types(BuzzcmsWeb.Schema.ConfigItems)
 
   query do
     import_fields(:node_field)
@@ -42,6 +43,7 @@ defmodule BuzzcmsWeb.Schema do
     import_fields(:route_queries)
     import_fields(:form_queries)
     import_fields(:subscriber_queries)
+    import_fields(:config_item_queries)
   end
 
   mutation do
@@ -64,6 +66,7 @@ defmodule BuzzcmsWeb.Schema do
     import_fields(:entry_field_mutations)
     import_fields(:form_mutations)
     import_fields(:subscriber_mutations)
+    import_fields(:config_item_mutations)
   end
 
   def context(ctx) do

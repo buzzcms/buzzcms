@@ -47,6 +47,7 @@ defmodule BuzzcmsWeb.Schema.FieldValues do
 
   input_object :field_value_filter_input do
     field(:code, :string_filter_input)
+    field(:display_name, :string_filter_input)
     field(:field_id, :id_filter_input)
   end
 

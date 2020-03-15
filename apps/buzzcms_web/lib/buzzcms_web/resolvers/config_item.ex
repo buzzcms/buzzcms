@@ -1,11 +1,11 @@
-defmodule BuzzcmsWeb.FieldValueResolver do
-  @schema Buzzcms.Schema.FieldValue
+defmodule BuzzcmsWeb.ConfigItemResolver do
+  @schema Buzzcms.Schema.ConfigItem
 
   @filter_definition [
     fields: [
       {:code, FilterParser.StringFilterInput},
       {:display_name, FilterParser.StringFilterInput},
-      {:field_id, FilterParser.IdFilterInput}
+      {:type, FilterParser.StringFilterInput}
     ]
   ]
 
