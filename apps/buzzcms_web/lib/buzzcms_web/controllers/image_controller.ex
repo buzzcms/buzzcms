@@ -23,7 +23,7 @@ defmodule BuzzcmsWeb.ImageController do
     content_type = MIME.from_path(id)
 
     case content_type do
-      "image/svg+xml" ->
+      t when t in ["image/svg+xml", "image/gif"] ->
         file_path = Path.join([dir(), "origin", id])
 
         conn
