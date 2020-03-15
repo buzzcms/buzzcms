@@ -4,8 +4,12 @@ defmodule BuzzcmsWeb.Schema.Subscribers do
 
   alias BuzzcmsWeb.SubscriberResolver
 
-  @filter_ids []
-  @input_ids [id: :subscriber, form_id: :form]
+  @filter_ids [
+    filter: [
+      form_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:form)
+    ]
+  ]
+  @input_ids [id: :subscriber, data: [form_id: :form]]
 
   node object(:subscriber) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
