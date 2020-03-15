@@ -2,8 +2,8 @@ defmodule Buzzcms.Schema.Subscriber do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @required_forms [:form_id, :data]
-  @optional_forms [:email, :phone, :name, :labels]
+  @required_fields [:form_id, :data]
+  @optional_fields [:email, :phone, :name, :labels]
 
   schema "subscriber" do
     field :email, :string
@@ -17,8 +17,8 @@ defmodule Buzzcms.Schema.Subscriber do
 
   def changeset(entity, params \\ %{}) do
     entity
-    |> cast(params, @required_forms ++ @optional_forms)
-    |> validate_required(@required_forms)
+    |> cast(params, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
     |> unique_constraint(:code)
   end
 end
