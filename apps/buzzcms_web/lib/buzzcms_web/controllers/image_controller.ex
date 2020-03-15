@@ -92,22 +92,6 @@ defmodule BuzzcmsWeb.ImageController do
         status: "uploaded"
       }
 
-      IO.inspect(
-        case info do
-          {mime, width, height, _} ->
-            base
-            |> Map.merge(%{
-              mime: mime,
-              width: width,
-              height: height
-            })
-
-          nil ->
-            base |> Map.merge(%{mime: content_type})
-        end,
-        label: "Misc"
-      )
-
       %Image{}
       |> Image.changeset(
         case info do
@@ -120,11 +104,10 @@ defmodule BuzzcmsWeb.ImageController do
             })
 
           nil ->
-            base
+            base |> Map.merge(%{mime: content_type})
         end
       )
       |> Repo.insert()
-      |> IO.inspect(label: "Insert result")
     else
       error ->
         inspect(error) |> Logger.debug()
