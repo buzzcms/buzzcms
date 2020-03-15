@@ -1,14 +1,17 @@
 transform_cases = %{
-  "w_100" => "b_white,c_scale,w_100",
-  "w_100,q_80" => "b_white,c_scale,q_80,w_100",
-  "w_100,q_80,c_scale" => "b_white,c_scale,q_80,w_100",
-  "q_80,w_100" => "b_white,c_scale,q_80,w_100",
+  "w_100" => "b_white,c_resize,w_100",
+  "w_100,q_80" => "b_white,c_resize,q_80,w_100",
+  "w_100,q_80,c_resize" => "b_white,c_resize,q_80,w_100",
+  "q_80,w_100" => "b_white,c_resize,q_80,w_100",
   "c_fit,q_80,w_100" => "b_white,c_fit,q_80,w_100",
   "c_fit,q_80,w_100,b_black" => "b_black,c_fit,q_80,w_100",
-  "c_fit,c_scale,q_80,w_100,b_black" => "b_black,c_scale,q_80,w_100",
-  "c_scale,c_fit,q_80,w_100,b_black" => "b_black,c_fit,q_80,w_100",
-  "c_scale,c_fit,q_80,w_100,b_black,xxx" => "b_black,c_fit,q_80,w_100",
-  "c_scale,c_fit,q_80,w_100,h_111,b_black,xxx" => "b_black,c_fit,h_200,q_80,w_100"
+  "c_fit,c_resize,q_80,w_100,b_black" => "b_black,c_resize,q_80,w_100",
+  "c_resize,c_fit,q_80,w_100,b_black" => "b_black,c_fit,q_80,w_100",
+  "c_resize,c_fit,q_80,w_100,b_black,xxx" => "b_black,c_fit,q_80,w_100",
+  "c_resize,c_fit,q_80,w_100,h_111,b_black,xxx" => "b_black,c_fit,h_200,q_80,w_100",
+  "c_resize,c_fit,q_80,w_100,h_111,b_black,f_xxx" => "b_black,c_fit,h_200,q_80,w_100",
+  "c_resize,c_fit,q_80,w_100,h_111,b_black,f_png" => "b_black,c_fit,f_png,h_200,q_80,w_100",
+  "c_resize,c_fit,q_80,w_100,h_111,b_black,f_webp" => "b_black,c_fit,f_webp,h_200,q_80,w_100"
 }
 
 bucket = "bucket"
@@ -17,7 +20,7 @@ file_cases = %{
   "w_100/test.jpg" => "/resize?extend=white&file=#{bucket}/origin/test.jpg&width=100",
   "w_100,q_80/test.jpg" =>
     "/resize?extend=white&file=#{bucket}/origin/test.jpg&quality=80&width=100",
-  "w_100,q_80,c_scale/test.jpg" =>
+  "w_100,q_80,c_resize/test.jpg" =>
     "/resize?extend=white&file=#{bucket}/origin/test.jpg&quality=80&width=100",
   "q_80,w_100/test.jpg" =>
     "/resize?extend=white&file=#{bucket}/origin/test.jpg&quality=80&width=100",
@@ -25,12 +28,14 @@ file_cases = %{
     "/fit?extend=white&file=#{bucket}/origin/test.jpg&quality=80&width=100",
   "c_fit,q_80,w_100,b_black/test.jpg" =>
     "/fit?extend=black&file=#{bucket}/origin/test.jpg&quality=80&width=100",
-  "c_fit,c_scale,q_80,w_100,b_black/test.jpg" =>
+  "c_fit,c_resize,q_80,w_100,b_black/test.jpg" =>
     "/resize?extend=black&file=#{bucket}/origin/test.jpg&quality=80&width=100",
-  "c_scale,c_fit,q_80,w_100,b_black/test.jpg" =>
+  "c_resize,c_fit,q_80,w_100,b_black/test.jpg" =>
     "/fit?extend=black&file=#{bucket}/origin/test.jpg&quality=80&width=100",
-  "c_scale,c_fit,q_80,w_100,b_black,xxx/test.jpg" =>
-    "/fit?extend=black&file=#{bucket}/origin/test.jpg&quality=80&width=100"
+  "c_resize,c_fit,q_80,w_100,b_black,xxx/test.jpg" =>
+    "/fit?extend=black&file=#{bucket}/origin/test.jpg&quality=80&width=100",
+  "c_resize,c_fit,q_80,w_100,b_black,f_webp/test.jpg" =>
+    "/fit?extend=black&file=#{bucket}/origin/test.jpg&format=webp&quality=80&width=100"
 }
 
 defmodule BuzzcmsWeb.ImaginaryParamsTest do

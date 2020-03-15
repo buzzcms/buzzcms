@@ -1,9 +1,9 @@
 defmodule BuzzcmsWeb.ImageParser do
-  @allow_actions ["scale", "fit"]
+  @allow_actions ["resize", "fit", "crop"]
   @allow_widths ["100", "200", "300", "400", "600", "800", "1200"]
   @allow_heights ["100", "200", "300", "400", "600", "800", "1200"]
   @allow_qualities ["60", "80", "90", "100"]
-  @allow_backgrounds ["black", "white"]
+  @allow_formats ["jpg", "webp", "png"]
 
   def to_map(transform) do
     transform
@@ -13,12 +13,13 @@ defmodule BuzzcmsWeb.ImageParser do
         ["c", v] when v in @allow_actions -> acc ++ [{"action", v}]
         ["w", v] -> acc ++ [{"width", get_width(v)}]
         ["h", v] -> acc ++ [{"height", get_height(v)}]
-        ["b", v] when v in @allow_backgrounds -> acc ++ [{"extend", v}]
+        ["f", v] when v in @allow_formats -> acc ++ [{"format", v}]
+        ["b", v] -> acc ++ [{"extend", v}]
         ["q", v] when v in @allow_qualities -> acc ++ [{"quality", v}]
         _ -> acc
       end
     end)
-    |> Enum.into(%{"extend" => "white", "action" => "scale"})
+    |> Enum.into(%{"extend" => "white", "action" => "resize"})
   end
 
   def to_transform(map) do
@@ -28,6 +29,7 @@ defmodule BuzzcmsWeb.ImageParser do
         {"action", v} -> acc ++ ["c_#{v}"]
         {"width", v} -> acc ++ ["w_#{v}"]
         {"height", v} -> acc ++ ["h_#{v}"]
+        {"format", v} -> acc ++ ["f_#{v}"]
         {"extend", v} -> acc ++ ["b_#{v}"]
         {"quality", v} -> acc ++ ["q_#{v}"]
         _ -> acc
@@ -37,15 +39,6 @@ defmodule BuzzcmsWeb.ImageParser do
     |> Enum.join(",")
   end
 
-  @spec to_request_url(%{
-          id:
-            binary
-            | maybe_improper_list(
-                binary | maybe_improper_list(any, binary | []) | char,
-                binary | []
-              ),
-          map: map
-        }) :: <<_::16, _::_*8>>
   def to_request_url(%{map: map, id: id, bucket: bucket}) do
     action =
       case Map.get(map, "action") do
