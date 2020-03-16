@@ -40,7 +40,7 @@ file_cases = %{
 
 defmodule BuzzcmsWeb.ImaginaryParamsTest do
   use BuzzcmsWeb.ConnCase
-  import BuzzcmsWeb.ImageParser
+  import BuzzcmsWeb.Image.Parser
 
   describe "to normalized transform" do
     Enum.each(transform_cases, fn {input, expected_output} ->

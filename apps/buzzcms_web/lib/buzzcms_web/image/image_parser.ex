@@ -1,4 +1,4 @@
-defmodule BuzzcmsWeb.ImageParser do
+defmodule BuzzcmsWeb.Image.Parser do
   @allow_actions ["resize", "fit", "crop"]
   @allow_widths ["100", "200", "300", "400", "600", "800", "1200"]
   @allow_heights ["100", "200", "300", "400", "600", "800", "1200"]
