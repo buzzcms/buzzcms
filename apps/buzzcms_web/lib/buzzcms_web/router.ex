@@ -23,7 +23,7 @@ defmodule BuzzcmsWeb.Router do
   end
 
   scope "/" do
-    pipe_through [:api, :graphql]
+    pipe_through [:auth, :api, :graphql]
 
     forward "/graphql", Absinthe.Plug,
       schema: BuzzcmsWeb.Schema,

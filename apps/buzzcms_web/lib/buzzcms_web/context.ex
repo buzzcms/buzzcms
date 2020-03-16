@@ -1,7 +1,7 @@
 defmodule BuzzcmsWeb.Context do
   @behaviour Plug
 
-  # alias BuzzcmsWeb.Auth.Guardian
+  alias BuzzcmsWeb.Auth.Guardian
 
   def init(opts), do: opts
 
@@ -13,16 +13,16 @@ defmodule BuzzcmsWeb.Context do
   @doc """
   Return the current user context based on the authorization header
   """
-  def build_context(_conn) do
-    %{}
-    # auth = Guardian.Plug.current_resource(conn)
+  def build_context(conn) do
+    case Guardian.Plug.current_resource(conn) do
+      %{"sub" => user_id, "role" => role} ->
+        %{
+          user_id: user_id,
+          role: role
+        }
 
-    # case auth do
-    #   %{"sub" => user_id, "role" => role} ->
-    #     %{user_id: user_id,, role: role}
-
-    #   _ ->
-    #     nil
-    # end
+      _ ->
+        %{}
+    end
   end
 end

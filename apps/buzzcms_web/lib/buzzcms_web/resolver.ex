@@ -15,7 +15,7 @@ defmodule BuzzcmsWeb.Resolver do
         {:ok, result |> Map.put(:count, count)}
       end
 
-      def create(%{data: data}, %{context: _} = _info) do
+      def create(%{data: data}, %{context: %{role: "admin"}} = _info) do
         result =
           %@schema{}
           |> @schema.changeset(data)
@@ -27,7 +27,11 @@ defmodule BuzzcmsWeb.Resolver do
         end
       end
 
-      def edit(%{id: id, data: data}, %{context: _}) do
+      def create(_, %{context: context} = _info) do
+        {:error, "Not authorized"}
+      end
+
+      def edit(%{id: id, data: data}, %{context: %{role: "admin"}}) do
         result = Repo.get!(@schema, id) |> @schema.changeset(data) |> Repo.update()
 
         case result do
@@ -36,7 +40,11 @@ defmodule BuzzcmsWeb.Resolver do
         end
       end
 
-      def delete(%{id: id}, %{context: _}) do
+      def edit(_, %{context: context} = _info) do
+        {:error, "Not authorized"}
+      end
+
+      def delete(%{id: id}, %{context: %{role: "admin"}}) do
         result = Repo.get!(@schema, id) |> Repo.delete()
 
         case result do
@@ -46,6 +54,10 @@ defmodule BuzzcmsWeb.Resolver do
           {:error, message} ->
             {:error, message}
         end
+      end
+
+      def delete(_, %{context: context} = _info) do
+        {:error, "Not authorized"}
       end
 
       defp get_order_by(params) do

@@ -37,7 +37,11 @@ defmodule BuzzcmsWeb.ControllerTestUtils do
     |> Repo.update_all([])
   end
 
-  def sign_in_with_email(_email, _password, _system_project_id) do
+  @spec sign_in_with_email(Plug.Conn.t(), any()) :: Guardian.Token.token()
+  def sign_in_with_email(conn, user) do
+    %{"access_token" => token} = post(conn, "/auth/identity/callback", user) |> json_response(200)
+
+    token
   end
 
   def get_email_template_types() do
@@ -51,5 +55,25 @@ defmodule BuzzcmsWeb.ControllerTestUtils do
       update: [set: [email_sender_id: ^email_sender_id]]
     )
     |> Repo.update_all([])
+  end
+
+  @doc """
+  Create a verified user with a specific role
+  """
+  @spec create_verified_user(Plug.Conn.t(), String.t()) :: Guardian.Token.token()
+  def create_verified_user(conn, role) do
+    user_payload = build(:email_signup_payload)
+
+    # Create user
+    %{user_id: user_id} =
+      conn
+      |> sign_up_with_email(user_payload)
+      |> decode_token()
+
+    # Verify created user
+    verify_user_email(conn, user_id, get_verify_token(user_id))
+    # Set role
+    from(t in User, update: [set: [role: ^role]]) |> Repo.update_all([])
+    sign_in_with_email(conn, %{email: user_payload.email, password: user_payload.password})
   end
 end
