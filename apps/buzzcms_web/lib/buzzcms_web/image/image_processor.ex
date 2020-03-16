@@ -3,7 +3,8 @@ defmodule BuzzcmsWeb.Image.Processor do
   alias Buzzcms.Repo
   alias Buzzcms.Schema.Image
 
-  @type upload_image_result :: {:ok, any()} | {:error, String.t()}
+  @type upload_image_result ::
+          {:ok, any()} | {:error, %{reason: String.t(), filename: String.t()}}
 
   @doc """
   Save list of images to disk & insert to database
@@ -77,8 +78,9 @@ defmodule BuzzcmsWeb.Image.Processor do
       |> Repo.insert()
     else
       error ->
+        # TODO: Show proper image error
         inspect(error) |> Logger.debug()
-        {:error, "Invalid image"}
+        {:error, %{reason: "Unknown error", filename: filename}}
     end
   end
 

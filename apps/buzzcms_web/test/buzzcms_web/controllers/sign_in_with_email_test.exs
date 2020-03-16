@@ -4,7 +4,6 @@ defmodule BuzzcmsWeb.SignInWithEmailTest do
   import BuzzcmsWeb.ControllerTestUtils
 
   describe "sign in with email" do
-    @tag :wip
     test "valid", %{conn: conn, valid_params: params} do
       conn = post(conn, "/auth/identity/callback", params)
       assert %{"access_token" => _} = json_response(conn, 200)
@@ -25,13 +24,11 @@ defmodule BuzzcmsWeb.SignInWithEmailTest do
               }} = BuzzcmsWeb.Auth.Guardian.decode_and_verify(token)
     end
 
-    @tag :wip
     test "missing password", %{conn: conn, valid_params: params} do
       conn = post(conn, "/auth/identity/callback", %{params | password: nil})
       assert %{"error" => "Missing password"} = json_response(conn, 400)
     end
 
-    @tag :wip
     test "invalid credentials", %{conn: conn, valid_params: params} do
       conn = post(conn, "/auth/identity/callback", %{params | password: "wrongpass"})
       assert %{"error" => "Invalid credentials"} = json_response(conn, 400)

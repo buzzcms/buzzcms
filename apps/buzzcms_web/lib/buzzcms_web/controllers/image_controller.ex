@@ -81,15 +81,16 @@ defmodule BuzzcmsWeb.ImageController do
   end
 
   def upload(conn, %{"files" => files} = args) do
-    saved_images =
+    result =
       save_images(
         files,
         keep_name: Map.has_key?(args, "keepFilename")
       )
-      |> Enum.filter(fn {status, _} -> status == :ok end)
-      |> Enum.count()
+      |> Enum.group_by(&elem(&1, 0), &elem(&1, 1))
+      |> Enum.map(fn {key, value} -> {Kernel.to_string(key), value} end)
+      |> Enum.into(%{})
 
-    conn |> json(%{saved_images: saved_images})
+    conn |> json(result)
   end
 
   @spec get_id(id: String.t()) :: String.t()
