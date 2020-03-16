@@ -55,7 +55,6 @@ defmodule BuzzcmsWeb.UploadImageTest do
              } = json_response(conn, 200)
     end
 
-    @tag :wip
     test "svg", %{conn: conn} do
       files = [
         %Plug.Upload{
@@ -79,7 +78,6 @@ defmodule BuzzcmsWeb.UploadImageTest do
              } = json_response(conn, 200)
     end
 
-    @tag :wip
     test "use keepFilename", %{conn: conn} do
       files = [%Plug.Upload{path: "test/fixtures/images/sample.png", filename: "sample.png"}]
 

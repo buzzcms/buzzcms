@@ -60,7 +60,6 @@ defmodule BuzzcmsWeb.ImageController do
 
           false ->
             request_url = to_request_url(%{map: map, id: id, bucket: bucket()})
-
             %{body: body, status_code: status_code} = HTTPoison.get!(request_url)
 
             case status_code do
