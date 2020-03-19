@@ -46,6 +46,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :taxonomy, non_null(:taxonomy), resolve: dataloader(Data, :taxonomy)
     field :taxons, non_null(list_of(non_null(:taxon))), resolve: dataloader(Data, :taxons)
     field :state, non_null(:string)
+    field :seo, :seo
   end
 
   connection(node_type: :taxon) do
@@ -68,6 +69,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :taxonomy_id, :string
     field :parent_id, :string
     field :position, :integer
+    field :seo, :seo_input
   end
 
   input_object :taxon_filter_input do

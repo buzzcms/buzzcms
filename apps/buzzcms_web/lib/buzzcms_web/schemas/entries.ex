@@ -49,6 +49,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :taxon, :taxon, resolve: dataloader(Data, :taxon)
     field :product, :product, resolve: dataloader(Data, :product)
     field :state, non_null(:entry_state)
+    field :seo, :seo
     field :published_at, non_null(:datetime)
     field :created_at, non_null(:datetime)
     field :updated_at, non_null(:datetime)
@@ -103,6 +104,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :entry_type_id, :string
     field :state, :entry_state
     field :published_at, :datetime
+    field :seo, :seo_input
   end
 
   input_object :entry_boolean_field_filter_input do
