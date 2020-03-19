@@ -35,6 +35,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :rich_text, :json
     field :is_root, :boolean
     field :path, :string
+    field :slug_path, :string
     field :image, :string
     field :images, non_null(list_of(non_null(:image_item)))
     field :entries_count, :integer
@@ -74,6 +75,8 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :slug, :string_filter_input
     field :title, :string_filter_input
     field :is_root, :boolean_filter_input
+    field :path, :ltree_filter_input
+    field :slug_path, :ltree_filter_input
     field :state, :string_filter_input
     field :taxonomy_id, :id_filter_input
     field :taxonomy_code, :string

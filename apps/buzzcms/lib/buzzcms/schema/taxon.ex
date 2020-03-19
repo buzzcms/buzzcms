@@ -30,6 +30,7 @@ defmodule Buzzcms.Schema.Taxon do
     field :is_root, :boolean
     field :entries_count, :integer
     field :path, Ltree
+    field :slug_path, Ltree
     field :level, :integer
     field :state, :string
     field :created_at, :utc_datetime

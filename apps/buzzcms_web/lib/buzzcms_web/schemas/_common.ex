@@ -174,6 +174,10 @@ defmodule BuzzcmsWeb.Schema.Common do
     field(:in, list_of(non_null(:date)))
   end
 
+  input_object :ltree_filter_input do
+    field(:match, :string)
+  end
+
   node interface do
     resolve_type(fn
       %EntryType{}, _ -> :entry_type

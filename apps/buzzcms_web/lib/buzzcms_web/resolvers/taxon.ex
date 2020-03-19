@@ -1,5 +1,5 @@
 defmodule BuzzcmsWeb.TaxonResolver do
-  alias FilterParser.{IdFilterInput, StringFilterInput, BooleanFilterInput}
+  alias FilterParser.{IdFilterInput, StringFilterInput, BooleanFilterInput, LtreeFilterInput}
   @schema Buzzcms.Schema.Taxon
   @filter_definition [
     fields: [
@@ -7,6 +7,8 @@ defmodule BuzzcmsWeb.TaxonResolver do
       {:slug, StringFilterInput},
       {:title, StringFilterInput},
       {:is_root, BooleanFilterInput},
+      {:path, LtreeFilterInput},
+      {:slug_path, LtreeFilterInput},
       {:parent_id, IdFilterInput},
       {:taxonomy_id, IdFilterInput},
       {:state, StringFilterInput}
