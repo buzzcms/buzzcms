@@ -162,6 +162,8 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :is_new_product, :boolean_filter_input
 
     field :entry_type_code, :string
+    field :taxon_slug_path, :ltree_filter_input
+    field :taxons_slug_path, :ltree_filter_input
     field :taxon_slug, :taxon_slug_filter_input
     field :taxons_slug, :taxon_slug_filter_input
   end

@@ -105,6 +105,24 @@ defmodule BuzzcmsWeb.EntryResolver do
             on: t.taxonomy_id == tx.id,
             where: t.slug == ^slug and tx.code == ^taxonomy_code
 
+        :taxon_slug_path ->
+          %{match: match} = value
+
+          from e in schema_acc,
+            join: t in Buzzcms.Schema.Taxon,
+            on: t.id == e.taxon_id,
+            where: fragment("? ~ ?", t.slug_path, ^match)
+
+        :taxons_slug_path ->
+          %{match: match} = value
+
+          from e in schema_acc,
+            join: et in Buzzcms.Schema.EntryTaxon,
+            on: e.id == et.entry_id,
+            join: t in Buzzcms.Schema.Taxon,
+            on: t.id == et.taxon_id,
+            where: fragment("? ~ ?", t.slug_path, ^match)
+
         _ ->
           schema_acc
       end
