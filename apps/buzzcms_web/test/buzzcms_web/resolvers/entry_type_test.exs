@@ -76,13 +76,12 @@ defmodule BuzzcmsWeb.EntryTypeResolverTest do
 
   describe "entry type mutation (without auth)" do
     test "mutation: create_entry_type", %{conn: conn} do
-      conn =
-        post(conn, "/graphql", %{
-          "query" => @create_mutation,
-          "variables" => %{
-            data: %{code: "product", display_name: "Product"}
-          }
-        })
+      post(conn, "/graphql", %{
+        "query" => @create_mutation,
+        "variables" => %{
+          data: %{code: "product", display_name: "Product"}
+        }
+      })
 
       assert %{
         "data" => %{"createEntryType" => nil},
