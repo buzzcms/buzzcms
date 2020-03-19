@@ -107,6 +107,7 @@ defmodule BuzzcmsWeb.EntryResolver do
 
         :taxon_slug_path ->
           %{match: match} = value
+          match = match |> String.replace("-", "_")
 
           from e in schema_acc,
             join: t in Buzzcms.Schema.Taxon,
@@ -115,6 +116,7 @@ defmodule BuzzcmsWeb.EntryResolver do
 
         :taxons_slug_path ->
           %{match: match} = value
+          match = match |> String.replace("-", "_")
 
           from e in schema_acc,
             join: et in Buzzcms.Schema.EntryTaxon,
@@ -122,6 +124,24 @@ defmodule BuzzcmsWeb.EntryResolver do
             join: t in Buzzcms.Schema.Taxon,
             on: t.id == et.taxon_id,
             where: fragment("? ~ ?", t.slug_path, ^match)
+
+        :taxon_path ->
+          %{match: match} = value
+
+          from e in schema_acc,
+            join: t in Buzzcms.Schema.Taxon,
+            on: t.id == e.taxon_id,
+            where: fragment("? ~ ?", t.path, ^match)
+
+        :taxons_path ->
+          %{match: match} = value
+
+          from e in schema_acc,
+            join: et in Buzzcms.Schema.EntryTaxon,
+            on: e.id == et.entry_id,
+            join: t in Buzzcms.Schema.Taxon,
+            on: t.id == et.taxon_id,
+            where: fragment("? ~ ?", t.path, ^match)
 
         _ ->
           schema_acc
