@@ -229,19 +229,30 @@ defmodule BuzzcmsWeb.EntryResolver do
           as: :fv,
           join: f in Field,
           on: fv.field_id == f.id,
-          distinct: esf.entry_id,
+          group_by: [esf.entry_id, esf.field_id],
           where: f.code == ^field_name
         ),
         fn {compare_type, value}, schema_acc ->
           case compare_type do
-            :eq -> schema_acc |> where([fv: fv], fv.code == ^value)
-            :in -> schema_acc |> where([fv: fv], fv.code in ^value)
-            _ -> schema_acc
+            :eq ->
+              schema_acc |> where([fv: fv], fv.code == ^value)
+
+            :any ->
+              schema_acc |> where([fv: fv], fv.code in ^value)
+
+            :all ->
+              count = value |> Enum.count()
+
+              schema_acc
+              |> where([fv: fv], fv.code in ^value)
+              |> having([esf], count() == ^count)
+
+            _ ->
+              schema_acc
           end
         end
       )
-
-    # |> IO.inspect(label: "Subquery")
+      |> select([:entry_id])
 
     schema |> join(:inner, [p], sub in subquery(sub_schema), on: p.id == sub.entry_id)
   end

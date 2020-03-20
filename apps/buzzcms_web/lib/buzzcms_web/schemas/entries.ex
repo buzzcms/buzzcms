@@ -135,7 +135,8 @@ defmodule BuzzcmsWeb.Schema.Entries do
   input_object :entry_select_field_filter_input do
     field :field, non_null(:string)
     field :eq, :string
-    field :in, list_of(non_null(:string))
+    field :any, list_of(non_null(:string))
+    field :all, list_of(non_null(:string))
   end
 
   input_object :entry_field_filter_input do
