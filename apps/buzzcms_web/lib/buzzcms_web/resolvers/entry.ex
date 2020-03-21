@@ -1,6 +1,16 @@
 defmodule BuzzcmsWeb.EntryResolver do
   import Ecto.Query
-  alias Buzzcms.Schema.{EntrySelectValue, Field, FieldValue, Product, Variant}
+
+  alias Buzzcms.Schema.{
+    EntrySelectValue,
+    EntryIntegerValue,
+    EntryDecimalValue,
+    Field,
+    FieldValue,
+    Product,
+    Variant
+  }
+
   alias FilterParser.{IdFilterInput, StringFilterInput}
 
   @schema Buzzcms.Schema.Entry
@@ -157,12 +167,10 @@ defmodule BuzzcmsWeb.EntryResolver do
       case type do
         :boolean -> parse_entry_boolean_field_filters(schema_acc, payload)
         :select -> parse_entry_select_field_filters(schema_acc, payload)
-        :integer -> parse_entry_select_field_filters(schema_acc, payload)
-        :decimal -> parse_entry_number_field_filters(schema_acc, payload)
+        :integer -> parse_entry_integer_field_filters(schema_acc, payload)
+        :decimal -> parse_entry_decimal_field_filters(schema_acc, payload)
       end
     end)
-
-    # |> IO.inspect(label: "Select Query")
   end
 
   defp parse_entry_field_filter(schema, _), do: schema
@@ -208,15 +216,68 @@ defmodule BuzzcmsWeb.EntryResolver do
   end
 
   defp parse_entry_select_field_filters(schema, filters) do
-    # IO.inspect(filters, label: "select")
-
     filters
     |> Enum.reduce(schema, fn filter, acc -> parse_entry_select_field_filter(acc, filter) end)
   end
 
-  defp parse_entry_number_field_filters(schema, _filters) do
-    # IO.inspect(payload, label: "number")
-    schema
+  defp parse_entry_integer_field_filters(schema, filters) do
+    filters
+    |> Enum.reduce(schema, fn filter, acc -> parse_entry_integer_field_filter(acc, filter) end)
+  end
+
+  defp parse_entry_decimal_field_filters(schema, filters) do
+    filters
+    |> Enum.reduce(schema, fn filter, acc -> parse_entry_decimal_field_filter(acc, filter) end)
+  end
+
+  defp parse_entry_integer_field_filter(schema, %{field: field_name} = filter) do
+    sub_schema =
+      filter
+      |> Enum.reduce(
+        from(esf in EntryIntegerValue,
+          join: f in Field,
+          on: esf.field_id == f.id,
+          where: f.code == ^field_name
+        ),
+        fn {compare_type, value}, schema_acc ->
+          case compare_type do
+            :eq -> schema_acc |> where([esf], esf.value == ^value)
+            :gt -> schema_acc |> where([esf], esf.value > ^value)
+            :gte -> schema_acc |> where([esf], esf.value >= ^value)
+            :lt -> schema_acc |> where([esf], esf.value < ^value)
+            :lte -> schema_acc |> where([esf], esf.value <= ^value)
+            _ -> schema_acc
+          end
+        end
+      )
+      |> select([:entry_id])
+
+    schema |> join(:inner, [p], sub in subquery(sub_schema), on: p.id == sub.entry_id)
+  end
+
+  defp parse_entry_decimal_field_filter(schema, %{field: field_name} = filter) do
+    sub_schema =
+      filter
+      |> Enum.reduce(
+        from(esf in EntryDecimalValue,
+          join: f in Field,
+          on: esf.field_id == f.id,
+          where: f.code == ^field_name
+        ),
+        fn {compare_type, value}, schema_acc ->
+          case compare_type do
+            :eq -> schema_acc |> where([esf], esf.value == ^value)
+            :gt -> schema_acc |> where([esf], esf.value > ^value)
+            :gte -> schema_acc |> where([esf], esf.value >= ^value)
+            :lt -> schema_acc |> where([esf], esf.value < ^value)
+            :lte -> schema_acc |> where([esf], esf.value <= ^value)
+            _ -> schema_acc
+          end
+        end
+      )
+      |> select([:entry_id])
+
+    schema |> join(:inner, [p], sub in subquery(sub_schema), on: p.id == sub.entry_id)
   end
 
   defp parse_entry_select_field_filter(schema, %{field: field_name} = filter) do
