@@ -32,4 +32,5 @@ email_templates = [
   }
 ]
 
+Buzzcms.DataImporter.import_from_dir(Path.join(File.cwd!(), "sample_data"))
 Buzzcms.Repo.insert_all(Buzzcms.Schema.EmailTemplate, email_templates)

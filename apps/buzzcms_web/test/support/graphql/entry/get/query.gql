@@ -1,0 +1,37 @@
+{
+  entries(
+    first: 1
+    filter: {
+      entryTypeCode: "service"
+      taxonsSlug: [
+        { taxonomyCode: "service_category", slug: { eq: "service-category-1" } }
+      ]
+    }
+    orderBy: [{ field: TITLE, direction: ASC }]
+  ) {
+    count
+    edges {
+      node {
+        slug
+        title
+        featured
+        booleanValues {
+          value
+        }
+        integerValues {
+          value
+        }
+        decimalValues {
+          value
+        }
+        jsonValues {
+          value
+        }
+        selectValues {
+          code
+          displayName
+        }
+      }
+    }
+  }
+}

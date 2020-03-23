@@ -1,0 +1,27 @@
+{
+  entries(
+    first: 10
+    filter: {
+      entryTypeCode: "service"
+      taxonsSlugPath: [
+        {
+          taxonomyCode: "service_category"
+          path: { match: "service-category-1.*" }
+        }
+        {
+          taxonomyCode: "service_category"
+          path: { match: "service-category-2.*" }
+        }
+      ]
+    }
+  ) {
+    count
+    edges {
+      node {
+        slug
+        title
+        featured
+      }
+    }
+  }
+}

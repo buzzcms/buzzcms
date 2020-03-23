@@ -142,6 +142,18 @@ defmodule Buzzcms.DataImporter do
         Map.put(acc, "#{taxonomy_code}:#{slug}", id)
       end)
 
+    # Update taxon parent
+    taxons
+    |> Enum.filter(&Map.has_key?(&1, "parent"))
+    |> Enum.each(fn %{"slug" => slug, "taxonomy" => taxonomy, "parent" => parent} ->
+      id = taxons_map["#{taxonomy}:#{slug}"]
+      parent_id = taxons_map["#{taxonomy}:#{parent}"]
+
+      Repo.get!(Taxon, id)
+      |> Taxon.changeset(%{parent_id: parent_id})
+      |> Repo.update!()
+    end)
+
     # Entries
     Repo.insert_all(
       Entry,

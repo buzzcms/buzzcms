@@ -1,0 +1,65 @@
+{
+  "data": {
+    "entries": {
+      "count": 1,
+      "edges": [
+        {
+          "node": {
+            "booleanValues": [
+              {
+                "value": true
+              }
+            ],
+            "decimalValues": [
+              {
+                "value": "100"
+              }
+            ],
+            "featured": false,
+            "integerValues": [
+              {
+                "value": 10
+              }
+            ],
+            "jsonValues": [
+              {
+                "value": {
+                  "items": [
+                    {
+                      "caption": "Image b1",
+                      "image": "image-b1"
+                    },
+                    {
+                      "caption": "Image b2",
+                      "image": "image-b2"
+                    },
+                    {
+                      "caption": "Image b3",
+                      "image": "image-b3"
+                    }
+                  ]
+                }
+              }
+            ],
+            "selectValues": [
+              {
+                "code": "type-2",
+                "displayName": "Type 2"
+              },
+              {
+                "code": "feature-1",
+                "displayName": "Feature 1"
+              },
+              {
+                "code": "feature-4",
+                "displayName": "Feature 4"
+              }
+            ],
+            "slug": "service-2",
+            "title": "Service 2"
+          }
+        }
+      ]
+    }
+  }
+}
