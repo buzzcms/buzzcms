@@ -37,6 +37,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :title, non_null(:string)
     field :subtitle, :string
     field :description, :string
+    field :featured, :boolean
     field :body, :string
     field :rich_text, :json
     field :is_root, :boolean
@@ -69,6 +70,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :title, :string
     field :subtitle, :string
     field :description, :string
+    field :featured, :boolean
     field :body, :string
     field :rich_text, :json
     field :image, :string

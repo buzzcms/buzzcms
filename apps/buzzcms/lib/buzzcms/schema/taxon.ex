@@ -21,6 +21,7 @@ defmodule Buzzcms.Schema.Taxon do
     field :title, :string
     field :subtitle, :string
     field :description, :string, default: ""
+    field :featured, :boolean
     field :body, :string
     field :rich_text, {:array, :map}
     field :image, :string
