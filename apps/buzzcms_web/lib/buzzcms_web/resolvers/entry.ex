@@ -94,29 +94,37 @@ defmodule BuzzcmsWeb.EntryResolver do
             where: et.code == ^value
 
         :taxon_slug ->
-          %{taxonomy_code: taxonomy_code, slug: slug} = value
+          value
+          |> Enum.reduce(schema_acc, fn %{taxonomy_code: taxonomy_code, slug: %{eq: slug}}, acc ->
+            sub_schema =
+              from e in Buzzcms.Schema.Entry,
+                join: t in Buzzcms.Schema.Taxon,
+                on: t.id == e.taxon_id,
+                join: tx in Buzzcms.Schema.Taxonomy,
+                on: t.taxonomy_id == tx.id,
+                where: t.slug == ^slug and tx.code == ^taxonomy_code,
+                select: [:entry_id]
 
-          from e in schema_acc,
-            join: t in Buzzcms.Schema.Taxon,
-            on: e.taxon_id == t.id,
-            join: tx in Buzzcms.Schema.Taxonomy,
-            on: t.taxonomy_id == tx.id,
-            where: t.slug == ^slug and tx.code == ^taxonomy_code
+            acc |> join(:inner, [p], sub in subquery(sub_schema), on: p.id == sub.entry_id)
+          end)
 
         :taxons_slug ->
-          %{taxonomy_code: taxonomy_code, slug: slug} = value
+          value
+          |> Enum.reduce(schema_acc, fn %{taxonomy_code: taxonomy_code, slug: %{eq: slug}}, acc ->
+            sub_schema =
+              from et in Buzzcms.Schema.EntryTaxon,
+                join: t in Buzzcms.Schema.Taxon,
+                on: t.id == et.taxon_id,
+                join: tx in Buzzcms.Schema.Taxonomy,
+                on: t.taxonomy_id == tx.id,
+                where: t.slug == ^slug and tx.code == ^taxonomy_code,
+                select: [:entry_id]
 
-          from e in schema_acc,
-            join: et in Buzzcms.Schema.EntryTaxon,
-            on: e.id == et.entry_id,
-            join: t in Buzzcms.Schema.Taxon,
-            on: t.id == et.taxon_id,
-            join: tx in Buzzcms.Schema.Taxonomy,
-            on: t.taxonomy_id == tx.id,
-            where: t.slug == ^slug and tx.code == ^taxonomy_code
+            acc |> join(:inner, [p], sub in subquery(sub_schema), on: p.id == sub.entry_id)
+          end)
 
         :taxon_slug_path ->
-          %{match: match} = value
+          %{path: %{match: match}} = value
           match = match |> String.replace("-", "_")
 
           from e in schema_acc,
@@ -125,15 +133,24 @@ defmodule BuzzcmsWeb.EntryResolver do
             where: fragment("? ~ ?", t.slug_path, ^match)
 
         :taxons_slug_path ->
-          %{match: match} = value
-          match = match |> String.replace("-", "_")
+          value
+          |> Enum.reduce(
+            schema_acc,
+            fn %{taxonomy_code: taxonomy_code, path: %{match: match}}, acc ->
+              match = match |> String.replace("-", "_")
 
-          from e in schema_acc,
-            join: et in Buzzcms.Schema.EntryTaxon,
-            on: e.id == et.entry_id,
-            join: t in Buzzcms.Schema.Taxon,
-            on: t.id == et.taxon_id,
-            where: fragment("? ~ ?", t.slug_path, ^match)
+              sub_schema =
+                from et in Buzzcms.Schema.EntryTaxon,
+                  join: t in Buzzcms.Schema.Taxon,
+                  on: t.id == et.taxon_id,
+                  join: tx in Buzzcms.Schema.Taxonomy,
+                  on: t.taxonomy_id == tx.id,
+                  where: fragment("? ~ ?", t.slug_path, ^match) and tx.code == ^taxonomy_code,
+                  select: [:entry_id]
+
+              acc |> join(:inner, [p], sub in subquery(sub_schema), on: p.id == sub.entry_id)
+            end
+          )
 
         :taxon_path ->
           %{match: match} = value
@@ -144,14 +161,22 @@ defmodule BuzzcmsWeb.EntryResolver do
             where: fragment("? ~ ?", t.path, ^match)
 
         :taxons_path ->
-          %{match: match} = value
+          value
+          |> Enum.reduce(
+            schema_acc,
+            fn %{taxonomy_code: taxonomy_code, path: %{match: match}}, acc ->
+              sub_schema =
+                from et in Buzzcms.Schema.EntryTaxon,
+                  join: t in Buzzcms.Schema.Taxon,
+                  on: t.id == et.taxon_id,
+                  join: tx in Buzzcms.Schema.Taxonomy,
+                  on: t.taxonomy_id == tx.id,
+                  where: fragment("? ~ ?", t.path, ^match) and tx.code == ^taxonomy_code,
+                  select: [:entry_id]
 
-          from e in schema_acc,
-            join: et in Buzzcms.Schema.EntryTaxon,
-            on: e.id == et.entry_id,
-            join: t in Buzzcms.Schema.Taxon,
-            on: t.id == et.taxon_id,
-            where: fragment("? ~ ?", t.path, ^match)
+              acc |> join(:inner, [p], sub in subquery(sub_schema), on: p.id == sub.entry_id)
+            end
+          )
 
         _ ->
           schema_acc

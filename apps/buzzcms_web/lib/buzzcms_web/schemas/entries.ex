@@ -149,7 +149,12 @@ defmodule BuzzcmsWeb.Schema.Entries do
   @desc "Filter by entry taxon/taxons slug; only use for the frontend"
   input_object :taxon_slug_filter_input do
     field :taxonomy_code, non_null(:string)
-    field :slug, non_null(:string)
+    field :slug, non_null(:string_filter_input)
+  end
+
+  input_object :taxon_path_filter_input do
+    field :taxonomy_code, non_null(:string)
+    field :path, non_null(:ltree_filter_input)
   end
 
   input_object :entry_filter_input do
@@ -165,12 +170,12 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :is_new_product, :boolean_filter_input
 
     field :entry_type_code, :string
-    field :taxon_path, :ltree_filter_input
-    field :taxons_path, :ltree_filter_input
-    field :taxon_slug_path, :ltree_filter_input
-    field :taxons_slug_path, :ltree_filter_input
-    field :taxon_slug, :taxon_slug_filter_input
-    field :taxons_slug, :taxon_slug_filter_input
+    field :taxon_path, list_of(non_null(:taxon_path_filter_input))
+    field :taxons_path, list_of(non_null(:taxon_path_filter_input))
+    field :taxon_slug_path, list_of(non_null(:taxon_path_filter_input))
+    field :taxons_slug_path, list_of(non_null(:taxon_path_filter_input))
+    field :taxon_slug, list_of(non_null(:taxon_slug_filter_input))
+    field :taxons_slug, list_of(non_null(:taxon_slug_filter_input))
   end
 
   object :select_filter_result do
