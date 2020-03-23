@@ -1,0 +1,16 @@
+{
+  "data": {
+    "entries": {
+      "count": 1,
+      "edges": [
+        {
+          "node": {
+            "featured": false,
+            "slug": "service-1",
+            "title": "Service 1"
+          }
+        }
+      ]
+    }
+  }
+}

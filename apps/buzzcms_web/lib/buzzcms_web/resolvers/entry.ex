@@ -165,6 +165,8 @@ defmodule BuzzcmsWeb.EntryResolver do
           |> Enum.reduce(
             schema_acc,
             fn %{taxonomy_code: taxonomy_code, path: %{match: match}}, acc ->
+              match = match |> String.replace("-", "_")
+
               sub_schema =
                 from et in Buzzcms.Schema.EntryTaxon,
                   join: t in Buzzcms.Schema.Taxon,

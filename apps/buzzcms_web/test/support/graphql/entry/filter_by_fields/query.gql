@@ -1,0 +1,38 @@
+{
+  entries(
+    first: 10
+    filter: {
+      entryTypeCode: "service"
+      field: {
+        boolean: [{ field: "is_promoted", eq: false }]
+        decimal: [{ field: "price", gt: 100 }]
+        integer: [{ field: "rating", gte: 5 }]
+        select: [{ field: "features", all: ["feature-1", "feature-2"] }]
+      }
+    }
+  ) {
+    count
+    edges {
+      node {
+        slug
+        title
+        featured
+        selectValues {
+          code
+        }
+        decimalValues {
+          fieldId
+          value
+        }
+        integerValues {
+          fieldId
+          value
+        }
+        booleanValues {
+          fieldId
+          value
+        }
+      }
+    }
+  }
+}

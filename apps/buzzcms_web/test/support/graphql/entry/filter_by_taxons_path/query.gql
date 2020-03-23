@@ -3,15 +3,9 @@
     first: 10
     filter: {
       entryTypeCode: "service"
-      taxonsSlugPath: [
-        {
-          taxonomyCode: "service_category"
-          path: { match: "service-category-1.*" }
-        }
-        {
-          taxonomyCode: "service_category"
-          path: { match: "service-category-2.*" }
-        }
+      taxonsPath: [
+        { taxonomyCode: "service_category", path: { match: "3.*" } }
+        { taxonomyCode: "service_category", path: { match: "4" } }
       ]
     }
   ) {

@@ -1,0 +1,45 @@
+{
+  "data": {
+    "entries": {
+      "count": 1,
+      "edges": [
+        {
+          "node": {
+            "booleanValues": [
+              {
+                "fieldId": "2",
+                "value": false
+              }
+            ],
+            "decimalValues": [
+              {
+                "fieldId": "1",
+                "value": "1000"
+              }
+            ],
+            "featured": false,
+            "integerValues": [
+              {
+                "fieldId": "4",
+                "value": 5
+              }
+            ],
+            "selectValues": [
+              {
+                "code": "type-1"
+              },
+              {
+                "code": "feature-1"
+              },
+              {
+                "code": "feature-2"
+              }
+            ],
+            "slug": "service-1",
+            "title": "Service 1"
+          }
+        }
+      ]
+    }
+  }
+}
