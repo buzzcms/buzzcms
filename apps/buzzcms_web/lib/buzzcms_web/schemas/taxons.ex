@@ -25,6 +25,12 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field(:direction, non_null(:order_direction))
   end
 
+  node object(:taxon_breadcrumb) do
+    field :slug, non_null(:string)
+    field :title, non_null(:string)
+    field :taxonomy, non_null(:taxonomy)
+  end
+
   node object(:taxon) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field :slug, non_null(:string)
@@ -38,6 +44,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :slug_path, :string
     field :image, :string
     field :images, non_null(list_of(non_null(:image_item)))
+    field :breadcrumbs, non_null(list_of(non_null(:taxon_breadcrumb)))
     field :entries_count, :integer
     field :taxonomy_id, non_null(:id)
     field :parent, :taxon, resolve: dataloader(Data, :parent)

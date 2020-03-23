@@ -24,6 +24,8 @@ defmodule Buzzcms.Schema.Taxon do
     field :rich_text, {:array, :map}
     field :image, :string
     field :images, {:array, :map}
+    embeds_many :breadcrumbs, Buzzcms.EmbeddedSchema.TaxonBreadcrumb
+    embeds_one :seo, Buzzcms.EmbeddedSchema.Seo, on_replace: :update
     has_many :taxons, Buzzcms.Schema.Taxon, foreign_key: :parent_id
     belongs_to :taxonomy, Buzzcms.Schema.Taxonomy
     belongs_to :parent, Buzzcms.Schema.Taxon
