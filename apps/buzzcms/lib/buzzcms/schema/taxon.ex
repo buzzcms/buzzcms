@@ -9,6 +9,7 @@ defmodule Buzzcms.Schema.Taxon do
     :description,
     :body,
     :rich_text,
+    :featured,
     :image,
     :images,
     :parent_id,
@@ -42,6 +43,7 @@ defmodule Buzzcms.Schema.Taxon do
   def changeset(entity, params \\ %{}) do
     entity
     |> cast(params, @required_fields ++ @optional_fields)
+    |> cast_embed(:seo)
     |> validate_required(@required_fields)
     |> unique_constraint(:slug, name: :taxon_slug_unique)
   end

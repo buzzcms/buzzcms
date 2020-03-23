@@ -56,29 +56,14 @@ defmodule BuzzcmsWeb.Schema.Common do
   end
 
   object :heading do
-    field(:title, :string) do
-      resolve(fn _parent, %{source: source} -> {:ok, source["title"] || source[:title]} end)
-    end
-
-    field(:subtitle, :string) do
-      resolve(fn _parent, %{source: source} -> {:ok, source["subtitle"] || source[:subtitle]} end)
-    end
+    field(:title, :string)
+    field(:subtitle, :string)
   end
 
   object :seo do
-    field(:title, :string) do
-      resolve(fn _parent, %{source: source} -> {:ok, source["title"] || source[:title]} end)
-    end
-
-    field(:description, :string) do
-      resolve(fn _parent, %{source: source} ->
-        {:ok, source["description"] || source[:description]}
-      end)
-    end
-
-    field(:keywords, list_of(non_null(:string))) do
-      resolve(fn _parent, %{source: source} -> {:ok, source["keywords"] || source[:keywords]} end)
-    end
+    field(:title, :string)
+    field(:description, :string)
+    field(:keywords, list_of(non_null(:string)))
   end
 
   input_object :heading_input do

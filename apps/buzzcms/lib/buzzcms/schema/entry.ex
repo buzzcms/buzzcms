@@ -8,6 +8,7 @@ defmodule Buzzcms.Schema.Entry do
     :description,
     :body,
     :rich_text,
+    :featured,
     :image,
     :images,
     :state,
@@ -26,6 +27,7 @@ defmodule Buzzcms.Schema.Entry do
     field :images, {:array, :map}
     field :rich_text, {:array, :map}
     field :tags, {:array, :string}
+    embeds_one :seo, Buzzcms.EmbeddedSchema.Seo, on_replace: :update
 
     belongs_to :entry_type, Buzzcms.Schema.EntryType
     belongs_to :taxon, Buzzcms.Schema.Taxon
@@ -49,6 +51,7 @@ defmodule Buzzcms.Schema.Entry do
   def changeset(entity, params \\ %{}) do
     entity
     |> cast(params, @required_fields ++ @optional_fields)
+    |> cast_embed(:seo)
     |> validate_required(@required_fields)
     |> unique_constraint(:slug, name: :entry_slug_unique)
   end
