@@ -1,0 +1,36 @@
+- code: price
+  display_name: Price
+  type: decimal
+- code: is_promoted
+  display_name: Is promoted
+  type: boolean
+- code: gallery
+  display_name: Gallery
+  type: gallery
+- code: rating
+  display_name: Rating
+  type: integer
+- code: service_type
+  display_name: Service type
+  type: select
+  values:
+    - code: type-1
+      display_name: Type 1
+    - code: type-2
+      display_name: Type 2
+    - code: type-3
+      display_name: Type 3
+    - code: type-4
+      display_name: Type 4
+- code: features
+  display_name: Features
+  type: multi_select
+  values:
+    - code: feature-1
+      display_name: Feature 1
+    - code: feature-2
+      display_name: Feature 2
+    - code: feature-3
+      display_name: Feature 3
+    - code: feature-4
+      display_name: Feature 4

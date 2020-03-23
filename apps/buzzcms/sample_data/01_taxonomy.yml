@@ -1,0 +1,4 @@
+- code: post_category
+  display_name: Post Category
+- code: service_category
+  display_name: Service Category

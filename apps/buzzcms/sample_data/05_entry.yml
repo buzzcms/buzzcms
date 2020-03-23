@@ -1,0 +1,85 @@
+- slug: about
+  title: About
+  entry_type: page
+- slug: post-1
+  title: Post 1
+  entry_type: post
+  taxons:
+    - slug: post-category-1
+      taxonomy: post_category
+- slug: post-2
+  title: Post 2
+  entry_type: post
+  taxons:
+    - slug: post-category-1
+      taxonomy: post_category
+    - slug: post-category-2
+      taxonomy: post_category
+- slug: service-1
+  title: Service 1
+  entry_type: service
+  taxons:
+    - slug: service-category-1a
+      taxonomy: service_category
+    - slug: service-category-2
+      taxonomy: service_category
+  integer_values:
+    - field: rating
+      value: 5
+  decimal_values:
+    - field: price
+      value: 1000
+  boolean_values:
+    - field: is_promoted
+      value: false
+  multi_select_values:
+    - field: features
+      value:
+        - feature-1
+        - feature-2
+  select_values:
+    - field: service_type
+      value: type-1
+  json_values:
+    - field: gallery
+      value:
+        items:
+          - image: image-a1
+            caption: Image a1
+          - image: image-a2
+            caption: Image a2
+          - image: image-a3
+            caption: Image a3
+- slug: service-2
+  title: Service 2
+  entry_type: service
+  taxons:
+    - slug: service-category-1
+      taxonomy: service_category
+  integer_values:
+    - field: rating
+      value: 10
+  decimal_values:
+    - field: price
+      value: 100
+  boolean_values:
+    - field: is_promoted
+      value: true
+  multi_select_values:
+    - field: features
+      value:
+        - feature-1
+        - feature-4
+  select_values:
+    - field: service_type
+      value: type-2
+  json_values:
+    - field: gallery
+      value:
+        items:
+          - image: image-b1
+            caption: Image b1
+          - image: image-b2
+            caption: Image b2
+          - image: image-b3
+            caption: Image b3

@@ -45,6 +45,7 @@ defmodule Buzzcms.MixProject do
       {:exconstructor, "~> 1.1"},
       {:ueberauth, "~> 0.6"},
       {:telemetry, "~> 0.4.1"},
+      {:yaml_elixir, "~> 2.4"},
       {:ex_machina, "~> 2.3", only: :test}
     ]
   end

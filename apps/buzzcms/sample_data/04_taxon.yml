@@ -1,0 +1,16 @@
+- slug: post-category-1
+  title: Post Category 1
+  taxonomy: post_category
+- slug: post-category-2
+  title: Post Category 2
+  taxonomy: post_category
+- slug: service-category-1
+  title: Service Category 1
+  taxonomy: service_category
+- slug: service-category-2
+  title: Service Category 2
+  taxonomy: service_category
+- slug: service-category-1a
+  title: Service Category 1a
+  parent: service-category-1
+  taxonomy: service_category
