@@ -9,6 +9,8 @@ defmodule Buzzcms.Schema.FieldValue do
     field :code, :string
     field :display_name, :string
     field :description, :string, default: ""
+    field :image, :string
+    field :color, :string
     field :position, :integer, default: 0
     belongs_to :field, Buzzcms.Schema.Field
   end

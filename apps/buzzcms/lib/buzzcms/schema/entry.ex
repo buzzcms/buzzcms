@@ -20,10 +20,13 @@ defmodule Buzzcms.Schema.Entry do
     field :title, :string
     field :subtitle, :string
     field :description, :string, default: ""
+    field :featured, :boolean
     field :body, :string
     field :image, :string
     field :images, {:array, :map}
     field :rich_text, {:array, :map}
+    field :tags, {:array, :string}
+
     belongs_to :entry_type, Buzzcms.Schema.EntryType
     belongs_to :taxon, Buzzcms.Schema.Taxon
     has_one :product, Buzzcms.Schema.Product
