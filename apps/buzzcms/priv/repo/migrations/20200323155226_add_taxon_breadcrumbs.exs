@@ -28,6 +28,7 @@ defmodule Buzzcms.Repo.Migrations.AddTaxonBreadcrumbs do
                 json_build_object('id', tx.id, 'code', tx.code, 'display_name', tx.display_name) as taxonomy
               FROM taxon
               INNER JOIN taxonomy tx ON taxon.taxonomy_id = tx.id
+              ORDER BY t.level
               WHERE taxon.id IN
                 (SELECT unnest(string_to_array(PATH::text, '.')::int[])
                 FROM taxon
