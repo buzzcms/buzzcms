@@ -1,4 +1,4 @@
-defmodule FilterParser.IdInputFilterTest do
+defmodule FilterParser.ArrayStringFilterInputTest do
   use ExUnit.Case
 
   alias FilterParser.ItemParser
