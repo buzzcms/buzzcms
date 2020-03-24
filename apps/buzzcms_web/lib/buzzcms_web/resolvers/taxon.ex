@@ -7,6 +7,7 @@ defmodule BuzzcmsWeb.TaxonResolver do
       {:slug, StringFilterInput},
       {:title, StringFilterInput},
       {:is_root, BooleanFilterInput},
+      {:featured, BooleanFilterInput},
       {:path, LtreeFilterInput},
       {:slug_path, LtreeFilterInput},
       {:parent_id, IdFilterInput},
