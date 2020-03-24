@@ -21,7 +21,8 @@ defmodule BuzzcmsWeb.TaxonResolver do
   def list(params, %{context: _} = _info) do
     ResolverHelper.list(params, @schema, @filter_definition,
       parse_addition_filter: fn schema, params ->
-        parse_addition_filter(schema, params)
+        schema
+        |> parse_addition_filter(params)
       end
     )
   end
