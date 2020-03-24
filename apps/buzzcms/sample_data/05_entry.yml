@@ -18,6 +18,9 @@
 - slug: service-1
   title: Service 1
   entry_type: service
+  tags:
+    - tag-1
+    - tag-2
   taxons:
     - slug: service-category-1a
       taxonomy: service_category
@@ -53,6 +56,9 @@
 - slug: service-2
   title: Service 2
   entry_type: service
+  tags:
+    - tag-1
+    - tag-3
   taxons:
     - slug: service-category-1
       taxonomy: service_category

@@ -6,7 +6,7 @@
       field: {
         boolean: [{ field: "is_promoted", eq: false }]
         decimal: [{ field: "price", gt: 100 }]
-        integer: [{ field: "rating", gte: 5 }]
+        integer: [{ field: "rating", gte: 5, lte: 10 }]
         select: [{ field: "features", all: ["feature-1", "feature-2"] }]
       }
     }

@@ -1,0 +1,20 @@
+{
+  "data": {
+    "entries": {
+      "count": 1,
+      "edges": [
+        {
+          "node": {
+            "featured": false,
+            "slug": "service-2",
+            "tags": [
+              "tag-1",
+              "tag-3"
+            ],
+            "title": "Service 2"
+          }
+        }
+      ]
+    }
+  }
+}

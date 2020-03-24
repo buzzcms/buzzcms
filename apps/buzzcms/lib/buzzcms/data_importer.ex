@@ -120,11 +120,13 @@ defmodule Buzzcms.DataImporter do
     Repo.insert_all(
       Taxon,
       taxons
-      |> Enum.map(fn %{"slug" => slug, "title" => title, "taxonomy" => taxonomy_code} ->
+      |> Enum.map(fn %{"slug" => slug, "title" => title, "taxonomy" => taxonomy_code} = taxon ->
         %{
           slug: slug,
           title: title,
-          taxonomy_id: taxonomies_map[taxonomy_code]
+          taxonomy_id: taxonomies_map[taxonomy_code],
+          featured: taxon["featured"] || false,
+          state: taxon["state"] || "draft"
         }
       end),
       on_conflict: :nothing
@@ -158,11 +160,18 @@ defmodule Buzzcms.DataImporter do
     Repo.insert_all(
       Entry,
       entries
-      |> Enum.map(fn %{"slug" => slug, "title" => title, "entry_type" => entry_type_code} ->
+      |> Enum.map(fn %{
+                       "slug" => slug,
+                       "title" => title,
+                       "entry_type" => entry_type_code
+                     } = entry ->
         %{
           slug: slug,
           title: title,
-          entry_type_id: entry_types_map[entry_type_code]
+          entry_type_id: entry_types_map[entry_type_code],
+          featured: entry["featured"] || false,
+          tags: entry["tags"],
+          state: entry["state"] || "draft"
         }
       end),
       on_conflict: :nothing

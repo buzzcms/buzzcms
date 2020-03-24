@@ -1,0 +1,19 @@
+{
+  entries(
+    first: 10
+    filter: {
+      entryTypeCode: "service"
+      tags: { all: ["tag-1", "tag-3"], any: ["tag-1", "tag-2", "tag-3"] }
+    }
+  ) {
+    count
+    edges {
+      node {
+        slug
+        title
+        featured
+        tags
+      }
+    }
+  }
+}

@@ -12,6 +12,7 @@ defmodule Buzzcms.Schema.Entry do
     :image,
     :images,
     :state,
+    :tags,
     :published_at
   ]
 
@@ -26,7 +27,7 @@ defmodule Buzzcms.Schema.Entry do
     field :image, :string
     field :images, {:array, :map}
     field :rich_text, {:array, :map}
-    field :tags, {:array, :string}
+    field :tags, {:array, :string}, default: []
     embeds_one :seo, Buzzcms.EmbeddedSchema.Seo, on_replace: :update
 
     belongs_to :entry_type, Buzzcms.Schema.EntryType

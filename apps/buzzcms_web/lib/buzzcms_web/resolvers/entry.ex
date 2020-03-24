@@ -11,7 +11,12 @@ defmodule BuzzcmsWeb.EntryResolver do
     Variant
   }
 
-  alias FilterParser.{BooleanFilterInput, IdFilterInput, StringFilterInput}
+  alias FilterParser.{
+    ArrayStringFilterInput,
+    BooleanFilterInput,
+    IdFilterInput,
+    StringFilterInput
+  }
 
   @schema Buzzcms.Schema.Entry
 
@@ -23,7 +28,8 @@ defmodule BuzzcmsWeb.EntryResolver do
       {:featured, BooleanFilterInput},
       {:entry_type_id, IdFilterInput},
       {:taxon_id, IdFilterInput},
-      {:state, StringFilterInput}
+      {:state, StringFilterInput},
+      {:tags, ArrayStringFilterInput}
     ],
     foreign_fields: [
       taxons_id:

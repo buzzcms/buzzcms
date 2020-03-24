@@ -104,6 +104,11 @@ defmodule BuzzcmsWeb.Schema.Common do
     field(:nin, list_of(non_null(:id)))
   end
 
+  input_object :array_string_filter_input do
+    field :any, list_of(non_null(:id))
+    field :all, list_of(non_null(:id))
+  end
+
   input_object :foreign_filter_input do
     field(:eq, :id)
     field(:neq, :id)

@@ -173,6 +173,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :sale_price, :decimal_filter_input
     field :is_new_product, :boolean_filter_input
     field :featured, :boolean_filter_input
+    field :tags, :array_string_filter_input
     field :entry_type_code, :string
     field :taxon_path, list_of(non_null(:taxon_path_filter_input))
     field :taxons_path, list_of(non_null(:taxon_path_filter_input))
