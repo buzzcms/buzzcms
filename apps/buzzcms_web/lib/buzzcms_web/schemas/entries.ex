@@ -185,6 +185,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
 
   object :entry_queries do
     field :entry_filter, :filter_result do
+      arg(:offset, :integer)
       arg(:filter, :entry_filter_input)
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&EntryResolver.get_filter/2)
