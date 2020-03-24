@@ -14,6 +14,8 @@ defmodule BuzzcmsWeb.ResolverHelper do
       end
       |> FilterParser.FilterParser.parse(params[:filter], filter_definition)
 
+    get_order_by = Keyword.get(opts, :get_order_by) || (&get_order_by/2)
+
     {:ok, result} =
       case params do
         %{offset: offset} ->
@@ -22,14 +24,14 @@ defmodule BuzzcmsWeb.ResolverHelper do
           query
           |> limit(^limit)
           |> offset(^offset)
-          |> order_by(^get_order_by(params))
+          |> get_order_by.(params)
           |> Repo.all()
           |> Connection.from_slice(offset)
 
         _ ->
           Absinthe.Relay.Connection.from_query(
             query
-            |> order_by(^get_order_by(params)),
+            |> get_order_by.(params),
             &Repo.all/1,
             params
           )
@@ -39,17 +41,16 @@ defmodule BuzzcmsWeb.ResolverHelper do
     {:ok, result |> Map.put(:count, count)}
   end
 
-  defp get_order_by(params) do
+  defp get_order_by(schema, params) do
     case params do
       %{order_by: order_by} ->
         order_by
-        |> Enum.map(fn %{field: field, direction: order_direction} ->
-          {order_direction, field}
+        |> Enum.reduce(schema, fn %{field: field_name, direction: order_direction}, acc_schema ->
+          acc_schema |> order_by(^Keyword.new([{order_direction, field_name}]))
         end)
-        |> Keyword.new()
 
       _ ->
-        []
+        schema
     end
   end
 end

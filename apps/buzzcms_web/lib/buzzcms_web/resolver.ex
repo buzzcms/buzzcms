@@ -1,12 +1,11 @@
 defmodule BuzzcmsWeb.Resolver do
   defmacro __using__(_opts) do
     quote do
-      alias BuzzcmsWeb.ResolverHelper
       alias Buzzcms.Repo
       import Ecto.Query
 
       def list(params, %{context: _} = _info) do
-        ResolverHelper.list(params, @schema, @filter_definition, [])
+        BuzzcmsWeb.ResolverHelper.list(params, @schema, @filter_definition, [])
       end
 
       def create(%{data: data}, %{context: %{role: "admin"}} = _info) do
