@@ -1,0 +1,16 @@
+{
+  taxons(
+    first: 3
+    filter: { taxonomyCode: "service_category" }
+    orderBy: [{ field: TITLE, direction: ASC }]
+  ) {
+    count
+    edges {
+      node {
+        slug
+        title
+        featured
+      }
+    }
+  }
+}

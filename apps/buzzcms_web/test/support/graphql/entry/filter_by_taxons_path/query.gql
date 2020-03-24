@@ -12,6 +12,8 @@
     count
     edges {
       node {
+        id
+        _id
         slug
         title
         featured

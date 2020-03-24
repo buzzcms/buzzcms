@@ -1,38 +1,12 @@
 defmodule BuzzcmsWeb.Resolver do
   defmacro __using__(_opts) do
     quote do
-      alias Absinthe.Relay.Connection
+      alias BuzzcmsWeb.ResolverHelper
       alias Buzzcms.Repo
       import Ecto.Query
 
       def list(params, %{context: _} = _info) do
-        query =
-          @schema
-          |> FilterParser.FilterParser.parse(params[:filter], @filter_definition)
-
-        {:ok, result} =
-          case params do
-            %{offset: offset} ->
-              {:ok, :forward, limit} = Connection.limit(params)
-
-              query
-              |> limit(^limit)
-              |> offset(^offset)
-              |> order_by(^get_order_by(params))
-              |> Repo.all()
-              |> Connection.from_slice(offset)
-
-            _ ->
-              Absinthe.Relay.Connection.from_query(
-                query
-                |> order_by(^get_order_by(params)),
-                &Repo.all/1,
-                params
-              )
-          end
-
-        count = Repo.aggregate(query, :count)
-        {:ok, result |> Map.put(:count, count)}
+        ResolverHelper.list(params, @schema, @filter_definition, [])
       end
 
       def create(%{data: data}, %{context: %{role: "admin"}} = _info) do
@@ -78,20 +52,6 @@ defmodule BuzzcmsWeb.Resolver do
 
       def delete(_, %{context: context} = _info) do
         {:error, "Not authorized"}
-      end
-
-      defp get_order_by(params) do
-        case params do
-          %{order_by: order_by} ->
-            order_by
-            |> Enum.map(fn %{field: field, direction: order_direction} ->
-              {order_direction, field}
-            end)
-            |> Keyword.new()
-
-          _ ->
-            []
-        end
       end
 
       defoverridable list: 2

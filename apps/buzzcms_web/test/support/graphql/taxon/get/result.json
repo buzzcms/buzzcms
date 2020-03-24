@@ -1,0 +1,30 @@
+{
+  "data": {
+    "taxons": {
+      "count": 3,
+      "edges": [
+        {
+          "node": {
+            "featured": false,
+            "slug": "service-category-1",
+            "title": "Service Category 1"
+          }
+        },
+        {
+          "node": {
+            "featured": false,
+            "slug": "service-category-1a",
+            "title": "Service Category 1a"
+          }
+        },
+        {
+          "node": {
+            "featured": false,
+            "slug": "service-category-2",
+            "title": "Service Category 2"
+          }
+        }
+      ]
+    }
+  }
+}

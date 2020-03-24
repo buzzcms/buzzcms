@@ -61,13 +61,4 @@ defmodule BuzzcmsWeb.Router do
     post("/logout", AuthController, :delete)
     post("/verify", AuthController, :verify_token)
   end
-
-  def absinthe_before_send(conn, %Absinthe.Blueprint{} = _blueprint) do
-    # IO.inspect(conn, label: "Before send")
-    conn
-  end
-
-  def absinthe_before_send(conn, _) do
-    conn
-  end
 end

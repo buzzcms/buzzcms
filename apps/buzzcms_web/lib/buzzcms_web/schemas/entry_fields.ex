@@ -1,3 +1,15 @@
+defmodule BuzzcmsWeb.UpdateEntryFieldsInput do
+  defstruct entry_id: nil,
+            decimal_values: [],
+            integer_values: [],
+            boolean_values: [],
+            json_values: [],
+            select_values: [],
+            multi_select_values: []
+
+  use ExConstructor
+end
+
 defmodule BuzzcmsWeb.Schema.EntryFields do
   use Absinthe.Schema.Notation
   use Absinthe.Relay.Schema.Notation, :modern
@@ -111,7 +123,7 @@ defmodule BuzzcmsWeb.Schema.EntryFields do
           json_values: json_values,
           select_values: select_values,
           multi_select_values: multi_select_values
-        } = data
+        } = BuzzcmsWeb.UpdateEntryFieldsInput.new(data)
 
         upsert_entry_values({EntryDecimalValue, entry_id, decimal_values})
         upsert_entry_values({EntryIntegerValue, entry_id, integer_values})
