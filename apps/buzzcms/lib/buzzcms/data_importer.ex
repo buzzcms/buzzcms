@@ -43,7 +43,9 @@ defmodule Buzzcms.DataImporter do
     Repo.insert_all(
       Field,
       fields
-      |> Enum.map(&%{code: &1["code"], display_name: &1["display_name"]}),
+      |> Enum.map(
+        &%{code: &1["code"], display_name: &1["display_name"], position: &1["position"]}
+      ),
       on_conflict: :nothing
     )
     |> IO.inspect(label: "Insert field")

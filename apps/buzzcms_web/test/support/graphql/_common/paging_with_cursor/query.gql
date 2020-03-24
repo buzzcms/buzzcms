@@ -1,0 +1,23 @@
+{
+  fields(
+    first: 2
+    after: "YXJyYXljb25uZWN0aW9uOjI="
+    orderBy: [{ field: POSITION, direction: DESC }]
+  ) {
+    count
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        id
+        code
+        displayName
+        position
+      }
+    }
+  }
+}

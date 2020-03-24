@@ -1,6 +1,7 @@
 defmodule BuzzcmsWeb.Resolver do
   defmacro __using__(_opts) do
     quote do
+      alias Absinthe.Relay.Connection
       alias Buzzcms.Repo
       import Ecto.Query
 
@@ -8,9 +9,28 @@ defmodule BuzzcmsWeb.Resolver do
         query =
           @schema
           |> FilterParser.FilterParser.parse(params[:filter], @filter_definition)
-          |> order_by(^get_order_by(params))
 
-        {:ok, result} = Absinthe.Relay.Connection.from_query(query, &Repo.all/1, params)
+        {:ok, result} =
+          case params do
+            %{offset: offset} ->
+              {:ok, :forward, limit} = Connection.limit(params)
+
+              query
+              |> limit(^limit)
+              |> offset(^offset)
+              |> order_by(^get_order_by(params))
+              |> Repo.all()
+              |> Connection.from_slice(offset)
+
+            _ ->
+              Absinthe.Relay.Connection.from_query(
+                query
+                |> order_by(^get_order_by(params)),
+                &Repo.all/1,
+                params
+              )
+          end
+
         count = Repo.aggregate(query, :count)
         {:ok, result |> Map.put(:count, count)}
       end

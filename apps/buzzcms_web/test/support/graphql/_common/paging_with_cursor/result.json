@@ -1,0 +1,31 @@
+{
+  "data": {
+    "fields": {
+      "count": 6,
+      "edges": [
+        {
+          "node": {
+            "code": "gallery",
+            "displayName": "Gallery",
+            "id": "RmllbGQ6Mw==",
+            "position": 3
+          }
+        },
+        {
+          "node": {
+            "code": "is_promoted",
+            "displayName": "Is promoted",
+            "id": "RmllbGQ6Mg==",
+            "position": 2
+          }
+        }
+      ],
+      "pageInfo": {
+        "endCursor": "YXJyYXljb25uZWN0aW9uOjQ=",
+        "hasNextPage": true,
+        "hasPreviousPage": true,
+        "startCursor": "YXJyYXljb25uZWN0aW9uOjM="
+      }
+    }
+  }
+}

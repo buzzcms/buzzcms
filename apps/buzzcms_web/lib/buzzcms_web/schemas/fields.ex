@@ -41,6 +41,8 @@ defmodule BuzzcmsWeb.Schema.Fields do
   end
 
   connection(node_type: :field) do
+    field :count, non_null(:integer)
+
     edge do
       field(:node, non_null(:field))
     end
@@ -71,6 +73,7 @@ defmodule BuzzcmsWeb.Schema.Fields do
 
   object :field_queries do
     connection field(:fields, node_type: :field) do
+      arg(:offset, :integer)
       arg(:filter, :field_filter_input)
       arg(:order_by, list_of(non_null(:field_order_by_input)))
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)

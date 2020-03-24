@@ -1,0 +1,31 @@
+{
+  "data": {
+    "fields": {
+      "count": 6,
+      "edges": [
+        {
+          "node": {
+            "code": "rating",
+            "displayName": "Rating",
+            "id": "RmllbGQ6NA==",
+            "position": 4
+          }
+        },
+        {
+          "node": {
+            "code": "gallery",
+            "displayName": "Gallery",
+            "id": "RmllbGQ6Mw==",
+            "position": 3
+          }
+        }
+      ],
+      "pageInfo": {
+        "endCursor": "YXJyYXljb25uZWN0aW9uOjM=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "YXJyYXljb25uZWN0aW9uOjI="
+      }
+    }
+  }
+}

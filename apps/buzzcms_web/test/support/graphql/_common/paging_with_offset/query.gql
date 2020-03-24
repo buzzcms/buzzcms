@@ -1,0 +1,19 @@
+{
+  fields(first: 2, offset: 2, orderBy: [{ field: POSITION, direction: DESC }]) {
+    count
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        id
+        code
+        displayName
+        position
+      }
+    }
+  }
+}

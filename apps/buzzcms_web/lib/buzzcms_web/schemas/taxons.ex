@@ -102,6 +102,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
 
   object :taxon_queries do
     connection field(:taxons, node_type: :taxon) do
+      arg(:offset, :integer)
       arg(:filter, :taxon_filter_input)
       arg(:order_by, list_of(non_null(:taxon_order_by_input)))
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)

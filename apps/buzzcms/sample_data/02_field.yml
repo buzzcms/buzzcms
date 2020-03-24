@@ -1,18 +1,23 @@
 - code: price
   display_name: Price
   type: decimal
+  position: 1
 - code: is_promoted
   display_name: Is promoted
   type: boolean
+  position: 2
 - code: gallery
   display_name: Gallery
   type: gallery
+  position: 3
 - code: rating
   display_name: Rating
   type: integer
+  position: 4
 - code: service_type
   display_name: Service type
   type: select
+  position: 5
   values:
     - code: type-1
       display_name: Type 1
@@ -25,6 +30,7 @@
 - code: features
   display_name: Features
   type: multi_select
+  position: 6
   values:
     - code: feature-1
       display_name: Feature 1
