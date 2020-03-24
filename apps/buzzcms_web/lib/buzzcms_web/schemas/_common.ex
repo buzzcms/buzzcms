@@ -55,9 +55,20 @@ defmodule BuzzcmsWeb.Schema.Common do
     value(:desc_nulls_first)
   end
 
+  enum :order_field_type do
+    value(:integer)
+    value(:decimal)
+    value(:boolean)
+    value(:time)
+    value(:date)
+    value(:datetime)
+  end
+
   input_object :order_by_input do
     field :field, non_null(:string)
     field :direction, non_null(:order_direction)
+    @desc "Use for order field in entry_integer_value, entry_decimal_value & friends"
+    field :field_type, :order_field_type
   end
 
   object :heading do

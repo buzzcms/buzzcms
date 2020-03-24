@@ -41,6 +41,7 @@ defmodule BuzzcmsWeb.EntryResolver do
 
   def list(params, %{context: _} = _info) do
     BuzzcmsWeb.ResolverHelper.list(params, @schema, @filter_definition,
+      get_order_by: &get_order_by/2,
       parse_addition_filter: fn schema, params ->
         schema
         |> parse_entry_field_filter(params)
@@ -347,5 +348,49 @@ defmodule BuzzcmsWeb.EntryResolver do
       |> select([:entry_id])
 
     schema |> join(:inner, [p], sub in subquery(sub_schema), on: p.id == sub.entry_id)
+  end
+
+  defp get_order_by(schema, params) do
+    case params do
+      %{order_by: order_by} ->
+        order_by |> Enum.reduce(schema, &parse_order_item/2)
+
+      _ ->
+        schema
+    end
+  end
+
+  defp parse_order_item(
+         %{field: field_name, direction: order_direction, field_type: field_type},
+         acc_schema
+       ) do
+    ref_query =
+      case field_type do
+        :integer ->
+          from(v in EntryIntegerValue,
+            join: f in Field,
+            on: f.id == v.field_id and f.code == ^field_name
+          )
+
+        :decimal ->
+          from(v in EntryDecimalValue,
+            join: f in Field,
+            on: f.id == v.field_id and f.code == ^field_name
+          )
+      end
+
+    acc_schema
+    |> join(:left, [e], v in subquery(ref_query), on: e.id == v.entry_id, as: :v)
+    |> order_by([v: v], [{^order_direction, v.value}])
+  end
+
+  defp parse_order_item(
+         %{field: field, direction: order_direction},
+         acc_schema
+       ) do
+    field = field |> String.to_atom()
+
+    acc_schema
+    |> order_by({^order_direction, ^field})
   end
 end

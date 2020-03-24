@@ -1,0 +1,18 @@
+{
+  entries(
+    first: 10
+    orderBy: [{ field: "rating", fieldType: INTEGER, direction: ASC }]
+  ) {
+    count
+    edges {
+      node {
+        slug
+        title
+        integerValues {
+          fieldId
+          value
+        }
+      }
+    }
+  }
+}
