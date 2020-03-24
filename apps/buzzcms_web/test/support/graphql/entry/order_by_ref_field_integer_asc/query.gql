@@ -1,7 +1,10 @@
 {
   entries(
     first: 10
-    orderBy: [{ field: "rating", fieldType: INTEGER, direction: ASC }]
+    orderBy: [
+      { field: "rating", fieldType: INTEGER, direction: ASC }
+      { field: "id", direction: ASC }
+    ]
   ) {
     count
     edges {

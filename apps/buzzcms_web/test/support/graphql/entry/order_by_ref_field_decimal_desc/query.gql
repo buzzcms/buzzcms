@@ -3,6 +3,7 @@
     first: 10
     orderBy: [
       { field: "price", fieldType: DECIMAL, direction: DESC_NULLS_LAST }
+      { field: "id", direction: ASC }
     ]
   ) {
     count
