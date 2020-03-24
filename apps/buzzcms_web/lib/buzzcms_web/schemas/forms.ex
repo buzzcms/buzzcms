@@ -36,20 +36,10 @@ defmodule BuzzcmsWeb.Schema.Forms do
     field :display_name, :string_filter_input
   end
 
-  enum :form_order_field do
-    value(:code)
-    value(:created_at)
-  end
-
-  input_object :form_order_by_input do
-    field :field, non_null(:form_order_field)
-    field :direction, non_null(:order_direction)
-  end
-
   object :form_queries do
     connection field(:forms, node_type: :form) do
       arg(:filter, :form_filter_input)
-      arg(:order_by, list_of(non_null(:form_order_by_input)))
+      arg(:order_by, list_of(non_null(:order_by_input)))
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&FormResolver.list/2)
     end

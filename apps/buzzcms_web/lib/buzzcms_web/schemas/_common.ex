@@ -55,6 +55,11 @@ defmodule BuzzcmsWeb.Schema.Common do
     value(:desc_nulls_first)
   end
 
+  input_object :order_by_input do
+    field :field, non_null(:string)
+    field :direction, non_null(:order_direction)
+  end
+
   object :heading do
     field(:title, :string)
     field(:subtitle, :string)

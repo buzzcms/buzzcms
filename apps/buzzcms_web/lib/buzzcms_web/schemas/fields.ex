@@ -62,20 +62,11 @@ defmodule BuzzcmsWeb.Schema.Fields do
     field :type, :string_filter_input
   end
 
-  enum :field_order_field do
-    value(:position)
-  end
-
-  input_object :field_order_by_input do
-    field :field, non_null(:field_order_field)
-    field :direction, non_null(:order_direction)
-  end
-
   object :field_queries do
     connection field(:fields, node_type: :field) do
       arg(:offset, :integer)
       arg(:filter, :field_filter_input)
-      arg(:order_by, list_of(non_null(:field_order_by_input)))
+      arg(:order_by, list_of(non_null(:order_by_input)))
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&FieldResolver.list/2)
     end

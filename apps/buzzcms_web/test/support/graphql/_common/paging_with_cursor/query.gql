@@ -2,7 +2,7 @@
   fields(
     first: 2
     after: "YXJyYXljb25uZWN0aW9uOjI="
-    orderBy: [{ field: POSITION, direction: DESC }]
+    orderBy: [{ field: "position", direction: DESC }]
   ) {
     count
     pageInfo {

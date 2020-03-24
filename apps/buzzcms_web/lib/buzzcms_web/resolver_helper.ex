@@ -46,7 +46,10 @@ defmodule BuzzcmsWeb.ResolverHelper do
       %{order_by: order_by} ->
         order_by
         |> Enum.reduce(schema, fn %{field: field_name, direction: order_direction}, acc_schema ->
-          acc_schema |> order_by(^Keyword.new([{order_direction, field_name}]))
+          field_name = field_name |> String.to_atom()
+
+          acc_schema
+          |> order_by(^Keyword.new([{order_direction, field_name}]))
         end)
 
       _ ->

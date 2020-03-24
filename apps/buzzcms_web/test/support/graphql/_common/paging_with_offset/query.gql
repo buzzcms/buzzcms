@@ -1,5 +1,9 @@
 {
-  fields(first: 2, offset: 2, orderBy: [{ field: POSITION, direction: DESC }]) {
+  fields(
+    first: 2
+    offset: 2
+    orderBy: [{ field: "position", direction: DESC }]
+  ) {
     count
     pageInfo {
       hasPreviousPage

@@ -26,19 +26,6 @@ defmodule BuzzcmsWeb.Schema.Images do
     field :created_at, :datetime
   end
 
-  enum :image_order_field do
-    value(:title)
-    value(:created_at)
-    value(:updated_at)
-    value(:published_at)
-    value(:position)
-  end
-
-  input_object :image_order_by_input do
-    field(:field, non_null(:image_order_field))
-    field(:direction, non_null(:order_direction))
-  end
-
   input_object :image_filter_input do
     field(:name, :string_filter_input)
     field(:remote_url, :string_filter_input)
@@ -59,7 +46,7 @@ defmodule BuzzcmsWeb.Schema.Images do
   object :image_queries do
     connection field(:images, node_type: :image) do
       arg(:filter, :image_filter_input)
-      arg(:order_by, list_of(non_null(:image_order_by_input)))
+      arg(:order_by, list_of(non_null(:order_by_input)))
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&ImageResolver.list/2)
     end

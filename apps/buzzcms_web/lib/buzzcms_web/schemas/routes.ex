@@ -16,15 +16,6 @@ defmodule BuzzcmsWeb.Schema.Routes do
     field(:data, :json)
   end
 
-  enum :route_order_field do
-    value(:name)
-  end
-
-  input_object :route_order_by_input do
-    field(:field, non_null(:route_order_field))
-    field(:direction, non_null(:order_direction))
-  end
-
   input_object :route_filter_input do
     field(:name, :string_filter_input)
   end
@@ -48,7 +39,7 @@ defmodule BuzzcmsWeb.Schema.Routes do
   object :route_queries do
     connection field(:routes, node_type: :route) do
       arg(:filter, :route_filter_input)
-      arg(:order_by, list_of(non_null(:route_order_by_input)))
+      arg(:order_by, list_of(non_null(:order_by_input)))
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&RouteResolver.list/2)
     end

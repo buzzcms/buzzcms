@@ -2,7 +2,7 @@
   taxons(
     first: 3
     filter: { taxonomyCode: "service_category" }
-    orderBy: [{ field: TITLE, direction: ASC }]
+    orderBy: [{ field: "title", direction: ASC }]
   ) {
     count
     edges {

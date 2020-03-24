@@ -22,19 +22,6 @@ defmodule BuzzcmsWeb.Schema.Entries do
     value(:trash, as: "trash")
   end
 
-  enum :entry_order_field do
-    value(:title)
-    value(:created_at)
-    value(:updated_at)
-    value(:published_at)
-    value(:position)
-  end
-
-  input_object :entry_order_by_input do
-    field :field, non_null(:entry_order_field)
-    field :direction, non_null(:order_direction)
-  end
-
   node object(:entry) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field :slug, non_null(:string)
@@ -205,7 +192,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
 
     connection field(:entries, node_type: :entry) do
       arg(:filter, :entry_filter_input)
-      arg(:order_by, list_of(non_null(:entry_order_by_input)))
+      arg(:order_by, list_of(non_null(:order_by_input)))
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&EntryResolver.list/2)
     end

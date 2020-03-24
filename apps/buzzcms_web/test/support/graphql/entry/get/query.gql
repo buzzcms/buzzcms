@@ -7,7 +7,7 @@
         { taxonomyCode: "service_category", slug: { eq: "service-category-1" } }
       ]
     }
-    orderBy: [{ field: TITLE, direction: ASC }]
+    orderBy: [{ field: "title", direction: ASC }]
   ) {
     count
     edges {

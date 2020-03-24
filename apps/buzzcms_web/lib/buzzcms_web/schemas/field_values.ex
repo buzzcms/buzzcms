@@ -18,15 +18,6 @@ defmodule BuzzcmsWeb.Schema.FieldValues do
     # field :field, non_null(:field), resolve: dataloader(Data, :field)
   end
 
-  enum :field_value_order_field do
-    value(:position)
-  end
-
-  input_object :field_value_order_by_input do
-    field :field, non_null(:field_value_order_field)
-    field :direction, non_null(:order_direction)
-  end
-
   connection(node_type: :field_value) do
     field(:count, non_null(:integer))
 
@@ -51,7 +42,7 @@ defmodule BuzzcmsWeb.Schema.FieldValues do
   object :field_value_queries do
     connection field(:field_values, node_type: :field_value) do
       arg(:filter, :field_value_filter_input)
-      arg(:order_by, list_of(non_null(:field_value_order_by_input)))
+      arg(:order_by, list_of(non_null(:order_by_input)))
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&FieldValueResolver.list/2)
     end

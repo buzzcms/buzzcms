@@ -39,20 +39,10 @@ defmodule BuzzcmsWeb.Schema.ConfigItems do
     field :type, :string_filter_input
   end
 
-  enum :config_item_order_field do
-    value(:code)
-    value(:created_at)
-  end
-
-  input_object :config_item_order_by_input do
-    field :field, non_null(:config_item_order_field)
-    field :direction, non_null(:order_direction)
-  end
-
   object :config_item_queries do
     connection field(:config_items, node_type: :config_item) do
       arg(:filter, :config_item_filter_input)
-      arg(:order_by, list_of(non_null(:config_item_order_by_input)))
+      arg(:order_by, list_of(non_null(:order_by_input)))
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&ConfigItemResolver.list/2)
     end

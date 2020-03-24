@@ -14,17 +14,6 @@ defmodule BuzzcmsWeb.Schema.Taxons do
   ]
   @input_ids [id: :taxon, data: [taxonomy_id: :taxonomy]]
 
-  enum :taxon_order_field do
-    value(:title)
-    value(:created_at)
-    value(:position)
-  end
-
-  input_object :taxon_order_by_input do
-    field(:field, non_null(:taxon_order_field))
-    field(:direction, non_null(:order_direction))
-  end
-
   node object(:taxon_breadcrumb) do
     field :slug, non_null(:string)
     field :title, non_null(:string)
@@ -104,7 +93,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     connection field(:taxons, node_type: :taxon) do
       arg(:offset, :integer)
       arg(:filter, :taxon_filter_input)
-      arg(:order_by, list_of(non_null(:taxon_order_by_input)))
+      arg(:order_by, list_of(non_null(:order_by_input)))
       middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&TaxonResolver.list/2)
     end
