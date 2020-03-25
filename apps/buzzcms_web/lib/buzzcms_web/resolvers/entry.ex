@@ -151,6 +151,7 @@ defmodule BuzzcmsWeb.EntryResolver do
                   join: tx in Buzzcms.Schema.Taxonomy,
                   on: t.taxonomy_id == tx.id,
                   where: fragment("? ~ ?", t.slug_path, ^match) and tx.code == ^taxonomy_code,
+                  distinct: et.entry_id,
                   select: [:entry_id]
 
               acc |> join(:inner, [p], sub in subquery(sub_schema), on: p.id == sub.entry_id)
@@ -169,16 +170,15 @@ defmodule BuzzcmsWeb.EntryResolver do
           value
           |> Enum.reduce(
             schema_acc,
-            fn %{taxonomy_code: taxonomy_code, path: %{match: match}}, acc ->
+            fn %{path: %{match: match}}, acc ->
               match = match |> String.replace("-", "_")
 
               sub_schema =
                 from et in Buzzcms.Schema.EntryTaxon,
                   join: t in Buzzcms.Schema.Taxon,
                   on: t.id == et.taxon_id,
-                  join: tx in Buzzcms.Schema.Taxonomy,
-                  on: t.taxonomy_id == tx.id,
-                  where: fragment("? ~ ?", t.path, ^match) and tx.code == ^taxonomy_code,
+                  where: fragment("? ~ ?", t.path, ^match),
+                  distinct: et.entry_id,
                   select: [:entry_id]
 
               acc |> join(:inner, [p], sub in subquery(sub_schema), on: p.id == sub.entry_id)

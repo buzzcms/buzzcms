@@ -11,8 +11,9 @@ defmodule Buzzcms.Telemetry do
           _ -> nil
         end
     }
-    |> inspect()
-    |> Logger.debug()
+
+    # |> inspect()
+    # |> Logger.debug()
   end
 
   def handle_event(
@@ -52,7 +53,8 @@ defmodule Buzzcms.Telemetry do
       %{event_name: [:absinthe, :execute, :operation, :stop]} -> result
       _ -> nil
     end
-    |> inspect()
-    |> Logger.debug()
+
+    # |> inspect()
+    # |> Logger.debug()
   end
 end
