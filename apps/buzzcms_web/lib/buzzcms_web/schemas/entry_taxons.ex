@@ -31,8 +31,6 @@ defmodule BuzzcmsWeb.Schema.EntryTaxons do
         field(:taxon, :taxon)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, data: [entry_id: :entry, taxon_id: :taxon])
-
       resolve(fn %{data: data}, %{context: _} ->
         result = %EntryTaxon{} |> EntryTaxon.changeset(data) |> Repo.insert()
 
@@ -52,8 +50,6 @@ defmodule BuzzcmsWeb.Schema.EntryTaxons do
         field(:entry, :entry)
         field(:taxon, :taxon)
       end
-
-      middleware(Absinthe.Relay.Node.ParseIDs, data: [entry_id: :entry, taxon_id: :taxon])
 
       resolve(fn %{data: data}, %{context: _} ->
         query =

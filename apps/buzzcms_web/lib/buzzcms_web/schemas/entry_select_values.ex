@@ -23,10 +23,6 @@ defmodule BuzzcmsWeb.Schema.EntrySelectValues do
         field(:field_value, :field_value)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs,
-        data: [entry_id: :entry, field_id: :field, field_value_id: :field_value]
-      )
-
       resolve(fn %{data: data}, %{context: _} ->
         result = %EntrySelectValue{} |> EntrySelectValue.changeset(data) |> Repo.insert()
 
@@ -46,10 +42,6 @@ defmodule BuzzcmsWeb.Schema.EntrySelectValues do
         field(:entry, :entry)
         field(:field_value, :field_value)
       end
-
-      middleware(Absinthe.Relay.Node.ParseIDs,
-        data: [entry_id: :entry, field_id: :field, field_value_id: :field_value]
-      )
 
       resolve(fn %{data: data}, %{context: _} ->
         query =

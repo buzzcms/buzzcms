@@ -102,18 +102,6 @@ defmodule BuzzcmsWeb.Schema.EntryFields do
         field(:result, :entry_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs,
-        data: [
-          entry_id: :entry,
-          select_values: [field_id: :field, value: :field_value],
-          multi_select_values: [field_id: :field, value: :field_value],
-          integer_values: [field_id: :field],
-          decimal_values: [field_id: :field],
-          boolean_values: [field_id: :field],
-          json_values: [field_id: :field]
-        ]
-      )
-
       resolve(fn %{data: data}, %{context: _} ->
         %{
           entry_id: entry_id,
@@ -132,10 +120,7 @@ defmodule BuzzcmsWeb.Schema.EntryFields do
         upsert_entry_select_values({entry_id, select_values})
         upsert_entry_multi_select_values({entry_id, multi_select_values})
 
-        case {:ok, 1} do
-          {:ok, _} -> {:ok, %{result: %{node: Repo.get(Entry, entry_id)}}}
-          {:error, _} -> {:error, "Error occurs"}
-        end
+        {:ok, %{result: %{node: Repo.get(Entry, entry_id)}}}
       end)
     end
   end

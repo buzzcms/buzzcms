@@ -22,10 +22,6 @@ defmodule BuzzcmsWeb.Schema.EntryTypeTaxonomies do
         field(:taxonomy, :taxonomy)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs,
-        data: [entry_type_id: :entry_type, taxonomy_id: :taxonomy]
-      )
-
       resolve(fn %{data: data}, %{context: _} ->
         result = %EntryTypeTaxonomy{} |> EntryTypeTaxonomy.changeset(data) |> Repo.insert()
 
@@ -45,10 +41,6 @@ defmodule BuzzcmsWeb.Schema.EntryTypeTaxonomies do
         field(:entry_type, :entry_type)
         field(:taxonomy, :taxonomy)
       end
-
-      middleware(Absinthe.Relay.Node.ParseIDs,
-        data: [entry_type_id: :entry_type, taxonomy_id: :taxonomy]
-      )
 
       resolve(fn %{data: data}, %{context: _} ->
         query =

@@ -22,11 +22,7 @@ defmodule BuzzcmsWeb.Schema.EntryTypeFields do
         field(:field, :field)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs,
-        data: [entry_type_id: :entry_type, field_id: :field]
-      )
-
-      resolve(fn %{data: data}, %{context: _} ->
+      resolve(fn %{data: data}, %{context: %{role: "admin"}} ->
         result = %EntryTypeField{} |> EntryTypeField.changeset(data) |> Repo.insert()
 
         case result do
@@ -46,11 +42,7 @@ defmodule BuzzcmsWeb.Schema.EntryTypeFields do
         field(:field, :field)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs,
-        data: [entry_type_id: :entry_type, field_id: :field]
-      )
-
-      resolve(fn %{data: data}, %{context: _} ->
+      resolve(fn %{data: data}, %{context: %{role: "admin"}} ->
         query =
           from(et in EntryTypeField,
             where: et.entry_type_id == ^data.entry_type_id and et.field_id == ^data.field_id
