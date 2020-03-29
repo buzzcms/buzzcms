@@ -5,6 +5,7 @@
       entryTypeCode: "service"
       tags: { all: ["tag-1", "tag-3"], any: ["tag-1", "tag-2", "tag-3"] }
     }
+    orderBy: []
   ) {
     count
     edges {

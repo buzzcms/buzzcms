@@ -1,0 +1,12 @@
+{
+  "data": {
+    "deleteEntry": {
+      "result": {
+        "node": {
+          "slug": "about",
+          "title": "About"
+        }
+      }
+    }
+  }
+}

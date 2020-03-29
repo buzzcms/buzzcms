@@ -70,6 +70,22 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :seo, :seo_input
   end
 
+  input_object :create_taxon_data_input do
+    field :slug, non_null(:string)
+    field :title, non_null(:string)
+    field :subtitle, :string
+    field :description, :string
+    field :featured, :boolean
+    field :body, :string
+    field :rich_text, :json
+    field :image, :string
+    field :images, list_of(non_null(:image_item_input))
+    field :taxonomy_id, :string
+    field :parent_id, :string
+    field :position, :integer
+    field :seo, :seo_input
+  end
+
   input_object :taxon_filter_input do
     field :id, :id_filter_input
     field :slug, :string_filter_input
@@ -102,7 +118,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
   object :taxon_mutations do
     payload field(:create_taxon) do
       input do
-        field(:data, :taxon_input)
+        field(:data, :create_taxon_data_input)
       end
 
       output do

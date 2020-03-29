@@ -1,0 +1,5 @@
+{
+  taxons(first: 3, filter: {}) {
+    count
+  }
+}

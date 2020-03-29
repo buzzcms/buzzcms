@@ -13,7 +13,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
       taxons_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:taxon)
     ]
   ]
-  @input_ids [id: :entry, data: [entry_type_id: :entry_type, taxon_id: :taxon]]
+  @input_ids [data: [taxon_id: :taxon]]
 
   enum :entry_state do
     value(:draft, as: "draft")
@@ -80,6 +80,24 @@ defmodule BuzzcmsWeb.Schema.Entries do
     end
   end
 
+  input_object :create_entry_data_input do
+    field :slug, non_null(:string)
+    field :title, non_null(:string)
+    field :subtitle, :string
+    field :description, :string
+    field :featured, :boolean
+    field :body, :string
+    field :rich_text, :json
+    field :tags, list_of(non_null(:string))
+    field :image, :string
+    field :images, list_of(non_null(:image_item_input))
+    field :taxon_id, :string
+    field :entry_type_id, :id
+    field :state, :entry_state
+    field :published_at, :datetime
+    field :seo, :seo_input
+  end
+
   input_object :entry_input do
     field :slug, :string
     field :title, :string
@@ -92,7 +110,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :image, :string
     field :images, list_of(non_null(:image_item_input))
     field :taxon_id, :string
-    field :entry_type_id, :string
+    field :entry_type_id, :id
     field :state, :entry_state
     field :published_at, :datetime
     field :seo, :seo_input
@@ -202,7 +220,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
   object :entry_mutations do
     payload field(:create_entry) do
       input do
-        field(:data, :entry_input)
+        field(:data, :create_entry_data_input)
       end
 
       output do

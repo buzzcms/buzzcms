@@ -27,7 +27,7 @@ defmodule BuzzcmsWeb.TaxonResolver do
     )
   end
 
-  defp parse_addition_filter(schema, %{filter: filter}) do
+  defp parse_addition_filter(schema, %{filter: filter}) when map_size(filter) > 0 do
     filter
     |> Enum.reduce(schema, fn {key, value}, schema_acc ->
       case key do
@@ -36,9 +36,6 @@ defmodule BuzzcmsWeb.TaxonResolver do
             join: t in Buzzcms.Schema.Taxonomy,
             on: e.taxonomy_id == t.id,
             where: t.code == ^value
-
-        _ ->
-          schema_acc
       end
     end)
   end

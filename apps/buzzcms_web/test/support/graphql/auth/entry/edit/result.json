@@ -1,0 +1,12 @@
+{
+  "data": {
+    "editEntry": {
+      "result": {
+        "node": {
+          "slug": "edited-title",
+          "title": "Edited title"
+        }
+      }
+    }
+  }
+}

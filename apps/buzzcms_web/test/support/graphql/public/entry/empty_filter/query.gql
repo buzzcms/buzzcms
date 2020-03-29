@@ -1,0 +1,5 @@
+{
+  entries(first: 10) {
+    count
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "data": {
+    "createEntry": {
+      "result": {
+        "node": {
+          "slug": "hello",
+          "title": "Hello"
+        }
+      }
+    }
+  }
+}

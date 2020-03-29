@@ -40,7 +40,10 @@ defmodule BuzzcmsWeb.EntryResolver do
   use BuzzcmsWeb.Resolver
 
   def list(params, %{context: _} = _info) do
-    BuzzcmsWeb.ResolverHelper.list(params, @schema, @filter_definition,
+    BuzzcmsWeb.ResolverHelper.list(
+      params,
+      @schema,
+      @filter_definition,
       get_order_by: &get_order_by/2,
       parse_addition_filter: fn schema, params ->
         schema
@@ -88,8 +91,10 @@ defmodule BuzzcmsWeb.EntryResolver do
     Repo.all(query)
   end
 
-  defp parse_addition_filter(schema, %{filter: filter}) do
+  defp parse_addition_filter(schema, %{filter: filter}) when map_size(filter) > 0 do
     filter
+    |> Map.drop(@filter_definition |> Keyword.get(:fields) |> Keyword.keys())
+    |> Map.delete(:field)
     |> Enum.reduce(schema, fn {key, value}, schema_acc ->
       case key do
         :entry_type_code ->
@@ -184,9 +189,6 @@ defmodule BuzzcmsWeb.EntryResolver do
               acc |> join(:inner, [p], sub in subquery(sub_schema), on: p.id == sub.entry_id)
             end
           )
-
-        _ ->
-          schema_acc
       end
     end)
   end

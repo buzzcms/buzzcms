@@ -1,0 +1,10 @@
+mutation {
+  deleteEntry(input: { id: 1 }) {
+    result {
+      node {
+        slug
+        title
+      }
+    }
+  }
+}

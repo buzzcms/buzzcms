@@ -1,0 +1,19 @@
+{
+  "data": {
+    "createEntry": null
+  },
+  "errors": [
+    {
+      "locations": [
+        {
+          "column": 3,
+          "line": 2
+        }
+      ],
+      "message": "Not authorized",
+      "path": [
+        "createEntry"
+      ]
+    }
+  ]
+}

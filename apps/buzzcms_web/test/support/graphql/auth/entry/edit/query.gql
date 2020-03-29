@@ -1,0 +1,15 @@
+mutation {
+  editEntry(
+    input: {
+      id: 2
+      data: { entryTypeId: 1, title: "Edited title", slug: "edited-title" }
+    }
+  ) {
+    result {
+      node {
+        slug
+        title
+      }
+    }
+  }
+}
