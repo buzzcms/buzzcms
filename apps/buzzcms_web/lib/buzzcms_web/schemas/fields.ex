@@ -48,9 +48,17 @@ defmodule BuzzcmsWeb.Schema.Fields do
   input_object :field_input do
     field :code, :string
     field :display_name, :string
+    field :type, :field_type
     field :position, :integer
     field :note, :string
-    field :type, :field_type
+  end
+
+  input_object :create_field_data_input do
+    field :code, non_null(:string)
+    field :display_name, non_null(:string)
+    field :type, non_null(:field_type)
+    field :position, :integer
+    field :note, :string
   end
 
   input_object :field_filter_input do
@@ -71,7 +79,7 @@ defmodule BuzzcmsWeb.Schema.Fields do
   object :field_mutations do
     payload field(:create_field) do
       input do
-        field(:data, :field_input)
+        field(:data, :create_field_data_input)
       end
 
       output do
@@ -83,7 +91,7 @@ defmodule BuzzcmsWeb.Schema.Fields do
 
     payload field(:edit_field) do
       input do
-        field(:id, :id)
+        field :id, non_null(:id)
         field(:data, :field_input)
       end
 
@@ -96,7 +104,7 @@ defmodule BuzzcmsWeb.Schema.Fields do
 
     payload field(:delete_field) do
       input do
-        field(:id, :id)
+        field :id, non_null(:id)
       end
 
       output do

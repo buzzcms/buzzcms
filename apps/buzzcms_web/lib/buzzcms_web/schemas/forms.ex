@@ -28,6 +28,13 @@ defmodule BuzzcmsWeb.Schema.Forms do
     field :note, :string
   end
 
+  input_object :craete_form_data_input do
+    field :code, non_null(:string)
+    field :display_name, non_null(:string)
+    field :data, non_null(:json)
+    field :note, :string
+  end
+
   input_object :form_filter_input do
     field :code, :string_filter_input
     field :display_name, :string_filter_input
@@ -44,7 +51,7 @@ defmodule BuzzcmsWeb.Schema.Forms do
   object :form_mutations do
     payload field(:create_form) do
       input do
-        field :data, :form_input
+        field :data, :craete_form_data_input
       end
 
       output do
@@ -56,7 +63,7 @@ defmodule BuzzcmsWeb.Schema.Forms do
 
     payload field(:edit_form) do
       input do
-        field :id, :id
+        field :id, non_null(:id)
         field :data, :form_input
       end
 
@@ -69,7 +76,7 @@ defmodule BuzzcmsWeb.Schema.Forms do
 
     payload field(:delete_form) do
       input do
-        field :id, :id
+        field :id, non_null(:id)
       end
 
       output do

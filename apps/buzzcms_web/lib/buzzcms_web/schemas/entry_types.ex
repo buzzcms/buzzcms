@@ -31,6 +31,12 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
     field :is_product, :boolean
   end
 
+  input_object :create_entry_type_data_input do
+    field :code, non_null(:string)
+    field :display_name, non_null(:string)
+    field :is_product, :boolean
+  end
+
   input_object :entry_type_filter_input do
     field :code, :string_filter_input
     field :is_product, :boolean_filter_input
@@ -47,7 +53,7 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
   object :entry_type_mutations do
     payload field(:create_entry_type) do
       input do
-        field(:data, :entry_type_input)
+        field(:data, :create_entry_type_data_input)
       end
 
       output do
@@ -59,7 +65,7 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
 
     payload field(:edit_entry_type) do
       input do
-        field(:id, :id)
+        field :id, non_null(:id)
         field(:data, :entry_type_input)
       end
 
@@ -72,7 +78,7 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
 
     payload field(:delete_entry_type) do
       input do
-        field(:id, :id)
+        field :id, non_null(:id)
       end
 
       output do

@@ -220,7 +220,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
 
     payload field(:edit_entry) do
       input do
-        field(:id, :id)
+        field :id, non_null(:id)
         field(:data, :entry_input)
       end
 
@@ -233,7 +233,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
 
     payload field(:delete_entry) do
       input do
-        field(:id, :id)
+        field :id, non_null(:id)
       end
 
       output do
