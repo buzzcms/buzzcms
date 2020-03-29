@@ -32,6 +32,15 @@ defmodule BuzzcmsWeb.Schema.Subscribers do
     field :labels, :json
   end
 
+  input_object :create_subscriber_data_input do
+    field :email, :string
+    field :phone, :string
+    field :name, :string
+    field :data, :json
+    field :form_id, :id
+    field :labels, :json
+  end
+
   input_object :subscriber_filter_input do
     field :email, :string_filter_input
     field :phone, :string_filter_input
@@ -50,7 +59,7 @@ defmodule BuzzcmsWeb.Schema.Subscribers do
   object :subscriber_mutations do
     payload field(:create_subscriber) do
       input do
-        field :data, :subscriber_input
+        field :data, :create_subscriber_data_input
       end
 
       output do

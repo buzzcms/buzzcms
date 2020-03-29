@@ -1,0 +1,20 @@
+mutation {
+  createSubscriber(
+    input: {
+      data: {
+        formId: 1
+        email: "hcc1512@gmail.com"
+        phone: "0985811833"
+        data: "{\"address\":\"111\"}"
+      }
+    }
+  ) {
+    result {
+      node {
+        email
+        name
+        data
+      }
+    }
+  }
+}

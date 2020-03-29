@@ -1,0 +1,15 @@
+{
+  "data": {
+    "createSubscriber": {
+      "result": {
+        "node": {
+          "data": {
+            "address": "111"
+          },
+          "email": "hcc1512@gmail.com",
+          "name": null
+        }
+      }
+    }
+  }
+}

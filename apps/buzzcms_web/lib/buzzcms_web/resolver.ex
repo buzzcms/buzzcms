@@ -27,6 +27,7 @@ defmodule BuzzcmsWeb.Resolver do
       end
 
       defoverridable list: 2
+      defoverridable create: 2
     end
   end
 end

@@ -12,4 +12,19 @@ defmodule BuzzcmsWeb.SubscriberResolver do
   ]
 
   use BuzzcmsWeb.Resolver
+
+  def create(
+        %{data: data},
+        %{context: _}
+      ) do
+    result =
+      struct(@schema)
+      |> @schema.changeset(data)
+      |> Repo.insert()
+
+    case result do
+      {:ok, result} -> {:ok, %{result: %{node: Repo.get(@schema, result.id)}}}
+      {:error, message} -> {:error, message}
+    end
+  end
 end

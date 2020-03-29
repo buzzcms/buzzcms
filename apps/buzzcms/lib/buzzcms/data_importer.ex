@@ -20,6 +20,7 @@ defmodule Buzzcms.DataImporter do
     EntryTypeTaxonomy,
     Field,
     FieldValue,
+    Form,
     Taxon,
     Taxonomy
   }
@@ -30,6 +31,7 @@ defmodule Buzzcms.DataImporter do
     entry_types = YamlElixir.read_from_file!(Path.join(dir, "03_entry_type.yml"))
     taxons = YamlElixir.read_from_file!(Path.join(dir, "04_taxon.yml"))
     entries = YamlElixir.read_from_file!(Path.join(dir, "05_entry.yml"))
+    forms = YamlElixir.read_from_file!(Path.join(dir, "06_form.yml"))
 
     # Taxonomies
     Repo.insert_all(
@@ -315,6 +317,15 @@ defmodule Buzzcms.DataImporter do
       on_conflict: :nothing
     )
     |> IO.inspect(label: "Insert entry_decimal_value")
+
+    # Forms
+    Repo.insert_all(
+      Form,
+      forms
+      |> Enum.map(&%{code: &1["code"], display_name: &1["display_name"]}),
+      on_conflict: :nothing
+    )
+    |> IO.inspect(label: "Insert form")
   end
 
   defp get_values_from_field(%{"values" => values, "code" => field}, fields_map)
