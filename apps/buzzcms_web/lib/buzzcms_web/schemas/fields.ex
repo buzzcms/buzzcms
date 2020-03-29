@@ -99,6 +99,7 @@ defmodule BuzzcmsWeb.Schema.Fields do
         field(:result, :field_edge)
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :field)
       resolve(&FieldResolver.edit/2)
     end
 
@@ -111,6 +112,7 @@ defmodule BuzzcmsWeb.Schema.Fields do
         field(:result, :field_edge)
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :field)
       resolve(&FieldResolver.delete/2)
     end
   end

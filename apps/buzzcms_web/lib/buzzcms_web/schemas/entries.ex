@@ -228,6 +228,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
         field(:result, :entry_edge)
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :entry)
       resolve(&EntryResolver.edit/2)
     end
 
@@ -241,6 +242,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
         field(:result, :entry_edge)
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :entry)
       resolve(&EntryResolver.delete/2)
     end
   end

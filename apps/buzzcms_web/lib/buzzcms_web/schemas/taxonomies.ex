@@ -67,6 +67,7 @@ defmodule BuzzcmsWeb.Schema.Taxonomies do
         field :result, :taxonomy_edge
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :taxonomy)
       resolve(&TaxonomyResolver.edit/2)
     end
 
@@ -79,6 +80,7 @@ defmodule BuzzcmsWeb.Schema.Taxonomies do
         field :result, :taxonomy_edge
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :taxonomy)
       resolve(&TaxonomyResolver.delete/2)
     end
   end

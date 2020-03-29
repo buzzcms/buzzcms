@@ -129,6 +129,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
         field(:result, :taxon_edge)
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :taxon)
       resolve(&TaxonResolver.edit/2)
     end
 
@@ -141,6 +142,7 @@ defmodule BuzzcmsWeb.Schema.Taxons do
         field(:result, :taxon_edge)
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :taxon)
       resolve(&TaxonResolver.delete/2)
     end
 

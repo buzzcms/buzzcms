@@ -73,6 +73,7 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
         field(:result, :entry_type_edge)
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :entry_type)
       resolve(&EntryTypeResolver.edit/2)
     end
 
@@ -85,6 +86,7 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
         field(:result, :entry_type_edge)
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :entry_type)
       resolve(&EntryTypeResolver.delete/2)
     end
   end

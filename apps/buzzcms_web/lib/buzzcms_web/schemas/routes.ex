@@ -72,6 +72,7 @@ defmodule BuzzcmsWeb.Schema.Routes do
         field :result, :route_edge
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :route)
       resolve(&RouteResolver.edit/2)
     end
 
@@ -84,6 +85,7 @@ defmodule BuzzcmsWeb.Schema.Routes do
         field :result, :route_edge
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :route)
       resolve(&RouteResolver.delete/2)
     end
   end

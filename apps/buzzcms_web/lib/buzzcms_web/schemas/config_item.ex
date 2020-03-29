@@ -30,6 +30,14 @@ defmodule BuzzcmsWeb.Schema.ConfigItems do
     field :note, :string
   end
 
+  input_object :create_config_item_data_input do
+    field :code, non_null(:string)
+    field :display_name, non_null(:string)
+    field :type, non_null(:field_type)
+    field :data, :json
+    field :note, :string
+  end
+
   input_object :config_item_filter_input do
     field :code, :string_filter_input
     field :display_name, :string_filter_input
@@ -47,7 +55,7 @@ defmodule BuzzcmsWeb.Schema.ConfigItems do
   object :config_item_mutations do
     payload field(:create_config_item) do
       input do
-        field :data, :config_item_input
+        field :data, :create_config_item_data_input
       end
 
       output do
@@ -67,6 +75,7 @@ defmodule BuzzcmsWeb.Schema.ConfigItems do
         field :result, :config_item_edge
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :config_item)
       resolve(&ConfigItemResolver.edit/2)
     end
 
@@ -79,6 +88,7 @@ defmodule BuzzcmsWeb.Schema.ConfigItems do
         field :result, :config_item_edge
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :config_item)
       resolve(&ConfigItemResolver.delete/2)
     end
   end
