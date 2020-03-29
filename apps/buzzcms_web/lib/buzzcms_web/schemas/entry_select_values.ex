@@ -7,9 +7,9 @@ defmodule BuzzcmsWeb.Schema.EntrySelectValues do
   alias Buzzcms.Schema.{Entry, EntrySelectValue}
 
   input_object :entry_select_value_input do
-    field(:entry_id, :string)
-    field(:field_id, :string)
-    field(:field_value_id, :string)
+    field(:entry_id, :id)
+    field(:field_id, :id)
+    field(:field_value_id, :id)
   end
 
   object :entry_select_value_mutations do

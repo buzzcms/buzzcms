@@ -4,9 +4,6 @@ defmodule BuzzcmsWeb.Schema.ConfigItems do
 
   alias BuzzcmsWeb.ConfigItemResolver
 
-  @filter_ids []
-  @input_ids [id: :config_item]
-
   node object(:config_item) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field :code, non_null(:string)
@@ -43,7 +40,6 @@ defmodule BuzzcmsWeb.Schema.ConfigItems do
     connection field(:config_items, node_type: :config_item) do
       arg(:filter, :config_item_filter_input)
       arg(:order_by, list_of(non_null(:order_by_input)))
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&ConfigItemResolver.list/2)
     end
   end
@@ -58,7 +54,6 @@ defmodule BuzzcmsWeb.Schema.ConfigItems do
         field :result, :config_item_edge
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&ConfigItemResolver.create/2)
     end
 
@@ -72,7 +67,6 @@ defmodule BuzzcmsWeb.Schema.ConfigItems do
         field :result, :config_item_edge
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&ConfigItemResolver.edit/2)
     end
 
@@ -85,7 +79,6 @@ defmodule BuzzcmsWeb.Schema.ConfigItems do
         field :result, :config_item_edge
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&ConfigItemResolver.delete/2)
     end
   end

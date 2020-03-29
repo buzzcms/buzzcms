@@ -6,9 +6,6 @@ defmodule BuzzcmsWeb.Schema.OptionTypes do
   alias BuzzcmsWeb.Data
   alias BuzzcmsWeb.OptionTypeResolver
 
-  @filter_ids []
-  @input_ids [id: :option_type]
-
   node object(:option_type) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field(:code, non_null(:string))
@@ -37,7 +34,6 @@ defmodule BuzzcmsWeb.Schema.OptionTypes do
   object :option_type_queries do
     connection field(:option_types, node_type: :option_type) do
       arg(:filter, :option_type_filter_input)
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&OptionTypeResolver.list/2)
     end
   end
@@ -52,7 +48,6 @@ defmodule BuzzcmsWeb.Schema.OptionTypes do
         field(:result, :option_type_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&OptionTypeResolver.create/2)
     end
 
@@ -66,7 +61,6 @@ defmodule BuzzcmsWeb.Schema.OptionTypes do
         field(:result, :option_type_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&OptionTypeResolver.edit/2)
     end
 
@@ -79,7 +73,6 @@ defmodule BuzzcmsWeb.Schema.OptionTypes do
         field(:result, :option_type_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&OptionTypeResolver.delete/2)
     end
   end

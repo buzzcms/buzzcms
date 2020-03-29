@@ -6,10 +6,8 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
   alias BuzzcmsWeb.Data
   alias BuzzcmsWeb.EntryTypeResolver
 
-  @filter_ids []
-  @input_ids [id: :entry_type]
-
   node object(:entry_type) do
+    field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field :code, non_null(:string)
     field :display_name, non_null(:string)
     field :is_product, non_null(:boolean)
@@ -42,7 +40,6 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
     connection field(:entry_types, node_type: :entry_type) do
       arg(:filter, :entry_type_filter_input)
       arg(:limit, :integer)
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&EntryTypeResolver.list/2)
     end
   end
@@ -57,7 +54,6 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
         field(:result, :entry_type_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&EntryTypeResolver.create/2)
     end
 
@@ -71,7 +67,6 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
         field(:result, :entry_type_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&EntryTypeResolver.edit/2)
     end
 
@@ -84,7 +79,6 @@ defmodule BuzzcmsWeb.Schema.EntryTypes do
         field(:result, :entry_type_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&EntryTypeResolver.delete/2)
     end
   end

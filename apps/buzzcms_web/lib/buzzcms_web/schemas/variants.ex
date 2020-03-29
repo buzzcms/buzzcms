@@ -6,9 +6,6 @@ defmodule BuzzcmsWeb.Schema.Variants do
   import Absinthe.Resolution.Helpers
   alias BuzzcmsWeb.Data
 
-  @filter_ids []
-  @input_ids [id: :variant]
-
   node object(:variant) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field :sku, :string
@@ -59,7 +56,6 @@ defmodule BuzzcmsWeb.Schema.Variants do
   object :variant_queries do
     connection field(:variants, node_type: :variant) do
       arg(:filter, :variant_filter_input)
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&VariantResolver.list/2)
     end
   end
@@ -74,7 +70,6 @@ defmodule BuzzcmsWeb.Schema.Variants do
         field(:result, :variant_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&VariantResolver.create/2)
     end
 
@@ -88,7 +83,6 @@ defmodule BuzzcmsWeb.Schema.Variants do
         field(:result, :variant_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&VariantResolver.edit/2)
     end
 
@@ -101,7 +95,6 @@ defmodule BuzzcmsWeb.Schema.Variants do
         field(:result, :variant_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&VariantResolver.delete/2)
     end
   end

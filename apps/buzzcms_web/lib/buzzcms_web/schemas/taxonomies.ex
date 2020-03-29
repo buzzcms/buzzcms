@@ -5,9 +5,6 @@ defmodule BuzzcmsWeb.Schema.Taxonomies do
 
   alias BuzzcmsWeb.TaxonomyResolver
 
-  @filter_ids []
-  @input_ids [id: :taxonomy]
-
   node object(:taxonomy) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field(:code, non_null(:string))
@@ -36,7 +33,6 @@ defmodule BuzzcmsWeb.Schema.Taxonomies do
   object :taxonomy_queries do
     connection field(:taxonomies, node_type: :taxonomy) do
       arg(:filter, :taxonomy_filter_input)
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&TaxonomyResolver.list/2)
     end
   end
@@ -51,7 +47,6 @@ defmodule BuzzcmsWeb.Schema.Taxonomies do
         field(:result, :taxonomy_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&TaxonomyResolver.create/2)
     end
 
@@ -65,7 +60,6 @@ defmodule BuzzcmsWeb.Schema.Taxonomies do
         field(:result, :taxonomy_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&TaxonomyResolver.edit/2)
     end
 
@@ -78,7 +72,6 @@ defmodule BuzzcmsWeb.Schema.Taxonomies do
         field(:result, :taxonomy_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&TaxonomyResolver.delete/2)
     end
   end

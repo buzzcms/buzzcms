@@ -4,9 +4,6 @@ defmodule BuzzcmsWeb.Schema.Routes do
 
   alias BuzzcmsWeb.RouteResolver
 
-  @filter_ids []
-  @input_ids [id: :route]
-
   node object(:route) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field(:name, non_null(:string))
@@ -40,7 +37,6 @@ defmodule BuzzcmsWeb.Schema.Routes do
     connection field(:routes, node_type: :route) do
       arg(:filter, :route_filter_input)
       arg(:order_by, list_of(non_null(:order_by_input)))
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&RouteResolver.list/2)
     end
   end
@@ -55,7 +51,6 @@ defmodule BuzzcmsWeb.Schema.Routes do
         field(:result, :route_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&RouteResolver.create/2)
     end
 
@@ -69,7 +64,6 @@ defmodule BuzzcmsWeb.Schema.Routes do
         field(:result, :route_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&RouteResolver.edit/2)
     end
 
@@ -82,7 +76,6 @@ defmodule BuzzcmsWeb.Schema.Routes do
         field(:result, :route_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&RouteResolver.delete/2)
     end
   end

@@ -7,8 +7,8 @@ defmodule BuzzcmsWeb.Schema.EntryTypeTaxonomies do
   alias Buzzcms.Schema.{EntryType, EntryTypeTaxonomy}
 
   input_object :entry_type_taxonomy_input do
-    field(:entry_type_id, :string)
-    field(:taxonomy_id, :string)
+    field(:entry_type_id, :id)
+    field(:taxonomy_id, :id)
   end
 
   object :entry_type_taxonomy_mutations do

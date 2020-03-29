@@ -5,16 +5,6 @@ defmodule BuzzcmsWeb.Schema.Entries do
   alias BuzzcmsWeb.Data
   alias BuzzcmsWeb.EntryResolver
 
-  @filter_ids [
-    filter: [
-      id: BuzzcmsWeb.ParseIDsHelper.get_ids(:entry),
-      entry_type_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:entry_type),
-      taxon_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:taxon),
-      taxons_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:taxon)
-    ]
-  ]
-  @input_ids [data: [taxon_id: :taxon]]
-
   enum :entry_state do
     value(:draft, as: "draft")
     value(:published, as: "published")
@@ -91,7 +81,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :tags, list_of(non_null(:string))
     field :image, :string
     field :images, list_of(non_null(:image_item_input))
-    field :taxon_id, :string
+    field :taxon_id, :id
     field :entry_type_id, :id
     field :state, :entry_state
     field :published_at, :datetime
@@ -109,7 +99,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :tags, list_of(non_null(:string))
     field :image, :string
     field :images, list_of(non_null(:image_item_input))
-    field :taxon_id, :string
+    field :taxon_id, :id
     field :entry_type_id, :id
     field :state, :entry_state
     field :published_at, :datetime
@@ -205,14 +195,12 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :entry_filter, :filter_result do
       arg(:offset, :integer)
       arg(:filter, :entry_filter_input)
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&EntryResolver.get_filter/2)
     end
 
     connection field(:entries, node_type: :entry) do
       arg(:filter, :entry_filter_input)
       arg(:order_by, list_of(non_null(:order_by_input)))
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&EntryResolver.list/2)
     end
   end
@@ -227,7 +215,6 @@ defmodule BuzzcmsWeb.Schema.Entries do
         field(:result, :entry_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&EntryResolver.create/2)
     end
 
@@ -241,7 +228,6 @@ defmodule BuzzcmsWeb.Schema.Entries do
         field(:result, :entry_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&EntryResolver.edit/2)
     end
 
@@ -255,7 +241,6 @@ defmodule BuzzcmsWeb.Schema.Entries do
         field(:result, :entry_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&EntryResolver.delete/2)
     end
   end

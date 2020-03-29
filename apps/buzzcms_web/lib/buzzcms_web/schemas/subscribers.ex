@@ -4,13 +4,6 @@ defmodule BuzzcmsWeb.Schema.Subscribers do
 
   alias BuzzcmsWeb.SubscriberResolver
 
-  @filter_ids [
-    filter: [
-      form_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:form)
-    ]
-  ]
-  @input_ids [id: :subscriber, data: [form_id: :form]]
-
   node object(:subscriber) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field :email, :string
@@ -50,7 +43,6 @@ defmodule BuzzcmsWeb.Schema.Subscribers do
     connection field(:subscribers, node_type: :subscriber) do
       arg(:filter, :subscriber_filter_input)
       arg(:order_by, list_of(non_null(:order_by_input)))
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&SubscriberResolver.list/2)
     end
   end
@@ -65,7 +57,6 @@ defmodule BuzzcmsWeb.Schema.Subscribers do
         field :result, :subscriber_edge
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&SubscriberResolver.create/2)
     end
 
@@ -79,7 +70,6 @@ defmodule BuzzcmsWeb.Schema.Subscribers do
         field :result, :subscriber_edge
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&SubscriberResolver.edit/2)
     end
 
@@ -92,7 +82,6 @@ defmodule BuzzcmsWeb.Schema.Subscribers do
         field :result, :subscriber_edge
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&SubscriberResolver.delete/2)
     end
   end

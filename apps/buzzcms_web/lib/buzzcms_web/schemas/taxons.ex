@@ -6,14 +6,6 @@ defmodule BuzzcmsWeb.Schema.Taxons do
   alias BuzzcmsWeb.Data
   alias BuzzcmsWeb.TaxonResolver
 
-  @filter_ids [
-    filter: [
-      id: BuzzcmsWeb.ParseIDsHelper.get_ids(:taxon),
-      taxonomy_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:taxonomy)
-    ]
-  ]
-  @input_ids [id: :taxon, data: [taxonomy_id: :taxonomy]]
-
   node object(:taxon_breadcrumb) do
     field :slug, non_null(:string)
     field :title, non_null(:string)
@@ -64,8 +56,8 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :rich_text, :json
     field :image, :string
     field :images, list_of(non_null(:image_item_input))
-    field :taxonomy_id, :string
-    field :parent_id, :string
+    field :taxonomy_id, :id
+    field :parent_id, :id
     field :position, :integer
     field :seo, :seo_input
   end
@@ -80,8 +72,8 @@ defmodule BuzzcmsWeb.Schema.Taxons do
     field :rich_text, :json
     field :image, :string
     field :images, list_of(non_null(:image_item_input))
-    field :taxonomy_id, :string
-    field :parent_id, :string
+    field :taxonomy_id, :id
+    field :parent_id, :id
     field :position, :integer
     field :seo, :seo_input
   end
@@ -110,7 +102,6 @@ defmodule BuzzcmsWeb.Schema.Taxons do
       arg(:offset, :integer)
       arg(:filter, :taxon_filter_input)
       arg(:order_by, list_of(non_null(:order_by_input)))
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&TaxonResolver.list/2)
     end
   end
@@ -125,7 +116,6 @@ defmodule BuzzcmsWeb.Schema.Taxons do
         field(:result, :taxon_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&TaxonResolver.create/2)
     end
 
@@ -139,7 +129,6 @@ defmodule BuzzcmsWeb.Schema.Taxons do
         field(:result, :taxon_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&TaxonResolver.edit/2)
     end
 
@@ -152,7 +141,6 @@ defmodule BuzzcmsWeb.Schema.Taxons do
         field(:result, :taxon_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&TaxonResolver.delete/2)
     end
 
@@ -164,8 +152,6 @@ defmodule BuzzcmsWeb.Schema.Taxons do
       output do
         field(:result, list_of(:taxon_edge))
       end
-
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
 
       resolve(fn %{data: data}, _info ->
         taxons =

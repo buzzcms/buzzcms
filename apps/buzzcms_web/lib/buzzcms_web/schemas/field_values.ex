@@ -3,13 +3,6 @@ defmodule BuzzcmsWeb.Schema.FieldValues do
   use Absinthe.Relay.Schema.Notation, :modern
   alias BuzzcmsWeb.FieldValueResolver
 
-  @filter_ids [
-    filter: [
-      field_id: BuzzcmsWeb.ParseIDsHelper.get_ids(:field)
-    ]
-  ]
-  @input_ids [id: :field_value, data: [field_id: :field]]
-
   node object(:field_value) do
     field :code, non_null(:string)
     field :display_name, non_null(:string)
@@ -43,7 +36,6 @@ defmodule BuzzcmsWeb.Schema.FieldValues do
     connection field(:field_values, node_type: :field_value) do
       arg(:filter, :field_value_filter_input)
       arg(:order_by, list_of(non_null(:order_by_input)))
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&FieldValueResolver.list/2)
     end
   end
@@ -58,7 +50,6 @@ defmodule BuzzcmsWeb.Schema.FieldValues do
         field(:result, :field_value_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&FieldValueResolver.create/2)
     end
 
@@ -72,7 +63,6 @@ defmodule BuzzcmsWeb.Schema.FieldValues do
         field(:result, :field_value_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&FieldValueResolver.edit/2)
     end
 
@@ -85,7 +75,6 @@ defmodule BuzzcmsWeb.Schema.FieldValues do
         field(:result, :field_value_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&FieldValueResolver.delete/2)
     end
   end

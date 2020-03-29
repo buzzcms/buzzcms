@@ -6,9 +6,6 @@ defmodule BuzzcmsWeb.Schema.Products do
 
   alias BuzzcmsWeb.Data
 
-  @filter_ids []
-  @input_ids [id: :product]
-
   node object(:product) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field(:available_at, :datetime)
@@ -58,7 +55,6 @@ defmodule BuzzcmsWeb.Schema.Products do
   object :product_queries do
     connection field(:products, node_type: :product) do
       arg(:filter, :product_filter_input)
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&BuzzcmsWeb.ProductResolver.list/2)
     end
   end
@@ -73,7 +69,6 @@ defmodule BuzzcmsWeb.Schema.Products do
         field(:result, :product_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&BuzzcmsWeb.ProductResolver.create/2)
     end
 
@@ -87,7 +82,6 @@ defmodule BuzzcmsWeb.Schema.Products do
         field(:result, :product_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&BuzzcmsWeb.ProductResolver.edit/2)
     end
 
@@ -100,7 +94,6 @@ defmodule BuzzcmsWeb.Schema.Products do
         field(:result, :product_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&BuzzcmsWeb.ProductResolver.delete/2)
     end
   end

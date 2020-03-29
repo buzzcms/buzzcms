@@ -6,9 +6,6 @@ defmodule BuzzcmsWeb.Schema.Fields do
   alias BuzzcmsWeb.FieldResolver
   import Absinthe.Resolution.Helpers
 
-  @filter_ids []
-  @input_ids [id: :field]
-
   enum :field_type do
     value(:integer)
     value(:decimal)
@@ -67,7 +64,6 @@ defmodule BuzzcmsWeb.Schema.Fields do
       arg(:offset, :integer)
       arg(:filter, :field_filter_input)
       arg(:order_by, list_of(non_null(:order_by_input)))
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&FieldResolver.list/2)
     end
   end
@@ -82,7 +78,6 @@ defmodule BuzzcmsWeb.Schema.Fields do
         field(:result, :field_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&FieldResolver.create/2)
     end
 
@@ -96,7 +91,6 @@ defmodule BuzzcmsWeb.Schema.Fields do
         field(:result, :field_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&FieldResolver.edit/2)
     end
 
@@ -109,7 +103,6 @@ defmodule BuzzcmsWeb.Schema.Fields do
         field(:result, :field_edge)
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&FieldResolver.delete/2)
     end
   end

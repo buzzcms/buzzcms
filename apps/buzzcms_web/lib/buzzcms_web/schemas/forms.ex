@@ -4,9 +4,6 @@ defmodule BuzzcmsWeb.Schema.Forms do
 
   alias BuzzcmsWeb.FormResolver
 
-  @filter_ids []
-  @input_ids [id: :form]
-
   node object(:form) do
     field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
     field :code, non_null(:string)
@@ -40,7 +37,6 @@ defmodule BuzzcmsWeb.Schema.Forms do
     connection field(:forms, node_type: :form) do
       arg(:filter, :form_filter_input)
       arg(:order_by, list_of(non_null(:order_by_input)))
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
       resolve(&FormResolver.list/2)
     end
   end
@@ -55,7 +51,6 @@ defmodule BuzzcmsWeb.Schema.Forms do
         field :result, :form_edge
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&FormResolver.create/2)
     end
 
@@ -69,7 +64,6 @@ defmodule BuzzcmsWeb.Schema.Forms do
         field :result, :form_edge
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&FormResolver.edit/2)
     end
 
@@ -82,7 +76,6 @@ defmodule BuzzcmsWeb.Schema.Forms do
         field :result, :form_edge
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&FormResolver.delete/2)
     end
   end

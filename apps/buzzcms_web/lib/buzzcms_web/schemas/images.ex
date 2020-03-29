@@ -4,79 +4,68 @@ defmodule BuzzcmsWeb.Schema.Images do
 
   alias BuzzcmsWeb.ImageResolver
 
-  @filter_ids []
-  @input_ids [id: :image]
-
   node object(:image) do
-    field(:name, non_null(:string))
-
-    field :uid, non_null(:id) do
-      resolve(fn _, %{source: source} ->
-        {:ok, source.id}
-      end)
-    end
-
-    field(:remote_url, :string)
-    field(:ext, non_null(:string))
-    field(:mime, :string)
-    field(:width, :decimal)
-    field(:height, :decimal)
-    field(:size, non_null(:decimal))
-    field(:code, non_null(:string))
+    field :_id, non_null(:id), resolve: fn %{id: id}, _, _ -> {:ok, id} end
+    field :name, non_null(:string)
+    field :remote_url, :string
+    field :ext, non_null(:string)
+    field :mime, :string
+    field :width, :decimal
+    field :height, :decimal
+    field :size, non_null(:decimal)
+    field :code, non_null(:string)
     field :created_at, :datetime
   end
 
   input_object :image_filter_input do
-    field(:name, :string_filter_input)
-    field(:remote_url, :string_filter_input)
+    field :name, :string_filter_input
+    field :remote_url, :string_filter_input
   end
 
   connection(node_type: :image) do
-    field(:count, non_null(:integer))
+    field :count, non_null(:integer)
 
     edge do
-      field(:node, non_null(:image))
+      field :node, non_null(:image)
     end
   end
 
   input_object :image_input do
-    field(:name, :string)
+    field :name, :string
   end
 
   object :image_queries do
-    connection field(:images, node_type: :image) do
+    connection field :images, node_type: :image do
       arg(:filter, :image_filter_input)
       arg(:order_by, list_of(non_null(:order_by_input)))
-      middleware(Absinthe.Relay.Node.ParseIDs, @filter_ids)
+
       resolve(&ImageResolver.list/2)
     end
   end
 
   object :image_mutations do
-    payload field(:edit_image) do
+    payload field :edit_image do
       input do
-        field(:id, :id)
-        field(:data, :image_input)
+        field :id, :id
+        field :data, :image_input
       end
 
       output do
-        field(:result, :image_edge)
+        field :result, :image_edge
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&ImageResolver.edit/2)
     end
 
-    payload field(:delete_image) do
+    payload field :delete_image do
       input do
-        field(:id, :id)
+        field :id, :id
       end
 
       output do
-        field(:result, :image_edge)
+        field :result, :image_edge
       end
 
-      middleware(Absinthe.Relay.Node.ParseIDs, @input_ids)
       resolve(&ImageResolver.delete/2)
     end
   end

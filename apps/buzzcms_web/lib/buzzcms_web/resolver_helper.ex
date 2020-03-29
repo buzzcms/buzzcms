@@ -26,7 +26,11 @@ defmodule BuzzcmsWeb.ResolverHelper do
     {:ok, result |> Map.put(:count, count)}
   end
 
-  def create(schema, %{data: data}, %{context: %{role: "admin"}} = _info) do
+  def create(
+        schema,
+        %{data: data},
+        %{context: %{role: "admin"}} = _info
+      ) do
     result =
       struct(schema)
       |> schema.changeset(data)
@@ -42,7 +46,11 @@ defmodule BuzzcmsWeb.ResolverHelper do
     {:error, "Not authorized"}
   end
 
-  def edit(schema, %{id: id, data: data}, %{context: %{role: "admin"}}) do
+  def edit(
+        schema,
+        %{id: id, data: data},
+        %{context: %{role: "admin"}}
+      ) do
     result = Repo.get!(schema, id) |> schema.changeset(data) |> Repo.update()
 
     case result do
@@ -55,7 +63,11 @@ defmodule BuzzcmsWeb.ResolverHelper do
     {:error, "Not authorized"}
   end
 
-  def delete(schema, %{id: id}, %{context: %{role: "admin"}}) do
+  def delete(
+        schema,
+        %{id: id},
+        %{context: %{role: "admin"}}
+      ) do
     result = Repo.get!(schema, id) |> Repo.delete()
 
     case result do

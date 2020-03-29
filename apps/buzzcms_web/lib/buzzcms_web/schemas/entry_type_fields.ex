@@ -7,8 +7,8 @@ defmodule BuzzcmsWeb.Schema.EntryTypeFields do
   alias Buzzcms.Schema.{EntryType, EntryTypeField}
 
   input_object :entry_type_field_input do
-    field(:entry_type_id, :string)
-    field(:field_id, :string)
+    field(:entry_type_id, :id)
+    field(:field_id, :id)
   end
 
   object :entry_type_field_mutations do

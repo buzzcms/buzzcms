@@ -9,8 +9,8 @@ defmodule BuzzcmsWeb.Schema.EntryTaxons do
   alias BuzzcmsWeb.Data
 
   input_object :entry_taxon_input do
-    field :entry_id, non_null(:string)
-    field :taxon_id, non_null(:string)
+    field :entry_id, non_null(:id)
+    field :taxon_id, non_null(:id)
     field :group, :string
   end
 
