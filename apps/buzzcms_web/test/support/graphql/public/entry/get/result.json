@@ -16,6 +16,7 @@
               }
             ],
             "featured": false,
+            "images": [],
             "integerValues": [
               {
                 "value": 10
@@ -55,6 +56,11 @@
                 "displayName": "Feature 4"
               }
             ],
+            "seo": {
+              "description": null,
+              "keywords": null,
+              "title": null
+            },
             "slug": "service-2",
             "title": "Service 2"
           }

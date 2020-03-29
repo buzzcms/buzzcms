@@ -31,6 +31,15 @@
           code
           displayName
         }
+        images {
+          id
+          caption
+        }
+        seo {
+          title
+          description
+          keywords
+        }
       }
     }
   }

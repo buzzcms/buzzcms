@@ -2,6 +2,11 @@ defmodule Buzzcms.DataImporter do
   import Ecto.Query
   alias Buzzcms.Repo
 
+  alias Buzzcms.EmbeddedSchema.{
+    ImageItem,
+    Seo
+  }
+
   alias Buzzcms.Schema.{
     Entry,
     EntryBooleanValue,
@@ -44,7 +49,12 @@ defmodule Buzzcms.DataImporter do
       Field,
       fields
       |> Enum.map(
-        &%{code: &1["code"], display_name: &1["display_name"], position: &1["position"]}
+        &%{
+          code: &1["code"],
+          display_name: &1["display_name"],
+          type: &1["type"],
+          position: &1["position"]
+        }
       ),
       on_conflict: :nothing
     )
@@ -173,6 +183,21 @@ defmodule Buzzcms.DataImporter do
           entry_type_id: entry_types_map[entry_type_code],
           featured: entry["featured"] || false,
           tags: entry["tags"],
+          image: entry["image"],
+          images:
+            (entry["images"] || [])
+            |> Enum.map(
+              &struct(ImageItem, %{
+                id: &1["id"],
+                caption: &1["caption"]
+              })
+            ),
+          seo:
+            struct(Seo, %{
+              title: get_in(entry, ["seo", "title"]),
+              description: get_in(entry, ["seo", "description"]),
+              keywords: get_in(entry, ["seo", "keywords"])
+            }),
           state: entry["state"] || "draft"
         }
       end),

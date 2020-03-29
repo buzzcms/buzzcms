@@ -11,7 +11,6 @@ defmodule Buzzcms.Schema.Taxon do
     :rich_text,
     :featured,
     :image,
-    :images,
     :parent_id,
     :state
   ]
@@ -25,7 +24,7 @@ defmodule Buzzcms.Schema.Taxon do
     field :body, :string
     field :rich_text, {:array, :map}
     field :image, :string
-    field :images, {:array, :map}
+    embeds_many :images, Buzzcms.EmbeddedSchema.ImageItem, on_replace: :raise
     embeds_many :breadcrumbs, Buzzcms.EmbeddedSchema.TaxonBreadcrumb
     embeds_one :seo, Buzzcms.EmbeddedSchema.Seo, on_replace: :update
     has_many :taxons, Buzzcms.Schema.Taxon, foreign_key: :parent_id
@@ -45,6 +44,7 @@ defmodule Buzzcms.Schema.Taxon do
     entity
     |> cast(params, @required_fields ++ @optional_fields)
     |> cast_embed(:seo)
+    |> cast_embed(:images)
     |> validate_required(@required_fields)
     |> unique_constraint(:slug, name: :taxon_slug_unique)
   end

@@ -10,14 +10,12 @@ defmodule Buzzcms.Schema.Entry do
     :rich_text,
     :featured,
     :image,
-    :images,
     :state,
     :tags,
     :published_at
   ]
 
   schema "entry" do
-    # field :nanoid, :string
     field :slug, :string
     field :title, :string
     field :subtitle, :string
@@ -25,11 +23,10 @@ defmodule Buzzcms.Schema.Entry do
     field :featured, :boolean
     field :body, :string
     field :image, :string
-    field :images, {:array, :map}
+    embeds_many :images, Buzzcms.EmbeddedSchema.ImageItem, on_replace: :raise
     field :rich_text, {:array, :map}
     field :tags, {:array, :string}, default: []
     embeds_one :seo, Buzzcms.EmbeddedSchema.Seo, on_replace: :update
-
     belongs_to :entry_type, Buzzcms.Schema.EntryType
     belongs_to :taxon, Buzzcms.Schema.Taxon
     has_one :product, Buzzcms.Schema.Product
@@ -53,6 +50,7 @@ defmodule Buzzcms.Schema.Entry do
     entity
     |> cast(params, @required_fields ++ @optional_fields)
     |> cast_embed(:seo)
+    |> cast_embed(:images)
     |> validate_required(@required_fields)
     |> unique_constraint(:slug, name: :entry_slug_unique)
   end

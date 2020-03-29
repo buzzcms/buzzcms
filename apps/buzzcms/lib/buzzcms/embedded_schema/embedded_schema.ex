@@ -36,6 +36,21 @@ defmodule Buzzcms.EmbeddedSchema.Heading do
   end
 end
 
+defmodule Buzzcms.EmbeddedSchema.ImageItem do
+  use Ecto.Schema
+  import Ecto.Changeset
+  @primary_key false
+
+  embedded_schema do
+    field :id, :string
+    field :caption, :string
+  end
+
+  def changeset(schema, params) do
+    schema |> cast(params, [:id, :caption])
+  end
+end
+
 defmodule Buzzcms.EmbeddedSchema.Seo do
   use Ecto.Schema
   import Ecto.Changeset
