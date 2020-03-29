@@ -1,0 +1,14 @@
+{
+  "data": {
+    "createEntryTypeTaxonomy": {
+      "entryType": {
+        "code": "post",
+        "_id": "1"
+      },
+      "taxonomy": {
+        "code": "service_category",
+        "_id": "2"
+      }
+    }
+  }
+}

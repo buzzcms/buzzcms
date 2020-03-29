@@ -23,7 +23,7 @@ defmodule BuzzcmsWeb.Schema.EntrySelectValues do
         field(:field_value, :field_value)
       end
 
-      resolve(fn %{data: data}, %{context: _} ->
+      resolve(fn %{data: data}, %{context: %{role: "admin"}} ->
         result = %EntrySelectValue{} |> EntrySelectValue.changeset(data) |> Repo.insert()
 
         case result do
@@ -43,7 +43,7 @@ defmodule BuzzcmsWeb.Schema.EntrySelectValues do
         field(:field_value, :field_value)
       end
 
-      resolve(fn %{data: data}, %{context: _} ->
+      resolve(fn %{data: data}, %{context: %{role: "admin"}} ->
         query =
           from(et in EntrySelectValue,
             where: et.entry_id == ^data.entry_id and et.field_value_id == ^data.field_value_id

@@ -1,0 +1,12 @@
+mutation {
+  createEntryTypeTaxonomy(input: { data: { entryTypeId: 1, taxonomyId: 2 } }) {
+    entryType {
+      _id
+      code
+    }
+    taxonomy {
+      _id
+      code
+    }
+  }
+}

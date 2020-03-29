@@ -1,0 +1,14 @@
+{
+  "data": {
+    "deleteEntryTypeTaxonomy": {
+      "entryType": {
+        "code": "post",
+        "_id": "1"
+      },
+      "taxonomy": {
+        "code": "post_category",
+        "_id": "1"
+      }
+    }
+  }
+}

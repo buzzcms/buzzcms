@@ -102,7 +102,7 @@ defmodule BuzzcmsWeb.Schema.EntryFields do
         field(:result, :entry_edge)
       end
 
-      resolve(fn %{data: data}, %{context: _} ->
+      resolve(fn %{data: data}, %{context: %{role: "admin"}} ->
         %{
           entry_id: entry_id,
           decimal_values: decimal_values,
@@ -156,7 +156,7 @@ defmodule BuzzcmsWeb.Schema.EntryFields do
       on_conflict: :nothing
     )
 
-    field_value_ids = values |> Enum.map(& &1.value) |> IO.inspect()
+    field_value_ids = values |> Enum.map(& &1.value)
 
     Repo.delete_all(
       from sv in EntrySelectValue,
@@ -186,7 +186,7 @@ defmodule BuzzcmsWeb.Schema.EntryFields do
       on_conflict: :nothing
     )
 
-    field_value_ids = values |> Enum.map(& &1.value) |> List.flatten() |> IO.inspect()
+    field_value_ids = values |> Enum.map(& &1.value) |> List.flatten()
 
     Repo.delete_all(
       from sv in EntrySelectValue,

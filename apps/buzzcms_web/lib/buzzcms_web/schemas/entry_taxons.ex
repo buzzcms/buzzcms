@@ -31,7 +31,7 @@ defmodule BuzzcmsWeb.Schema.EntryTaxons do
         field(:taxon, :taxon)
       end
 
-      resolve(fn %{data: data}, %{context: _} ->
+      resolve(fn %{data: data}, %{context: %{role: "admin"}} ->
         result = %EntryTaxon{} |> EntryTaxon.changeset(data) |> Repo.insert()
 
         case result do
@@ -51,7 +51,7 @@ defmodule BuzzcmsWeb.Schema.EntryTaxons do
         field(:taxon, :taxon)
       end
 
-      resolve(fn %{data: data}, %{context: _} ->
+      resolve(fn %{data: data}, %{context: %{role: "admin"}} ->
         query =
           from(et in EntryTaxon,
             where: et.entry_id == ^data.entry_id and et.taxon_id == ^data.taxon_id

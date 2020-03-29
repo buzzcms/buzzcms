@@ -1,0 +1,12 @@
+mutation {
+  deleteEntryTypeTaxonomy(input: { data: { entryTypeId: 1, taxonomyId: 1 } }) {
+    entryType {
+      _id
+      code
+    }
+    taxonomy {
+      _id
+      code
+    }
+  }
+}

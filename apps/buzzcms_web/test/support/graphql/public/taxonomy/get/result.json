@@ -1,0 +1,23 @@
+{
+  "data": {
+    "taxonomies": {
+      "count": 2,
+      "edges": [
+        {
+          "node": {
+            "_id": "1",
+            "code": "post_category",
+            "displayName": "Post Category"
+          }
+        },
+        {
+          "node": {
+            "_id": "2",
+            "code": "service_category",
+            "displayName": "Service Category"
+          }
+        }
+      ]
+    }
+  }
+}

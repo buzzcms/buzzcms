@@ -1,0 +1,12 @@
+{
+  taxonomies(first: 10) {
+    count
+    edges {
+      node {
+        _id
+        code
+        displayName
+      }
+    }
+  }
+}

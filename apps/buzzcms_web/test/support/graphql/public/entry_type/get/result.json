@@ -1,0 +1,30 @@
+{
+  "data": {
+    "entryTypes": {
+      "count": 3,
+      "edges": [
+        {
+          "node": {
+            "_id": "1",
+            "code": "post",
+            "displayName": "Post"
+          }
+        },
+        {
+          "node": {
+            "_id": "2",
+            "code": "page",
+            "displayName": "Page"
+          }
+        },
+        {
+          "node": {
+            "_id": "4",
+            "code": "service",
+            "displayName": "Service"
+          }
+        }
+      ]
+    }
+  }
+}
