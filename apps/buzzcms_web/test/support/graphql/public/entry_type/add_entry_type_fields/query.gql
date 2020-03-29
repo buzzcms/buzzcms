@@ -1,0 +1,12 @@
+mutation {
+  createEntryTypeField(input: { data: { entryTypeId: 1, fieldId: 1 } }) {
+    entryType {
+      id
+      code
+    }
+    field {
+      id
+      code
+    }
+  }
+}

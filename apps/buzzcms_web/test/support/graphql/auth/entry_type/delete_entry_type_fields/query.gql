@@ -1,0 +1,12 @@
+mutation {
+  deleteEntryTypeField(input: { data: { entryTypeId: 4, fieldId: 1 } }) {
+    entryType {
+      _id
+      code
+    }
+    field {
+      _id
+      code
+    }
+  }
+}

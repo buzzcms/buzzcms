@@ -1,0 +1,14 @@
+{
+  "data": {
+    "deleteEntryTaxon": {
+      "entry": {
+        "_id": "2",
+        "slug": "post-1"
+      },
+      "taxon": {
+        "_id": "1",
+        "slug": "post-category-1"
+      }
+    }
+  }
+}

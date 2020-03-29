@@ -1,0 +1,14 @@
+{
+  "data": {
+    "deleteEntryTypeField": {
+      "entryType": {
+        "code": "service",
+        "_id": "4"
+      },
+      "field": {
+        "code": "price",
+        "_id": "1"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+mutation {
+  createEntryTaxon(input: { data: { entryId: 2, taxonId: 2 } }) {
+    entry {
+      _id
+      slug
+    }
+    taxon {
+      _id
+      slug
+    }
+  }
+}

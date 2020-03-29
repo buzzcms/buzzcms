@@ -1,0 +1,14 @@
+{
+  "data": {
+    "createEntryTypeField": {
+      "entryType": {
+        "_id": "1",
+        "code": "post"
+      },
+      "field": {
+        "_id": "1",
+        "code": "price"
+      }
+    }
+  }
+}

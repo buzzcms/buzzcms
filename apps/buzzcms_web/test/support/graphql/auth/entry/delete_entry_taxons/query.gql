@@ -1,0 +1,12 @@
+mutation {
+  deleteEntryTaxon(input: { data: { entryId: 2, taxonId: 1 } }) {
+    entry {
+      _id
+      slug
+    }
+    taxon {
+      _id
+      slug
+    }
+  }
+}
