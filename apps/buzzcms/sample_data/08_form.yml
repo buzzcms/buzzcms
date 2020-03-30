@@ -1,0 +1,4 @@
+- code: contact
+  display_name: Contact
+  email_sender: # sender@example.com, will get the first email_sender for convenience
+  data: {}

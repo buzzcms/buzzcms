@@ -13,24 +13,5 @@ Buzzcms.Repo.insert!(%Buzzcms.Schema.AuthProvider{value: "email"})
 Buzzcms.Repo.insert!(%Buzzcms.Schema.Role{value: "admin"})
 Buzzcms.Repo.insert!(%Buzzcms.Schema.Role{value: "contributor"})
 Buzzcms.Repo.insert!(%Buzzcms.Schema.Role{value: "customer", is_default: true})
-Buzzcms.Repo.insert!(%Buzzcms.Schema.EntryType{code: "post", display_name: "Post"})
-
-email_templates = [
-  %{
-    type: "verify_email",
-    subject: "Verify your email",
-    html: "Please click the link <%= link %>",
-    text: "Please click the link: <%= link %>",
-    link: "https://dew.vn/verify-email"
-  },
-  %{
-    type: "reset_password",
-    subject: "Reset your password",
-    html: "Please click the link <%= link %>",
-    text: "Please click the link: <%= link %>",
-    link: "https://dew.vn/forget-password"
-  }
-]
 
 Buzzcms.DataImporter.import_from_dir(Path.join(File.cwd!(), "sample_data"))
-Buzzcms.Repo.insert_all(Buzzcms.Schema.EmailTemplate, email_templates)

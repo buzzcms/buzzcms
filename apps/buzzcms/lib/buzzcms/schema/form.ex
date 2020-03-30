@@ -9,10 +9,10 @@ defmodule Buzzcms.Schema.Form do
     field :code, :string
     field :display_name, :string
     field :note, :string
-    field :send_from_email, :string
+    belongs_to :email_sender, Buzzcms.Schema.EmailSender
     field :notify_emails, {:array, :string}, default: []
-    embeds_one :notify_template, Buzzcms.EmbeddedSchema.EmailTemplate
-    embeds_one :thank_you_template, Buzzcms.EmbeddedSchema.EmailTemplate
+    embeds_one :notify_template, Buzzcms.EmbeddedSchema.EmailTemplate, on_replace: :update
+    embeds_one :thank_you_template, Buzzcms.EmbeddedSchema.EmailTemplate, on_replace: :update
     field :data, :map, default: %{fields: []}
     field :created_at, :utc_datetime
   end

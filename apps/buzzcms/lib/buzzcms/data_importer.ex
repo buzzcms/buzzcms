@@ -8,6 +8,8 @@ defmodule Buzzcms.DataImporter do
   }
 
   alias Buzzcms.Schema.{
+    EmailSender,
+    EmailTemplate,
     Entry,
     EntryBooleanValue,
     EntryDecimalValue,
@@ -31,7 +33,9 @@ defmodule Buzzcms.DataImporter do
     entry_types = YamlElixir.read_from_file!(Path.join(dir, "03_entry_type.yml"))
     taxons = YamlElixir.read_from_file!(Path.join(dir, "04_taxon.yml"))
     entries = YamlElixir.read_from_file!(Path.join(dir, "05_entry.yml"))
-    forms = YamlElixir.read_from_file!(Path.join(dir, "06_form.yml"))
+    email_senders = YamlElixir.read_from_file!(Path.join(dir, "06_email_sender.yml"))
+    email_templates = YamlElixir.read_from_file!(Path.join(dir, "07_email_template.yml"))
+    forms = YamlElixir.read_from_file!(Path.join(dir, "08_form.yml"))
 
     # Taxonomies
     Repo.insert_all(
@@ -318,11 +322,51 @@ defmodule Buzzcms.DataImporter do
     )
     |> IO.inspect(label: "Insert entry_decimal_value")
 
+    # Email senders
+    Repo.insert_all(
+      EmailSender,
+      email_senders
+      |> Enum.map(
+        &%{
+          email: &1["email"],
+          name: &1["name"],
+          provider: &1["provider"]
+        }
+      ),
+      on_conflict: :nothing
+    )
+    |> IO.inspect(label: "Insert email senders")
+
+    %{id: email_sender_id} = Repo.one(EmailSender)
+
+    # Email templates
+    Repo.insert_all(
+      EmailTemplate,
+      email_templates
+      |> Enum.map(
+        &%{
+          type: &1["type"],
+          subject: &1["subject"],
+          html: &1["html"],
+          text: &1["text"],
+          link: &1["link"]
+        }
+      ),
+      on_conflict: :nothing
+    )
+    |> IO.inspect(label: "Insert email templates")
+
     # Forms
     Repo.insert_all(
       Form,
       forms
-      |> Enum.map(&%{code: &1["code"], display_name: &1["display_name"]}),
+      |> Enum.map(
+        &%{
+          code: &1["code"],
+          display_name: &1["display_name"],
+          email_sender_id: email_sender_id
+        }
+      ),
       on_conflict: :nothing
     )
     |> IO.inspect(label: "Insert form")

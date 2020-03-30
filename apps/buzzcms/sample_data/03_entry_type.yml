@@ -1,9 +1,9 @@
-- code: page
-  display_name: Page
 - code: post
   display_name: Post
   taxonomies:
     - post_category
+- code: page
+  display_name: Page
 - code: service
   display_name: Service
   taxonomies:

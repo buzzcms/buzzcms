@@ -1,5 +1,5 @@
 mutation {
-  deleteEntryTypeField(input: { data: { entryTypeId: 4, fieldId: 1 } }) {
+  deleteEntryTypeField(input: { data: { entryTypeId: 3, fieldId: 1 } }) {
     entryType {
       _id
       code

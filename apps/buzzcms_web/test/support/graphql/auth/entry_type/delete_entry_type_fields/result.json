@@ -3,7 +3,7 @@
     "deleteEntryTypeField": {
       "entryType": {
         "code": "service",
-        "_id": "4"
+        "_id": "3"
       },
       "field": {
         "code": "price",

@@ -1,0 +1,4 @@
+- email: sender@example.com
+  name: Sender
+  is_verified: false
+  provider: SES
