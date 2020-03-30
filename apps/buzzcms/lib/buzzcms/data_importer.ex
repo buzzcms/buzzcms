@@ -345,16 +345,22 @@ defmodule Buzzcms.DataImporter do
       email_templates
       |> Enum.map(
         &%{
-          type: &1["type"],
+          code: &1["code"],
+          note: &1["note"],
+          is_system: &1["is_system"],
           subject: &1["subject"],
           html: &1["html"],
           text: &1["text"],
-          link: &1["link"]
+          email_sender_id: email_sender_id
         }
       ),
       on_conflict: :nothing
     )
     |> IO.inspect(label: "Insert email templates")
+
+    email_templates_map =
+      Repo.all(EmailTemplate)
+      |> Enum.reduce(%{}, fn %{id: id, code: code}, acc -> Map.put(acc, code, id) end)
 
     # Forms
     Repo.insert_all(
@@ -364,7 +370,9 @@ defmodule Buzzcms.DataImporter do
         &%{
           code: &1["code"],
           display_name: &1["display_name"],
-          email_sender_id: email_sender_id
+          thank_you_template_id: email_templates_map["contact_thank_you"],
+          notify_template_id: email_templates_map["contact_notify"],
+          notify_emails: &1["notify_emails"]
         }
       ),
       on_conflict: :nothing

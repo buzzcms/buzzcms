@@ -1,19 +1,32 @@
 defmodule BuzzcmsWeb.Helpers.EmailFactory do
   import Bamboo.Email
+  alias Buzzcms.Schema.{EmailTemplate, User}
 
-  def make_email(from, to, %{subject: _, body_html: _} = template, payload)
-      when is_binary(from) and is_bitstring(to) do
-    make_email(template, payload) |> from(from) |> to(to)
+  def make_email(%EmailTemplate{} = template, to, payload) when is_bitstring(to) do
+    make_email(template, payload) |> to(to)
+  end
+
+  def make_email(%EmailTemplate{} = template, %User{} = to, payload) do
+    make_email(template, payload) |> to(to)
   end
 
   def make_email(_from, _to, _template, _payload) do
   end
 
-  defp make_email(template, payload) do
+  defp make_email(
+         %EmailTemplate{
+           email_sender: from,
+           html: html,
+           text: text,
+           subject: subject
+         },
+         payload
+       ) do
     new_email(
-      subject: EEx.eval_string(template.subject, payload),
-      html_body: EEx.eval_string(template.body_html, payload),
-      text_body: EEx.eval_string(template.body_text, payload)
+      from: from,
+      subject: EEx.eval_string(subject, payload),
+      html_body: EEx.eval_string(html, payload),
+      text_body: EEx.eval_string(text, payload)
     )
   end
 end

@@ -3,8 +3,9 @@ mutation {
     input: {
       data: {
         formId: 1
-        email: "hcc1512@gmail.com"
-        phone: "0985811833"
+        email: "joehua87@gmail.com"
+        name: "Joe"
+        phone: "0981222111"
         data: "{\"address\":\"111\"}"
       }
     }

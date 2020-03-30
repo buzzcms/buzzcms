@@ -1,4 +1,6 @@
 - code: contact
   display_name: Contact
-  email_sender: # sender@example.com, will get the first email_sender for convenience
+  notify_emails:
+    - test1@gmail.com
+    - test2@gmail.com
   data: {}

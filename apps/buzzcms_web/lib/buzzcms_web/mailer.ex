@@ -2,7 +2,7 @@ defmodule BuzzcmsWeb.Mailer do
   use Bamboo.Mailer, otp_app: :buzzcms_web
   import Ecto.Query, only: [from: 2]
   alias Buzzcms.Repo
-  alias Buzzcms.Schema.{EmailTemplate, EmailSender, Token, User}
+  alias Buzzcms.Schema.{EmailTemplate, Token, User}
 
   def send_mail_by_token(token) do
     case make_email(token) do
@@ -28,35 +28,22 @@ defmodule BuzzcmsWeb.Mailer do
          type: type,
          token: token
        }) do
-    query =
-      from t in EmailTemplate,
-        left_join: es in EmailSender,
-        on: es.id == t.email_sender_id,
-        where: t.type == ^type,
-        select: [t, es]
-
-    template = Repo.one(query)
-    to = Repo.get(User, user_id)
+    template =
+      Repo.one(
+        from t in EmailTemplate,
+          where: t.code == ^type and t.is_system == true
+      )
+      |> Repo.preload([:email_sender])
 
     case template do
       nil ->
         {:error, "Cannot find email template"}
 
-      [_, nil] ->
-        {:error, "Cannot find email sender"}
-
-      [
-        %EmailTemplate{subject: subject, html: html, text: text, link: link},
-        %EmailSender{} = from
-      ] ->
-        link = "#{link}?token=#{token}"
-
-        Bamboo.Email.new_email(
-          to: to,
-          from: from,
-          subject: subject,
-          html_body: EEx.eval_string(html, link: link),
-          text_body: EEx.eval_string(text, link: link)
+      %EmailTemplate{} = template ->
+        BuzzcmsWeb.Helpers.EmailFactory.make_email(
+          template,
+          Repo.get(User, user_id),
+          token: token
         )
     end
   end

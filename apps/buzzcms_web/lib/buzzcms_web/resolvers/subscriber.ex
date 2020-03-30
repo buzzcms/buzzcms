@@ -1,5 +1,7 @@
 defmodule BuzzcmsWeb.SubscriberResolver do
   @schema Buzzcms.Schema.Subscriber
+  import Ecto.Query
+  alias Buzzcms.Schema.Form
 
   @filter_definition [
     fields: [
@@ -14,7 +16,7 @@ defmodule BuzzcmsWeb.SubscriberResolver do
   use BuzzcmsWeb.Resolver
 
   def create(
-        %{data: data},
+        %{data: %{form_id: form_id} = data},
         %{context: _}
       ) do
     result =
@@ -25,8 +27,7 @@ defmodule BuzzcmsWeb.SubscriberResolver do
     case result do
       {:ok, result} ->
         subscriber = Repo.get(@schema, result.id)
-        form = Repo.get(Buzzcms.Schema.Form, result.form_id)
-        send_mails(form, subscriber)
+        get_templates(form_id) |> send_mails(subscriber)
         {:ok, %{result: %{node: subscriber}}}
 
       {:error, changeset = %Ecto.Changeset{}} ->
@@ -37,11 +38,15 @@ defmodule BuzzcmsWeb.SubscriberResolver do
     end
   end
 
+  defp get_templates(form_id) do
+    Repo.get(Form, form_id)
+    |> Repo.preload(thank_you_template: [:email_sender], notify_template: [:email_sender])
+  end
+
   defp send_mails(
-         %{
+         %Form{
            thank_you_template: thank_you_template,
            notify_template: notify_template,
-           send_from_email: send_from_email,
            notify_emails: notify_emails
          },
          %{email: subscriber_email, phone: phone, name: name, data: data} = _subscriber
@@ -53,28 +58,26 @@ defmodule BuzzcmsWeb.SubscriberResolver do
 
     options = [email: subscriber_email, phone: phone, name: name] ++ addition_data
 
-    thank_you_email =
-      BuzzcmsWeb.Helpers.EmailFactory.make_email(
-        send_from_email,
-        subscriber_email,
-        thank_you_template,
-        options
-      )
-      |> BuzzcmsWeb.Mailer.deliver_later()
+    BuzzcmsWeb.Helpers.EmailFactory.make_email(
+      thank_you_template,
+      subscriber_email,
+      options
+    )
+    |> BuzzcmsWeb.Mailer.deliver_later()
+
+    # |> IO.inspect(label: "Thank you email")
 
     notify_emails
     |> Enum.each(
       &(BuzzcmsWeb.Helpers.EmailFactory.make_email(
-          send_from_email,
-          &1,
           notify_template,
+          &1,
           options
         )
         |> BuzzcmsWeb.Mailer.deliver_later())
     )
 
-    IO.inspect(thank_you_email, label: "Thank you")
-    IO.inspect(notify_emails, label: "Notify")
+    # |> IO.inspect(label: "Notify emails")
   end
 
   defp send_mails(_form, _subscriber) do

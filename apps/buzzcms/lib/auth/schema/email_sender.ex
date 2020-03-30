@@ -10,6 +10,7 @@ defmodule Buzzcms.Schema.EmailSender do
     field :name, :string
     field :is_verified, :boolean
     field :provider, :string
+    field :created_at, :utc_datetime
   end
 
   def changeset(entity, params) do

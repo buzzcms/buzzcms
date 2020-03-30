@@ -1,10 +1,22 @@
-- type: "verify_email"
+- code: "verify_email"
+  is_system: true
   subject: "Verify your email"
-  html: "Please click the link <%= link %>"
-  text: "Please click the link: <%= link %>"
-  link: "https://example.com/verify-email"
-- type: "reset_password"
+  html: "Please click the link http://example.com/verify?type=verify&token=<%= token %>"
+  text: "Please click the link: http://example.com/verify?type=verify&token=<%= token %>"
+- code: "reset_password"
+  is_system: true
   subject: "Reset your password"
-  html: "Please click the link <%= link %>"
-  text: "Please click the link: <%= link %>"
-  link: "https://example.com/forget-password"
+  html: "Please click the link http://example.com/verify?type=reset_password&token=<%= token %>"
+  text: "Please click the link: http://example.com/verify?type=reset_password&token=<%= token %>"
+- code: "contact_thank_you"
+  is_system: false
+  note: Contact thank you
+  subject: "Thank you for subscribed"
+  text: "Thank you for subscribed. We will contact you soon"
+  html: "Thank you for subscribed. We will contact you soon"
+- code: "contact_notify"
+  is_system: false
+  note: Contact contact_notify
+  subject: "Form subscribed"
+  text: "<%= name %> on <%= email %> subscribed"
+  html: "<%= name %> on <%= email %> subscribed"

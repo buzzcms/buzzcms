@@ -1,7 +1,8 @@
 defmodule BuzzcmsWeb.Schema.Forms do
   use Absinthe.Schema.Notation
   use Absinthe.Relay.Schema.Notation, :modern
-
+  import Absinthe.Resolution.Helpers
+  alias BuzzcmsWeb.Data
   alias BuzzcmsWeb.FormResolver
 
   node object(:form) do
@@ -10,10 +11,9 @@ defmodule BuzzcmsWeb.Schema.Forms do
     field :display_name, non_null(:string)
     field :note, :string
     field :data, :json
-    field :send_from_email, non_null(:string)
+    field :notify_template, :email_template, resolve: dataloader(Data, :notify_template)
+    field :thank_you_template, :email_template, resolve: dataloader(Data, :thank_you_template)
     field :notify_emails, non_null(list_of(non_null(:string)))
-    field :notify_template, non_null(:email_template)
-    field :thank_you_template, non_null(:email_template)
     field :created_at, non_null(:datetime)
   end
 
@@ -30,20 +30,18 @@ defmodule BuzzcmsWeb.Schema.Forms do
     field :display_name, :string
     field :data, :json
     field :note, :string
-    field :send_from_email, :string
     field :notify_emails, list_of(non_null(:string))
-    field :notify_template, :email_template_input
-    field :thank_you_template, :email_template_input
+    field :notify_template_id, :id
+    field :thank_you_template_id, :id
   end
 
   input_object :create_form_data_input do
     field :code, non_null(:string)
     field :display_name, non_null(:string)
     field :data, non_null(:json)
-    field :send_from_email, non_null(:string)
     field :notify_emails, non_null(list_of(non_null(:string)))
-    field :notify_template, non_null(:email_template_input)
-    field :thank_you_template, non_null(:email_template_input)
+    field :notify_template_id, non_null(:id)
+    field :thank_you_template_id, non_null(:id)
     field :note, :string
   end
 

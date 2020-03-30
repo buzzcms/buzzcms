@@ -5,6 +5,8 @@ defmodule BuzzcmsWeb.Schema.Common do
   alias Buzzcms.Repo
 
   alias Buzzcms.Schema.{
+    EmailSender,
+    EmailTemplate,
     Entry,
     EntryType,
     Field,
@@ -103,18 +105,6 @@ defmodule BuzzcmsWeb.Schema.Common do
     field(:caption, :string)
   end
 
-  object :email_template do
-    field(:subject, :string)
-    field(:body_text, :string)
-    field(:body_html, :string)
-  end
-
-  input_object :email_template_input do
-    field(:subject, :string)
-    field(:body_text, :string)
-    field(:body_html, :string)
-  end
-
   input_object :boolean_filter_input do
     field(:eq, :boolean)
     field(:neq, :boolean)
@@ -193,6 +183,8 @@ defmodule BuzzcmsWeb.Schema.Common do
 
   node interface do
     resolve_type(fn
+      %EmailSender{}, _ -> :email_sender
+      %EmailTemplate{}, _ -> :email_template
       %EntryType{}, _ -> :entry_type
       %Taxonomy{}, _ -> :taxonomy
       %Taxon{}, _ -> :taxon
@@ -209,6 +201,8 @@ defmodule BuzzcmsWeb.Schema.Common do
   object :node_field do
     node field do
       resolve(fn
+        %{type: :email_sender, id: id}, _ -> {:ok, Repo.get(EmailSender, id)}
+        %{type: :email_template, id: id}, _ -> {:ok, Repo.get(EmailTemplate, id)}
         %{type: :entry_type, id: id}, _ -> {:ok, Repo.get(EntryType, id)}
         %{type: :entry, id: id}, _ -> {:ok, Repo.get(Entry, id)}
         %{type: :taxonomy, id: id}, _ -> {:ok, Repo.get(Taxonomy, id)}
