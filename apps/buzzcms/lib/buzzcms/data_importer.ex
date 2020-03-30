@@ -24,10 +24,12 @@ defmodule Buzzcms.DataImporter do
     FieldValue,
     Form,
     Taxon,
-    Taxonomy
+    Taxonomy,
+    User
   }
 
   def import_from_dir(dir) when is_bitstring(dir) do
+    users = YamlElixir.read_from_file!(Path.join(dir, "00_user.yml"))
     taxonomies = YamlElixir.read_from_file!(Path.join(dir, "01_taxonomy.yml"))
     fields = YamlElixir.read_from_file!(Path.join(dir, "02_field.yml"))
     entry_types = YamlElixir.read_from_file!(Path.join(dir, "03_entry_type.yml"))
@@ -36,6 +38,28 @@ defmodule Buzzcms.DataImporter do
     email_senders = YamlElixir.read_from_file!(Path.join(dir, "06_email_sender.yml"))
     email_templates = YamlElixir.read_from_file!(Path.join(dir, "07_email_template.yml"))
     forms = YamlElixir.read_from_file!(Path.join(dir, "08_form.yml"))
+
+    # Users
+    Repo.insert_all(
+      User,
+      users
+      |> Enum.map(
+        &%{
+          email: &1["email"],
+          nickname: &1["nickname"],
+          display_name: &1["display_name"],
+          is_verified: &1["is_verified"],
+          role: &1["role"],
+          auth_provider: &1["auth_provider"],
+          bio: &1["bio"],
+          website: &1["website"]
+        }
+      ),
+      on_conflict: :nothing
+    )
+    |> IO.inspect(label: "Insert users")
+
+    %{id: user_id} = Repo.one(User)
 
     # Taxonomies
     Repo.insert_all(
@@ -144,6 +168,8 @@ defmodule Buzzcms.DataImporter do
           title: title,
           taxonomy_id: taxonomies_map[taxonomy_code],
           featured: taxon["featured"] || false,
+          created_by_id: user_id,
+          modified_by_id: user_id,
           state: taxon["state"] || "draft"
         }
       end),
@@ -204,6 +230,8 @@ defmodule Buzzcms.DataImporter do
               description: get_in(entry, ["seo", "description"]),
               keywords: get_in(entry, ["seo", "keywords"])
             }),
+          created_by_id: user_id,
+          modified_by_id: user_id,
           state: entry["state"] || "draft"
         }
       end),

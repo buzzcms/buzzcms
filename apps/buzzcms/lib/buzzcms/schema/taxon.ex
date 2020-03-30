@@ -12,7 +12,9 @@ defmodule Buzzcms.Schema.Taxon do
     :featured,
     :image,
     :parent_id,
-    :state
+    :state,
+    :created_by_id,
+    :modified_by_id
   ]
 
   schema "taxon" do
@@ -36,6 +38,8 @@ defmodule Buzzcms.Schema.Taxon do
     field :slug_path, Ltree
     field :level, :integer
     field :state, :string
+    belongs_to :created_by, Buzzcms.Schema.User, type: Ecto.UUID
+    belongs_to :modified_by, Buzzcms.Schema.User, type: Ecto.UUID
     field :created_at, :utc_datetime
     field :modified_at, :utc_datetime
   end

@@ -15,6 +15,9 @@ defmodule Buzzcms.Schema.User do
     field :auth_provider, :string
     field :role, :string
     field :is_verified, :boolean
+    field :avatar, :string
+    field :bio, :string
+    field :website, :string
     field :created_at, :utc_datetime
     field :modified_at, :utc_datetime
   end
@@ -32,6 +35,9 @@ defmodule Buzzcms.Schema.User do
       :password,
       :auth_provider,
       :role,
+      :avatar,
+      :bio,
+      :website,
       :is_verified
     ])
     |> validate_required([:email, :display_name, :password, :auth_provider])

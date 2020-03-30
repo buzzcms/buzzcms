@@ -12,7 +12,9 @@ defmodule Buzzcms.Schema.Entry do
     :image,
     :state,
     :tags,
-    :published_at
+    :published_at,
+    :created_by_id,
+    :modified_by_id
   ]
 
   schema "entry" do
@@ -42,6 +44,8 @@ defmodule Buzzcms.Schema.Entry do
     has_many :json_values, Buzzcms.Schema.EntryJsonValue
     field :state, :string
     field :published_at, :utc_datetime
+    belongs_to :created_by, Buzzcms.Schema.User, type: Ecto.UUID
+    belongs_to :modified_by, Buzzcms.Schema.User, type: Ecto.UUID
     field :created_at, :utc_datetime
     field :modified_at, :utc_datetime
   end

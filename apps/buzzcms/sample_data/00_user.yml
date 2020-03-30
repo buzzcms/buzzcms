@@ -1,0 +1,8 @@
+- email: admin@example.com
+  nickname: admin
+  display_name: Admin
+  is_verified: true
+  role: admin
+  bio: I'm the admin
+  auth_provider: email
+  website: www.example.com

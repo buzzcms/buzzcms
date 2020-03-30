@@ -27,6 +27,7 @@ defmodule BuzzcmsWeb.Schema do
   import_types(BuzzcmsWeb.Schema.ConfigItems)
   import_types(BuzzcmsWeb.Schema.EmailSenders)
   import_types(BuzzcmsWeb.Schema.EmailTemplates)
+  import_types(BuzzcmsWeb.Schema.Users)
 
   query do
     import_fields(:node_field)
@@ -47,6 +48,7 @@ defmodule BuzzcmsWeb.Schema do
     import_fields(:config_item_queries)
     import_fields(:email_sender_queries)
     import_fields(:email_template_queries)
+    import_fields(:user_queries)
   end
 
   mutation do

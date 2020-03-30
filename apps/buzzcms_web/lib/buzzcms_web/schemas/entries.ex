@@ -30,6 +30,8 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :state, non_null(:entry_state)
     field :seo, :seo
     field :published_at, non_null(:datetime)
+    field :created_by, :user, resolve: dataloader(Data, :created_by)
+    field :modified_by, :user, resolve: dataloader(Data, :modified_by)
     field :created_at, non_null(:datetime)
     field :updated_at, non_null(:datetime)
 
