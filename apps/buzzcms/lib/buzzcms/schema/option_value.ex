@@ -17,5 +17,6 @@ defmodule Buzzcms.Schema.OptionValue do
     |> cast(params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
     |> unique_constraint(:code, name: :option_value_option_type_id_code)
+    |> foreign_key_constraint(:option_type_id)
   end
 end

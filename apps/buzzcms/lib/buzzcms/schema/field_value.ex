@@ -20,5 +20,6 @@ defmodule Buzzcms.Schema.FieldValue do
     |> cast(params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
     |> unique_constraint(:code, name: :field_value_field_id_code)
+    |> foreign_key_constraint(:field_id)
   end
 end

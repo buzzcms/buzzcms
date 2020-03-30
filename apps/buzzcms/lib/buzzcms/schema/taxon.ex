@@ -47,5 +47,7 @@ defmodule Buzzcms.Schema.Taxon do
     |> cast_embed(:images)
     |> validate_required(@required_fields)
     |> unique_constraint(:slug, name: :taxon_slug_unique)
+    |> foreign_key_constraint(:taxonomy_id)
+    |> foreign_key_constraint(:parent_id)
   end
 end

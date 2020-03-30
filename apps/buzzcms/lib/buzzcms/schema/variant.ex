@@ -41,5 +41,6 @@ defmodule Buzzcms.Schema.Variant do
     entity
     |> cast(params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+    |> foreign_key_constraint(:product)
   end
 end

@@ -13,5 +13,7 @@ defmodule Buzzcms.Schema.EntryTypeField do
     entity
     |> cast(params, [:entry_type_id, :field_id])
     |> unique_constraint(:field, name: :entry_type_field_pkey)
+    |> foreign_key_constraint(:entry_type_id)
+    |> foreign_key_constraint(:field_id)
   end
 end

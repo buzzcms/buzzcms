@@ -13,5 +13,7 @@ defmodule Buzzcms.Schema.EntryTypeTaxonomy do
     entity
     |> cast(params, [:entry_type_id, :taxonomy_id])
     |> unique_constraint(:taxonomy, name: :entry_type_taxonomy_pkey)
+    |> foreign_key_constraint(:entry_type_id)
+    |> foreign_key_constraint(:taxonomy_id)
   end
 end

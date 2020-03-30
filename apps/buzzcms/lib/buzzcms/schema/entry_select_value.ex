@@ -17,5 +17,8 @@ defmodule Buzzcms.Schema.EntrySelectValue do
     |> cast(params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
     |> unique_constraint(:field_value, name: :entry_field_value_pkey)
+    |> foreign_key_constraint(:entry_id)
+    |> foreign_key_constraint(:field_id)
+    |> foreign_key_constraint(:field_value_id)
   end
 end
