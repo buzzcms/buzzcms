@@ -1,0 +1,12 @@
+mutation {
+  createEntry(
+    input: { data: { entryTypeId: 111, title: "Hello", slug: "hello" } }
+  ) {
+    result {
+      node {
+        slug
+        title
+      }
+    }
+  }
+}

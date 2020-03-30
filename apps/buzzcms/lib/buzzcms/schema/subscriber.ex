@@ -19,6 +19,7 @@ defmodule Buzzcms.Schema.Subscriber do
     entity
     |> cast(params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+    |> foreign_key_constraint(:form_id)
     |> unique_constraint(:code)
   end
 end

@@ -37,8 +37,14 @@ defmodule BuzzcmsWeb.ResolverHelper do
       |> Repo.insert()
 
     case result do
-      {:ok, result} -> {:ok, %{result: %{node: Repo.get(schema, result.id)}}}
-      {:error, message} -> {:error, message}
+      {:ok, result} ->
+        {:ok, %{result: %{node: Repo.get(schema, result.id)}}}
+
+      {:error, changeset = %Ecto.Changeset{}} ->
+        {:error, %{message: BuzzcmsWeb.Helpers.error_text(changeset)}}
+
+      {:error, _} ->
+        {:error, "Unknown errors"}
     end
   end
 
@@ -54,8 +60,14 @@ defmodule BuzzcmsWeb.ResolverHelper do
     result = Repo.get!(schema, id) |> schema.changeset(data) |> Repo.update()
 
     case result do
-      {:ok, result} -> {:ok, %{result: %{node: result}}}
-      {:error, message} -> {:error, message}
+      {:ok, result} ->
+        {:ok, %{result: %{node: result}}}
+
+      {:error, changeset = %Ecto.Changeset{}} ->
+        {:error, %{message: BuzzcmsWeb.Helpers.error_text(changeset)}}
+
+      {:error, _} ->
+        {:error, "Unknown errors"}
     end
   end
 
@@ -74,8 +86,11 @@ defmodule BuzzcmsWeb.ResolverHelper do
       {:ok, result} ->
         {:ok, %{deleted_id: Base.encode64("entry:#{id}"), result: %{node: result}}}
 
-      {:error, message} ->
-        {:error, message}
+      {:error, changeset = %Ecto.Changeset{}} ->
+        {:error, %{message: BuzzcmsWeb.Helpers.error_text(changeset)}}
+
+      {:error, _} ->
+        {:error, "Unknown errors"}
     end
   end
 

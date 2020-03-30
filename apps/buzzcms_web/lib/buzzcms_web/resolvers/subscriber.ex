@@ -23,8 +23,14 @@ defmodule BuzzcmsWeb.SubscriberResolver do
       |> Repo.insert()
 
     case result do
-      {:ok, result} -> {:ok, %{result: %{node: Repo.get(@schema, result.id)}}}
-      {:error, message} -> {:error, message}
+      {:ok, result} ->
+        {:ok, %{result: %{node: Repo.get(@schema, result.id)}}}
+
+      {:error, changeset = %Ecto.Changeset{}} ->
+        {:error, %{message: BuzzcmsWeb.Helpers.error_text(changeset)}}
+
+      {:error, _} ->
+        {:error, "Unknown errors"}
     end
   end
 end

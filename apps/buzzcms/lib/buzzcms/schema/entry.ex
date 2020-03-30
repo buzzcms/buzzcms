@@ -53,5 +53,7 @@ defmodule Buzzcms.Schema.Entry do
     |> cast_embed(:images)
     |> validate_required(@required_fields)
     |> unique_constraint(:slug, name: :entry_slug_unique)
+    |> foreign_key_constraint(:entry_type_id)
+    |> foreign_key_constraint(:taxon_id_id)
   end
 end
