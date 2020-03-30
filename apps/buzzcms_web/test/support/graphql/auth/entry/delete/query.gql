@@ -1,5 +1,5 @@
 mutation {
-  deleteEntry(input: { id: 1 }) {
+  deleteEntry(input: { id: "RW50cnk6MQ==" }) {
     result {
       node {
         slug
