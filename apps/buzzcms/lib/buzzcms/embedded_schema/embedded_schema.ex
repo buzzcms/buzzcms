@@ -66,3 +66,19 @@ defmodule Buzzcms.EmbeddedSchema.Seo do
     schema |> cast(params, [:title, :description, :keywords])
   end
 end
+
+defmodule Buzzcms.EmbeddedSchema.EmailTemplate do
+  use Ecto.Schema
+  import Ecto.Changeset
+  @primary_key false
+
+  embedded_schema do
+    field :subject, :string
+    field :body_text, :string
+    field :body_html, :string
+  end
+
+  def changeset(schema, params) do
+    schema |> cast(params, [:subject, :body_text, :body_html])
+  end
+end

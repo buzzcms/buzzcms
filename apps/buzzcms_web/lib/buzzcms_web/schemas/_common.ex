@@ -103,6 +103,18 @@ defmodule BuzzcmsWeb.Schema.Common do
     field(:caption, :string)
   end
 
+  object :email_template do
+    field(:subject, :string)
+    field(:body_text, :string)
+    field(:body_html, :string)
+  end
+
+  input_object :email_template_input do
+    field(:subject, :string)
+    field(:body_text, :string)
+    field(:body_html, :string)
+  end
+
   input_object :boolean_filter_input do
     field(:eq, :boolean)
     field(:neq, :boolean)
