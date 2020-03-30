@@ -79,6 +79,7 @@ defmodule BuzzcmsWeb.Schema.Subscribers do
         field :result, :subscriber_edge
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :subscriber)
       resolve(&SubscriberResolver.edit/2)
     end
 
@@ -91,6 +92,7 @@ defmodule BuzzcmsWeb.Schema.Subscribers do
         field :result, :subscriber_edge
       end
 
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :subscriber)
       resolve(&SubscriberResolver.delete/2)
     end
   end
