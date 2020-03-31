@@ -66,6 +66,7 @@ defmodule BuzzcmsWeb.MixProject do
       {:ueberauth_facebook, "~> 0.8"},
       {:guardian, "~> 2.0"},
       {:bamboo, "~> 1.4"},
+      {:bamboo_smtp, "~> 2.1"},
       {:cachex, "~> 3.2"},
       {:excoveralls, "~> 0.10", only: :test},
       {:ex_machina, "~> 2.3", only: :test}
