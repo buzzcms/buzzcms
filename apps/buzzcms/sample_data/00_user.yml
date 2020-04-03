@@ -1,4 +1,5 @@
 - email: admin@example.com
+  password: S3cret
   nickname: admin
   display_name: Admin
   is_verified: true

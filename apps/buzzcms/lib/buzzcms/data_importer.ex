@@ -40,12 +40,12 @@ defmodule Buzzcms.DataImporter do
     forms = YamlElixir.read_from_file!(Path.join(dir, "08_form.yml"))
 
     # Users
-    Repo.insert_all(
-      User,
-      users
-      |> Enum.map(
-        &%{
+    users
+    |> Enum.each(
+      &(%User{}
+        |> User.sign_up_with_password_changeset(%{
           email: &1["email"],
+          password: &1["password"],
           nickname: &1["nickname"],
           display_name: &1["display_name"],
           is_verified: &1["is_verified"],
@@ -53,12 +53,11 @@ defmodule Buzzcms.DataImporter do
           auth_provider: &1["auth_provider"],
           bio: &1["bio"],
           website: &1["website"]
-        }
-      ),
-      on_conflict: :nothing
+        })
+        |> Repo.insert(on_conflict: :nothing))
     )
-    |> IO.inspect(label: "Insert users")
 
+    IO.inspect("Insert user complete")
     %{id: user_id} = Repo.one(User)
 
     # Taxonomies
