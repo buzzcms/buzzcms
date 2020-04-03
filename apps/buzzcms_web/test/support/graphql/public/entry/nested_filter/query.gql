@@ -1,0 +1,13 @@
+{
+  entries(first: 5) {
+    edges {
+      node {
+        slug
+        taxons(filter: { taxonomyId: { eq: 1 } }) {
+          slug
+          taxonomyId
+        }
+      }
+    }
+  }
+}

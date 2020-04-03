@@ -1,0 +1,52 @@
+{
+  "data": {
+    "entries": {
+      "edges": [
+        {
+          "node": {
+            "slug": "about",
+            "taxons": []
+          }
+        },
+        {
+          "node": {
+            "slug": "post-1",
+            "taxons": [
+              {
+                "slug": "post-category-1",
+                "taxonomyId": "1"
+              }
+            ]
+          }
+        },
+        {
+          "node": {
+            "slug": "post-2",
+            "taxons": [
+              {
+                "slug": "post-category-1",
+                "taxonomyId": "1"
+              },
+              {
+                "slug": "post-category-2",
+                "taxonomyId": "1"
+              }
+            ]
+          }
+        },
+        {
+          "node": {
+            "slug": "service-1",
+            "taxons": []
+          }
+        },
+        {
+          "node": {
+            "slug": "service-2",
+            "taxons": []
+          }
+        }
+      ]
+    }
+  }
+}

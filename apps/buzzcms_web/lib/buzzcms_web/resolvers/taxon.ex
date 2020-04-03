@@ -1,6 +1,7 @@
 defmodule BuzzcmsWeb.TaxonResolver do
   alias FilterParser.{IdFilterInput, StringFilterInput, BooleanFilterInput, LtreeFilterInput}
   @schema Buzzcms.Schema.Taxon
+
   @filter_definition [
     fields: [
       {:id, IdFilterInput},
@@ -17,6 +18,8 @@ defmodule BuzzcmsWeb.TaxonResolver do
   ]
 
   use BuzzcmsWeb.Resolver
+
+  def filter_definition, do: @filter_definition
 
   def list(params, %{context: _} = _info) do
     BuzzcmsWeb.ResolverHelper.list(params, @schema, @filter_definition,

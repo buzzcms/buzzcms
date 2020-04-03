@@ -40,8 +40,19 @@ defmodule BuzzcmsWeb.Schema.Entries do
           resolve: dataloader(Data, :entry_taxons)
 
     field :taxons,
-          non_null(list_of(non_null(:taxon))),
-          resolve: dataloader(Data, :taxons)
+          non_null(list_of(non_null(:taxon))) do
+      arg(:filter, :taxon_filter_input)
+
+      resolve(
+        dataloader(Data, fn _, params, _info ->
+          {:taxons,
+           %{
+             params: params,
+             filter_definition: BuzzcmsWeb.TaxonResolver.filter_definition()
+           }}
+        end)
+      )
+    end
 
     field :select_values,
           non_null(list_of(non_null(:field_value))),
