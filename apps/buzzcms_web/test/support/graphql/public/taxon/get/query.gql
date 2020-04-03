@@ -1,7 +1,7 @@
 {
   taxons(
     first: 3
-    filter: { taxonomyCode: "service_category" }
+    filter: { taxonomyCode: "service_category", taxonomyId: { eq: 2 } }
     orderBy: [{ field: "title", direction: ASC }]
   ) {
     count

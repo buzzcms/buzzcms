@@ -75,6 +75,7 @@ defmodule BuzzcmsWeb.TaxonResolver do
 
   defp parse_addition_filter(schema, %{filter: filter}) when map_size(filter) > 0 do
     filter
+    |> Map.take([:taxonomy_code])
     |> Enum.reduce(schema, fn {key, value}, schema_acc ->
       case key do
         :taxonomy_code ->
