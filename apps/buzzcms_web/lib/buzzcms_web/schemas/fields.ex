@@ -18,6 +18,7 @@ defmodule BuzzcmsWeb.Schema.Fields do
     value(:color)
     value(:checkbox_group)
     value(:radio_group)
+    value(:text)
     value(:rich_text)
     value(:image)
     value(:gallery)
