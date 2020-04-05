@@ -93,6 +93,21 @@ defmodule Buzzcms.Migration do
     )
   end
 
+  def drop_unique_contraint(table, columns) do
+    name = "#{table}_#{Enum.join(columns, "_")}"
+    columns_text = columns |> Enum.map(&~s("#{&1}")) |> Enum.join(",")
+
+    execute(
+      """
+      ALTER TABLE "#{table}" DROP CONSTRAINT #{name}_unique;
+      """,
+      """
+      ALTER TABLE "#{table}"
+      ADD CONSTRAINT #{name}_unique UNIQUE (#{columns_text});
+      """
+    )
+  end
+
   def create_trigger(name: name, table: table, trigger: trigger, function: function) do
     execute(
       """

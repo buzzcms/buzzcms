@@ -64,7 +64,12 @@ defmodule Buzzcms.DataImporter do
     Repo.insert_all(
       Taxonomy,
       taxonomies
-      |> Enum.map(&%{code: &1["code"], display_name: &1["display_name"]}),
+      |> Enum.map(
+        &%{
+          code: &1["code"],
+          display_name: &1["display_name"]
+        }
+      ),
       on_conflict: :nothing
     )
     |> IO.inspect(label: "Insert taxonomy")
@@ -118,7 +123,12 @@ defmodule Buzzcms.DataImporter do
     Repo.insert_all(
       EntryType,
       entry_types
-      |> Enum.map(&%{code: &1["code"], display_name: &1["display_name"]}),
+      |> Enum.map(
+        &%{
+          code: &1["code"],
+          display_name: &1["display_name"]
+        }
+      ),
       on_conflict: :nothing
     )
     |> IO.inspect(label: "Insert entry_type")
