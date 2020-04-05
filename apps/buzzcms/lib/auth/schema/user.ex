@@ -4,7 +4,6 @@ defmodule Buzzcms.Schema.User do
   import Ecto.Changeset
 
   @primary_key {:id, Ecto.UUID, autogenerate: true}
-  @derive {Jason.Encoder, only: [:email, :display_name, :nickname, :auth_provider]}
 
   schema "user" do
     field :email, :string

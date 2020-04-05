@@ -20,20 +20,6 @@ defmodule Buzzcms.Schema.Image do
 
   @primary_key {:id, :string, []}
 
-  @derive {Jason.Encoder,
-   only: [
-     :id,
-     :name,
-     :ext,
-     :mime,
-     :caption,
-     :width,
-     :height,
-     :size
-     #  :created_at,
-     #  :modified_at
-   ]}
-
   schema "image" do
     field :remote_url, :string
     field :name, :string
@@ -49,9 +35,9 @@ defmodule Buzzcms.Schema.Image do
   end
 
   @doc false
-  def changeset(post, attrs) do
-    post
-    |> cast(attrs, @required_fields ++ @optional_fields)
+  def changeset(entity, params \\ %{}) do
+    entity
+    |> cast(params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
   end
 end
