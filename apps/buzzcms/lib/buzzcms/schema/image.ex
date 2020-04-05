@@ -20,6 +20,20 @@ defmodule Buzzcms.Schema.Image do
 
   @primary_key {:id, :string, []}
 
+  @derive {Jason.Encoder,
+           only: [
+             :id,
+             :name,
+             :ext,
+             :mime,
+             :caption,
+             :width,
+             :height,
+             :size,
+             :created_at,
+             :modified_at
+           ]}
+
   schema "image" do
     field :remote_url, :string
     field :name, :string
