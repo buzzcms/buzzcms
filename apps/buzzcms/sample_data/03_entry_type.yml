@@ -7,6 +7,7 @@
 - code: service
   display_name: Service
   taxonomies:
+    - post_category
     - service_category
   fields:
     - price

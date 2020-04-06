@@ -6,7 +6,6 @@ mutation {
       fields {
         _id
         code
-        position
       }
     }
   }

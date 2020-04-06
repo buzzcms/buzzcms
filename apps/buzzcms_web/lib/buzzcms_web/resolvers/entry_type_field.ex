@@ -80,7 +80,6 @@ defmodule BuzzcmsWeb.EntryTypeFieldResolver do
     end)
     |> Repo.transaction()
 
-    order_query = from c in EntryTypeField, order_by: c.position
-    {:ok, %{entry_type: Repo.get(EntryType, entry_type_id, preload: [fields: order_query])}}
+    {:ok, %{entry_type: Repo.get(EntryType, entry_type_id)}}
   end
 end

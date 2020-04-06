@@ -1,0 +1,18 @@
+{
+  "data": {
+    "editEntryTypeTaxonomyPosition": {
+      "entryType": {
+        "taxonomies": [
+          {
+            "_id": "2",
+            "code": "service_category"
+          },
+          {
+            "_id": "1",
+            "code": "post_category"
+          }
+        ]
+      }
+    }
+  }
+}

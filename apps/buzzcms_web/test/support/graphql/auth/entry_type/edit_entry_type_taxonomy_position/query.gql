@@ -1,0 +1,12 @@
+mutation {
+  editEntryTypeTaxonomyPosition(
+    input: { entryTypeId: "3", taxonomyIds: ["2", "1"] }
+  ) {
+    entryType {
+      taxonomies {
+        _id
+        code
+      }
+    }
+  }
+}

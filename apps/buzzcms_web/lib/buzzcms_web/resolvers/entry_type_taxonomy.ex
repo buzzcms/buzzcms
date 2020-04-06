@@ -1,5 +1,6 @@
 defmodule BuzzcmsWeb.EntryTypeTaxonomyResolver do
   import Ecto.Query
+  alias Ecto.Multi
   alias Buzzcms.Repo
   alias Buzzcms.Schema.{EntryType, EntryTypeTaxonomy, Taxonomy}
 
@@ -50,5 +51,38 @@ defmodule BuzzcmsWeb.EntryTypeTaxonomyResolver do
 
   def delete(_params, _info) do
     {:error, "Not authorized"}
+  end
+
+  def edit_position(
+        %{entry_type_id: entry_type_id, taxonomy_ids: taxonomy_ids},
+        # %{context: %{role: "admin"}}
+        _
+      )
+      when is_list(taxonomy_ids) do
+    multi = Multi.new()
+
+    taxonomy_ids
+    |> Enum.with_index()
+    |> Enum.reduce(multi, fn {taxonomy_id, position}, multi_acc ->
+      IO.inspect({taxonomy_id, position})
+
+      Multi.run(
+        multi_acc,
+        {:entry_type_taxonomy, taxonomy_id},
+        fn repo, _ ->
+          result =
+            from(etf in EntryTypeTaxonomy,
+              where: etf.taxonomy_id == ^taxonomy_id and etf.entry_type_id == ^entry_type_id,
+              update: [set: [position: ^position]]
+            )
+            |> repo.update_all([])
+
+          {:ok, result}
+        end
+      )
+    end)
+    |> Repo.transaction()
+
+    {:ok, %{entry_type: Repo.get(EntryType, entry_type_id)}}
   end
 end
