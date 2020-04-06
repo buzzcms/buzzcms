@@ -18,14 +18,14 @@ defmodule Buzzcms.Schema.EntryType do
     entity
     |> cast(params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
-    |> unique_constraint(:code)
     |> cast_embed(:config)
+    |> unique_constraint(:code)
   end
 
   def edit_changeset(entity, params \\ %{}) do
     entity
     |> cast(params, @required_fields ++ @optional_fields)
+    |> cast_embed(:config)
     |> unique_constraint(:code)
-    |> put_embed(:config, params[:config])
   end
 end
