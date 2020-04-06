@@ -1,0 +1,40 @@
+{
+  "data": {
+    "editEntryTypeFieldPosition": {
+      "entryType": {
+        "fields": [
+          {
+            "_id": "1",
+            "code": "price",
+            "position": 1
+          },
+          {
+            "_id": "2",
+            "code": "is_promoted",
+            "position": 2
+          },
+          {
+            "_id": "3",
+            "code": "gallery",
+            "position": 3
+          },
+          {
+            "_id": "4",
+            "code": "rating",
+            "position": 4
+          },
+          {
+            "_id": "5",
+            "code": "service_type",
+            "position": 5
+          },
+          {
+            "_id": "6",
+            "code": "features",
+            "position": 6
+          }
+        ]
+      }
+    }
+  }
+}

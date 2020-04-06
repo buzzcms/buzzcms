@@ -12,9 +12,6 @@ defmodule BuzzcmsWeb.Data do
   end
 
   defp make_query(queryable, nil, _), do: queryable
-
-  defp make_query(queryable, fd, %{filter: f = %{}}),
-    do: queryable |> FilterParser.parse(f, fd)
-
+  defp make_query(queryable, fd, %{filter: f = %{}}), do: queryable |> FilterParser.parse(f, fd)
   defp make_query(queryable, _, _), do: queryable
 end

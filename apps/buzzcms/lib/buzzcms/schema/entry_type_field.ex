@@ -7,11 +7,12 @@ defmodule Buzzcms.Schema.EntryTypeField do
   schema "entry_type_field" do
     belongs_to :entry_type, Buzzcms.Schema.EntryType
     belongs_to :field, Buzzcms.Schema.Field
+    field :position, :integer
   end
 
   def changeset(entity, params \\ %{}) do
     entity
-    |> cast(params, [:entry_type_id, :field_id])
+    |> cast(params, [:entry_type_id, :field_id, :position])
     |> unique_constraint(:field, name: :entry_type_field_pkey)
     |> foreign_key_constraint(:entry_type_id)
     |> foreign_key_constraint(:field_id)

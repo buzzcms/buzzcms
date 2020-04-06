@@ -33,5 +33,19 @@ defmodule BuzzcmsWeb.Schema.EntryTypeFields do
 
       resolve(&BuzzcmsWeb.EntryTypeFieldResolver.delete/2)
     end
+
+    payload field :edit_entry_type_field_position do
+      input do
+        field :entry_type_id, :id
+        field :field_ids, non_null(list_of(non_null(:id)))
+      end
+
+      @desc "Return entry_type include fields, so the consuming client can automatically update via graphql client like relay or apollo"
+      output do
+        field :entry_type, :entry_type
+      end
+
+      resolve(&BuzzcmsWeb.EntryTypeFieldResolver.edit_position/2)
+    end
   end
 end
