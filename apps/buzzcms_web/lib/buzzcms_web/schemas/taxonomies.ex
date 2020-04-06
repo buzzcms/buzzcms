@@ -34,7 +34,9 @@ defmodule BuzzcmsWeb.Schema.Taxonomies do
   end
 
   input_object :taxonomy_filter_input do
+    field :id, :id_filter_input
     field :code, :string_filter_input
+    field :display_name, :string_filter_input
   end
 
   object :taxonomy_queries do

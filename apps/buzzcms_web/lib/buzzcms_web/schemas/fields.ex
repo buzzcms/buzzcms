@@ -63,6 +63,7 @@ defmodule BuzzcmsWeb.Schema.Fields do
   end
 
   input_object :field_filter_input do
+    field :id, :id_filter_input
     field :code, :string_filter_input
     field :display_name, :string_filter_input
     field :type, :string_filter_input

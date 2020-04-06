@@ -33,7 +33,7 @@ defmodule BuzzcmsWeb.Schema.Entries do
     field :created_by, :user, resolve: dataloader(Data, :created_by)
     field :modified_by, :user, resolve: dataloader(Data, :modified_by)
     field :created_at, non_null(:datetime)
-    field :updated_at, non_null(:datetime)
+    field :modified_at, non_null(:datetime)
 
     field :entry_taxons,
           non_null(list_of(non_null(:entry_taxon))),
