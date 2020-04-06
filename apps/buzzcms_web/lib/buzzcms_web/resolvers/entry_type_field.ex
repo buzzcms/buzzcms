@@ -58,7 +58,15 @@ defmodule BuzzcmsWeb.EntryTypeFieldResolver do
         %{context: %{role: "admin"}}
       )
       when is_list(field_ids) do
-    multi = Multi.new()
+    multi =
+      Multi.new()
+      |> Multi.update(
+        :entry_type,
+        Repo.get(EntryType, entry_type_id)
+        |> EntryType.edit_changeset(%{
+          config: %{fields_layout: field_ids}
+        })
+      )
 
     field_ids
     |> Enum.with_index()

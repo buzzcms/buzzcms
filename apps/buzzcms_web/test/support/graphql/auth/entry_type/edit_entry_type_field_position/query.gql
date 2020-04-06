@@ -3,9 +3,8 @@ mutation {
     input: { entryTypeId: "3", fieldIds: ["6", "5", "4", "3", "2", "1"] }
   ) {
     entryType {
-      fields {
-        _id
-        code
+      config {
+        fieldsLayout
       }
     }
   }

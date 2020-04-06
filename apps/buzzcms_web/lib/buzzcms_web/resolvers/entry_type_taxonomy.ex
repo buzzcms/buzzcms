@@ -55,17 +55,22 @@ defmodule BuzzcmsWeb.EntryTypeTaxonomyResolver do
 
   def edit_position(
         %{entry_type_id: entry_type_id, taxonomy_ids: taxonomy_ids},
-        # %{context: %{role: "admin"}}
-        _
+        %{context: %{role: "admin"}}
       )
       when is_list(taxonomy_ids) do
-    multi = Multi.new()
+    multi =
+      Multi.new()
+      |> Multi.update(
+        :entry_type,
+        Repo.get(EntryType, entry_type_id)
+        |> EntryType.edit_changeset(%{
+          config: %{taxonomies_layout: taxonomy_ids}
+        })
+      )
 
     taxonomy_ids
     |> Enum.with_index()
     |> Enum.reduce(multi, fn {taxonomy_id, position}, multi_acc ->
-      IO.inspect({taxonomy_id, position})
-
       Multi.run(
         multi_acc,
         {:entry_type_taxonomy, taxonomy_id},

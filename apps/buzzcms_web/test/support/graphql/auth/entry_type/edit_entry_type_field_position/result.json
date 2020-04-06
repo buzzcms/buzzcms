@@ -2,32 +2,16 @@
   "data": {
     "editEntryTypeFieldPosition": {
       "entryType": {
-        "fields": [
-          {
-            "_id": "6",
-            "code": "features"
-          },
-          {
-            "_id": "5",
-            "code": "service_type"
-          },
-          {
-            "_id": "4",
-            "code": "rating"
-          },
-          {
-            "_id": "3",
-            "code": "gallery"
-          },
-          {
-            "_id": "2",
-            "code": "is_promoted"
-          },
-          {
-            "_id": "1",
-            "code": "price"
-          }
-        ]
+        "config": {
+          "fieldsLayout": [
+            "6",
+            "5",
+            "4",
+            "3",
+            "2",
+            "1"
+          ]
+        }
       }
     }
   }

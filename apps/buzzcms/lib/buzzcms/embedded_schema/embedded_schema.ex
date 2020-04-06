@@ -1,3 +1,18 @@
+defmodule Buzzcms.EmbeddedSchema.EntryTypeConfig do
+  use Ecto.Schema
+  import Ecto.Changeset
+  @primary_key false
+
+  embedded_schema do
+    field :fields_layout, {:array, :string}, default: []
+    field :taxonomies_layout, {:array, :string}, default: []
+  end
+
+  def changeset(schema, params) do
+    schema |> cast(params, [:fields_layout, :taxonomies_layout])
+  end
+end
+
 defmodule Buzzcms.EmbeddedSchema.Taxonomy do
   use Ecto.Schema
   @primary_key false

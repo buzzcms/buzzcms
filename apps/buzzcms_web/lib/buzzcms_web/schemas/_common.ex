@@ -73,6 +73,11 @@ defmodule BuzzcmsWeb.Schema.Common do
     field :field_type, :order_field_type
   end
 
+  object :entry_type_config do
+    field :fields_layout, non_null(list_of(non_null(:string)))
+    field :taxonomies_layout, non_null(list_of(non_null(:string)))
+  end
+
   object :heading do
     field(:title, :string)
     field(:subtitle, :string)
